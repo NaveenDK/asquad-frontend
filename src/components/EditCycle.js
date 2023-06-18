@@ -4,11 +4,8 @@ import Table from "react-bootstrap/Table";
 import Container from "react-bootstrap/Container";
 
 import Row from "react-bootstrap/Row";
-import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
-import UserTabs from "./UserTabs";
 import MainLayout from "./MainLayout";
 import ListGroup from "react-bootstrap/ListGroup";
 import ProgressBar from "react-bootstrap/ProgressBar";
@@ -35,10 +32,8 @@ const EditCycle = () => {
       })
       .then((response) => {
         setCycle(response.data);
-        //console.log ("cycles set to : " +  cycle)
+
         setUsers(response.data.users);
-        // setStartDate(new Date(response.data.startDate));
-        // setEndDate(new Date(response.data.endDate));
       })
       .catch(function (error) {
         {
@@ -47,46 +42,12 @@ const EditCycle = () => {
       });
   }, [adminId, cycleId]);
 
-  // const userList = ()=>{
-  //   if(cycle.users){
-  //     console.log("cycle list " +JSON.stringify(cycle))
-  //     return cycle.users.map(currentUser=>{
-  //      return <UserRow  goals={currentUser.goals}firstName={currentUser.firstName} key={currentUser._id} id={currentUser._id}/>})
-  //   }
-  // }
-
-  const updateProgress = () => {};
-
-  // const saveUserProgress = (userIndex,goalIndex,subTaskIndex)=>{
-  //   //let tempUsers=[...users]
-  //    console.log (" users[userIndex]._id "+ users[userIndex]._id )
-  //    console.log ("goals[goalIndex]._id : "+users[userIndex].goals[goalIndex]._id )
-  //    console.log ("users[userIndex].goals[goalIndex].subTasks[subTaskIndex]._id : "+users[userIndex].goals[goalIndex].subTasks[subTaskIndex]._id )
-  //   console.log("cycle.users[userIndex].goals " + JSON.stringify(cycle.users[userIndex].goals[goalIndex].subTasks[subTaskIndex].done))
-
-  //   const tempCycle ={
-  //     startDate:cycle.startDate,
-  //     endDate:cycle.endDate,
-  //    users:cycle.users
-  //   }
-
-  // axios.post('http://localhost:5000/cycles/update/' + id_cycle  ,tempCycle)
-  // .then(res => console.log(res.data));
-
-  // }
-
   const handleCheckChange = (subTaskIndex, goalIndex, userIndex) => {
     //  console.log("cycle prints: " + JSON.stringify(cycle.users))
     const token = localStorage.getItem("token");
 
     let tempUsers = [...users];
-    console.log("print tempUsers: " + JSON.stringify(tempUsers));
-    console.log(
-      "whats in: tempUsers[userIndex].goals[goalIndex].subTasks[subTaskIndex]" +
-        JSON.stringify(
-          tempUsers[userIndex].goals[goalIndex].subTasks[subTaskIndex]
-        )
-    );
+
     let totalSubTasksOfGoal =
       tempUsers[userIndex].goals[goalIndex].subTasks.length;
 
@@ -101,22 +62,6 @@ const EditCycle = () => {
     let subtasksCompleted = tempUsers[userIndex].goals[
       goalIndex
     ].subTasks.filter((props) => props.done).length;
-    // subtasksCompleted =   tempUsers[userIndex].goals[goalIndex].subTasks.filter(props=>props.done).length
-
-    //subtasksCompleted =   tempUsers[userIndex].goals[goalIndex].subTasks.filter(props=>props.done).length
-    // console.log(false)
-
-    console.log(
-      "we changed the subtask with the name: " +
-        tempUsers[userIndex].goals[goalIndex].subTasks[subTaskIndex].task
-    );
-    console.log(
-      "tempUsers[userIndex].goals[goalIndex].subTasks[subTaskIndex].done?" +
-        tempUsers[userIndex].goals[goalIndex].subTasks[subTaskIndex].done
-    );
-    console.log("totalSubTasksOfGoal " + totalSubTasksOfGoal);
-
-    console.log("subtasksCompleted: " + subtasksCompleted);
 
     let calculatedProgress = (
       (subtasksCompleted / totalSubTasksOfGoal) *
@@ -124,10 +69,6 @@ const EditCycle = () => {
     ).toFixed(2);
 
     tempUsers[userIndex].goals[goalIndex].progress = calculatedProgress;
-    console.log(
-      " tempUsers[userIndex].goals[goalIndex].progress: " +
-        tempUsers[userIndex].goals[goalIndex].progress
-    );
 
     setUsers(tempUsers);
     const tempCycle = {
@@ -143,16 +84,6 @@ const EditCycle = () => {
         },
       })
       .then((res) => console.log("WOW " + res.data));
-    // if (isChecked==true){
-    //   setIsChecked(false)
-    // }
-    // if(isChecked==false){
-    //   setIsChecked(true)
-    // }
-    // console.log("I was changed to: "+ isChecked)
-    // console.log("My K is : "+ k)
-
-    // console.log("wht is e: "+ JSON.stringify(e.type))
   };
 
   return (

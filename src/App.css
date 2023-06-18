@@ -221,3 +221,28 @@ button.fullwidth.btn.btn-primary:hover {
   transition: 0.3s;
   border: 1px solid black;
 }
+
+/*LOGIN*/
+/* .FormContainer {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.mainTitle {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.fullwidth {
+  width: 100%;
+  margin-top: 20px;
+} */

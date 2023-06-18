@@ -28,7 +28,7 @@ const LoginForm = () => {
         admin
       );
       const token = response.data.token;
-      //console.log(response.data);
+
       localStorage.setItem("token", token); //
 
       const adminId = response.data.adminId; // Assuming the API response contains the adminId
@@ -38,7 +38,7 @@ const LoginForm = () => {
       navigate("/overview");
     } catch (error) {
       console.error(error);
-      setError("Failed to create admin");
+      setError("Oops, Please check your credentials ");
     }
   };
 
@@ -54,11 +54,10 @@ const LoginForm = () => {
             onChange={(e) => setEmail(e.target.value)}
             vlue={email}
           />
-          {/* <Form.Text className="text-muted">
+          <Form.Text className="text-muted">
             We'll never share your email with anyone else.
-          </Form.Text> */}
+          </Form.Text>
         </Form.Group>
-
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -68,10 +67,8 @@ const LoginForm = () => {
             value={password}
           />
         </Form.Group>
-
-        {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group> */}
+        {error && <div className="error-message">{error}</div>}{" "}
+        {/* Display error message if it exists */}
         <Button className="fullwidth" variant="primary" onClick={handleSubmit}>
           Submit
         </Button>

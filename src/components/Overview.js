@@ -70,7 +70,6 @@ function Cycle(props) {
 
 const Overview = () => {
   const { adminId } = useContext(AdminContext);
-  console.log("IM in overview & adminID: " + adminId);
 
   const [cycles, setCycles] = useState([]);
 
@@ -101,7 +100,7 @@ const Overview = () => {
               },
             }
           );
-          console.log(response.data);
+
           setCycles(response.data);
         }
       } catch (error) {
@@ -118,10 +117,8 @@ const Overview = () => {
   };
 
   const cycleList = () => {
-    console.log("adminId :" + adminId);
     if (cycles) {
       return cycles.map((currentCycle) => {
-        console.log("cycleId: " + currentCycle._id);
         return (
           <Cycle
             adminId={adminId}

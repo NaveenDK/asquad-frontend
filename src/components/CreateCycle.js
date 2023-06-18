@@ -42,17 +42,13 @@ const CreateCycle = () => {
       users: users,
     };
 
-    console.log("We are here");
-    console.log(cycle);
-
     //axios.post
-    axios
-      .post(`http://localhost:5000/admins/${adminId}`, cycle, {
-        headers: {
-          "x-auth-token": token,
-        },
-      })
-      .then((res) => console.log("WOW " + res.data));
+    axios.post(`http://localhost:5000/admins/${adminId}`, cycle, {
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+
     navigate("/overview");
 
     //window.location = '/'
@@ -69,9 +65,6 @@ const CreateCycle = () => {
     let goalsOfUser = [...users[index].goals];
     goalsOfUser[goalIndex][event.target.name] = event.target.value;
 
-    //console.log("printing goalsOfUser: " + JSON.stringify(goalsOfUser))
-
-    console.log("users" + JSON.stringify(users));
     const tempUsers = [...users];
     tempUsers[index].goals = goalsOfUser;
     setUsers(tempUsers);
@@ -83,11 +76,11 @@ const CreateCycle = () => {
 
     let subTasksOfGoal = [...users[index].goals[goalIndex].subTasks];
     subTasksOfGoal[subTaskIndex].task = event.target.value;
-    console.log("printing subTasksOfGoal: " + JSON.stringify(subTasksOfGoal));
+
     const tempUsers = [...users];
     tempUsers[index].goals[goalIndex].subTasks = subTasksOfGoal;
     setUsers(tempUsers);
-    console.log("users" + JSON.stringify(users));
+
     // const tempUsers = [...users]
     // tempUsers[index].goals = goalsOfUser;
     // setUsers(tempUsers)
@@ -123,7 +116,6 @@ const CreateCycle = () => {
     setUsers(tempUsers);
   };
   const addSubTask = (index, i) => {
-    console.log("add subtask clicked");
     let newSubTask = { task: "", done: false };
     const tempUsers = [...users];
     tempUsers[index].goals[i].subTasks.push(newSubTask);
@@ -250,55 +242,6 @@ const CreateCycle = () => {
             </div>
           </div>
 
-          {/* <div className="GoalSection">
-                {users.length>1 && 
-                <div className="form-group" > 
-                    
-    
-                            <label className="boldLabel">Add Goals</label>
-                                <div className="innerWrapGoals"> 
-                                    {
-                                    goalFields.map((g,gI)=>{
-                                                    return(
-                                <div className="selectWrap" key={gI}> 
-                                            <Row>
-                                            <Col>
-                                            <Form.Select aria-label="Default select example" name="Owner" onChange={event=>handleAddGoal(gI,event)}>
-                                                <option>Open this select menu</option>
-                                                    {
-
-                                                users.map((e,q)=>{
-                                                    return ( e.firstName  &&
-                                                            <option key={q} value={e.firstName}>{e.firstName}</option>
-                                                            )
-                                                    } )
-                                                    }
-                                                </Form.Select>
-                                        
-                            
-                                            </Col>
-                                        <Col>
-                                        <Form.Control name="mainGoal" onChange={event =>handleAddGoal(gI,event)} type="text" placeholder="Main Goal" />
-                                        </Col>
-                                        <Col>
-                                        <Form.Control name="subTasks"  onChange={event =>handleAddGoal(gI,event)}as="textarea" placeholder="Add Subtasks" rows={3} />
-                                        <div className="btnDiv">
-                                        <button  className="btn btn-danger minusMember" onClick={() => removeGoal(gI)}>- </button>
-                                        </div>
-                                        </Col>
-                                    </Row>
-                                </div>
-                                            )
-                                        })
-                                    }         
-                                                        
-                                    </div>
-                        <div className="form-group plusGoal">
-                            <button  onClick={addGoal}type="button" className="btn btn-dark plusMember"> + </button>
-                        </div>
-
-                    </div> }
-                    </div> */}
           <div className="form-group btnSection">
             <input
               type="submit"

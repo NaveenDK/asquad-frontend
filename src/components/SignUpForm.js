@@ -33,7 +33,7 @@ const SignUpForm = () => {
     try {
       const response = await axios.post("http://localhost:5000/admins", admin);
       const token = response.data.token;
-      //console.log(response.data);
+
       localStorage.setItem("token", token); //
 
       const adminId = response.data.adminId; // Assuming the API response contains the adminId

@@ -263,55 +263,6 @@ const UpdateCycle = () => {
             </div>
           </div>
 
-          {/* <div className="GoalSection">
-                {users.length>1 && 
-                <div className="form-group" > 
-                    
-    
-                            <label className="boldLabel">Add Goals</label>
-                                <div className="innerWrapGoals"> 
-                                    {
-                                    goalFields.map((g,gI)=>{
-                                                    return(
-                                <div className="selectWrap" key={gI}> 
-                                            <Row>
-                                            <Col>
-                                            <Form.Select aria-label="Default select example" name="Owner" onChange={event=>handleAddGoal(gI,event)}>
-                                                <option>Open this select menu</option>
-                                                    {
-
-                                                users.map((e,q)=>{
-                                                    return ( e.firstName  &&
-                                                            <option key={q} value={e.firstName}>{e.firstName}</option>
-                                                            )
-                                                    } )
-                                                    }
-                                                </Form.Select>
-                                        
-                            
-                                            </Col>
-                                        <Col>
-                                        <Form.Control name="mainGoal" onChange={event =>handleAddGoal(gI,event)} type="text" placeholder="Main Goal" />
-                                        </Col>
-                                        <Col>
-                                        <Form.Control name="subTasks"  onChange={event =>handleAddGoal(gI,event)}as="textarea" placeholder="Add Subtasks" rows={3} />
-                                        <div className="btnDiv">
-                                        <button  className="btn btn-danger minusMember" onClick={() => removeGoal(gI)}>- </button>
-                                        </div>
-                                        </Col>
-                                    </Row>
-                                </div>
-                                            )
-                                        })
-                                    }         
-                                                        
-                                    </div>
-                        <div className="form-group plusGoal">
-                            <button  onClick={addGoal}type="button" className="btn btn-dark plusMember"> + </button>
-                        </div>
-
-                    </div> }
-                    </div> */}
           <div className="form-group btnSection">
             <input
               type="submit"
