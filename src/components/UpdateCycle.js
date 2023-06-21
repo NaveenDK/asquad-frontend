@@ -11,6 +11,7 @@ import MainLayout from "./MainLayout";
 import { AdminContext } from "./AdminContext";
 import { useParams, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const UpdateCycle = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const UpdateCycle = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:5000/admins/${adminId}/cycles/${cycleId}`, {
+      .get(`${apiUrl}/admins/${adminId}/cycles/${cycleId}`, {
         headers: {
           "x-auth-token": token,
         },
@@ -59,13 +60,11 @@ const UpdateCycle = () => {
     // console.log(cycle);
 
     //axios.post
-    axios
-      .put(`http://localhost:5000/admins/${adminId}/cycles/${cycleId}`, cycle, {
-        headers: {
-          "x-auth-token": token,
-        },
-      })
-      .then((res) => console.log("WOW " + res.data));
+    axios.put(`${apiUrl}/admins/${adminId}/cycles/${cycleId}`, cycle, {
+      headers: {
+        "x-auth-token": token,
+      },
+    });
     console.log("adminId" + adminId);
     //window.location = '/'
     navigate("/overview");

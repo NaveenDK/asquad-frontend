@@ -6,6 +6,7 @@ import { AdminContext } from "./AdminContext";
 import Button from "react-bootstrap/Button";
 import MainLayout from "./MainLayout";
 import { useNavigate } from "react-router-dom";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -23,10 +24,7 @@ const LoginForm = () => {
       password: password,
     };
     try {
-      const response = await axios.post(
-        "http://localhost:5000/admins/login",
-        admin
-      );
+      const response = await axios.post(`${apiUrl}/admins/login`, admin);
       const token = response.data.token;
 
       localStorage.setItem("token", token); //

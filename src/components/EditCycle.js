@@ -13,6 +13,8 @@ import Form from "react-bootstrap/Form";
 import { AdminContext } from "./AdminContext";
 import { useParams, useNavigate } from "react-router-dom";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const EditCycle = () => {
   const [cycle, setCycle] = useState([]);
   const [users, setUsers] = useState([]);
@@ -25,7 +27,7 @@ const EditCycle = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:5000/admins/${adminId}/cycles/${cycleId}`, {
+      .get(`${apiUrl}/admins/${adminId}/cycles/${cycleId}`, {
         headers: {
           "x-auth-token": token,
         },
@@ -78,7 +80,7 @@ const EditCycle = () => {
     };
     //axios.post
     axios
-      .put(`http://localhost:5000/admins/${adminId}/cycles/${cycleId}`, cycle, {
+      .put(`${apiUrl}/admins/${adminId}/cycles/${cycleId}`, cycle, {
         headers: {
           "x-auth-token": token,
         },

@@ -12,6 +12,8 @@ import MainLayout from "./MainLayout";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 function Cycle(props) {
   const options = { year: "numeric", month: "long", day: "numeric" };
 
@@ -76,7 +78,7 @@ const Overview = () => {
   const deleteCycle = (id) => {
     const token = localStorage.getItem("token");
     axios
-      .delete(`http://localhost:5000/admins/${adminId}/cycles/${id}`, {
+      .delete(`${apiUrl}/admins/${adminId}/cycles/${id}`, {
         headers: {
           "x-auth-token": token,
         },
@@ -93,7 +95,7 @@ const Overview = () => {
         if (adminId) {
           // Check if adminId is defined
           const response = await axios.get(
-            `http://localhost:5000/admins/${adminId}/cycles`,
+            `${apiUrl}/admins/${adminId}/cycles`,
             {
               headers: {
                 "x-auth-token": token,

@@ -12,6 +12,8 @@ import MainLayout from "./MainLayout";
 import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const CreateCycle = () => {
   const navigate = useNavigate();
   const { adminId } = useContext(AdminContext);
@@ -43,7 +45,7 @@ const CreateCycle = () => {
     };
 
     //axios.post
-    axios.post(`http://localhost:5000/admins/${adminId}`, cycle, {
+    axios.post(`${apiUrl}/admins/${adminId}`, cycle, {
       headers: {
         "x-auth-token": token,
       },

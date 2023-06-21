@@ -3,6 +3,7 @@ import axios from "axios";
 import { Container, Form, Button } from "react-bootstrap";
 import { AdminContext } from "./AdminContext";
 import { useNavigate } from "react-router-dom";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const SignUpForm = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/admins", admin);
+      const response = await axios.post(`${apiUrl}/admins`, admin);
       const token = response.data.token;
 
       localStorage.setItem("token", token); //
