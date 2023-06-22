@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import MainLayout from "./MainLayout";
 import axios from "axios";
+import Spinner from "react-bootstrap/Spinner";
+
 import { format, parseISO } from "date-fns";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -72,7 +74,7 @@ function Cycle(props) {
 
 const Overview = () => {
   const { adminId } = useContext(AdminContext);
-
+  const [loading, setLoading] = useState(true);
   const [cycles, setCycles] = useState([]);
 
   const deleteCycle = (id) => {
@@ -89,6 +91,7 @@ const Overview = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     const token = localStorage.getItem("token"); //
     const fetchData = async () => {
       try {
@@ -107,6 +110,8 @@ const Overview = () => {
         }
       } catch (error) {
         console.error(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -118,39 +123,56 @@ const Overview = () => {
     navigate("/create");
   };
 
-  const cycleList = () => {
-    if (cycles) {
-      return cycles.map((currentCycle) => {
-        return (
-          <Cycle
-            adminId={adminId}
-            cycle={currentCycle}
-            deleteCycle={deleteCycle}
-            startDate={currentCycle.startDate}
-            endDate={currentCycle.endDate}
-            key={currentCycle._id}
-          />
-        );
-      });
-    }
-  };
+  // const cycleList = () => {
+  //   if (cycles) {
+  //     return cycles.map((currentCycle) => {
+  //       return (
+  //         <Cycle
+  //           adminId={adminId}
+  //           cycle={currentCycle}
+  //           deleteCycle={deleteCycle}
+  //           startDate={currentCycle.startDate}
+  //           endDate={currentCycle.endDate}
+  //           key={currentCycle._id}
+  //         />
+  //       );
+  //     });
+  //   }
+  // };
 
   return (
     <Container>
-      <MainLayout title="Overview">
-        {cycleList()}
-        <Row>
-          <Col className="d-flex justify-content-center">
-            <Button
-              onClick={navigateToCreate}
-              className="align-self-center blackBigBtn"
-            >
-              {" "}
-              Create Cycle{" "}
-            </Button>{" "}
-          </Col>
-        </Row>
-      </MainLayout>
+      {loading ? (
+        <div className="d-flex justify-content-center align-items-center vh-100">
+          <Spinner animation="border" />
+        </div>
+      ) : (
+        <>
+          <MainLayout title="Overview">
+            {cycles.map((currentCycle) => (
+              <Cycle
+                adminId={adminId}
+                cycle={currentCycle}
+                deleteCycle={deleteCycle}
+                startDate={currentCycle.startDate}
+                endDate={currentCycle.endDate}
+                key={currentCycle._id}
+              />
+            ))}
+            <Row>
+              <Col className="d-flex justify-content-center">
+                <Button
+                  onClick={navigateToCreate}
+                  className="align-self-center blackBigBtn"
+                >
+                  {" "}
+                  Create Cycle{" "}
+                </Button>{" "}
+              </Col>
+            </Row>
+          </MainLayout>
+        </>
+      )}
     </Container>
   );
 };

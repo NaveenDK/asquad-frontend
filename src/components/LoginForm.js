@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import { AdminContext } from "./AdminContext";
 import Button from "react-bootstrap/Button";
 import MainLayout from "./MainLayout";
+import Spinner from "react-bootstrap/Spinner";
 import { useNavigate } from "react-router-dom";
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -12,13 +13,14 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const { setAdminId } = useContext(AdminContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(email, password);
-
+    setLoading(true);
     const admin = {
       email: email,
       password: password,
@@ -37,6 +39,8 @@ const LoginForm = () => {
     } catch (error) {
       console.error(error);
       setError("Oops, Please check your credentials ");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,8 +71,19 @@ const LoginForm = () => {
         </Form.Group>
         {error && <div className="error-message">{error}</div>}{" "}
         {/* Display error message if it exists */}
-        <Button className="fullwidth" variant="primary" onClick={handleSubmit}>
-          Submit
+        <Button
+          className="fullwidth"
+          variant="primary"
+          onClick={handleSubmit}
+          disabled={loading} // Disable the button while loading
+        >
+          {loading ? (
+            <>
+              <Spinner animation="border" size="sm" /> Loading...
+            </>
+          ) : (
+            "Submit"
+          )}
         </Button>
       </Form>
     </Container>
