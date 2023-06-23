@@ -10,7 +10,10 @@ import UpdateCycle from "./components/UpdateCycle";
 import { AdminProvider } from "./components/AdminContext";
 import { createBrowserHistory } from "history";
 import SignUp from "./components/SignUpForm";
+import { GoogleLogin } from "@react-oauth/google";
 import Login from "./components/LoginForm";
+import LandingNav from "./components/LandingNav";
+import LandingPage from "./components/LandingPage";
 import {
   BrowserRouter as Router,
   Route,
@@ -20,15 +23,38 @@ import {
   Redirect,
   Navigate,
 } from "react-router-dom";
-
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
 function AppRouter() {
   const navigate = useNavigate();
   const location = useLocation();
   const isLoggedIn = Boolean(localStorage.getItem("token"));
 
+  function handleCallbackResponse(response) {
+    console.log("encoded JWT ID token: " + response.credential);
+  }
+
   useEffect(() => {
+    /* global google*/
+    // google.accounts.id.initialize({
+    //   client_id: { googleClientId },
+    //   callback: handleCallbackResponse,
+    // });
+
+    // google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+    //   theme: "outline",
+    //   size: "large",
+    // });
+
+    // gapi.auth2
+    //   .init({
+    //     client_id: { googleClientId },
+    //     scope: "profile email",
+    //   })
+    //   .then(function (authInstance) {
+    //     /* GoogleAuth object is now initialized and ready to be used */
+    //   });
     if (location.pathname === "/" && !isLoggedIn) {
-      navigate("/login");
+      navigate("/");
     } else if (location.pathname === "/" && isLoggedIn) {
       navigate("/overview");
     } else if (location.pathname === "/overview" && !isLoggedIn) {
@@ -45,10 +71,11 @@ function AppRouter() {
           isLoggedIn ? (
             <Navigate to="/overview" replace />
           ) : (
-            <Navigate to="/login" replace />
+            <Navigate to="/" replace />
           )
         }
       />
+      <Route path="/" element={<LandingPage />} />
       <Route path="/overview" element={<Overview />} />
       <Route path="/edit/" element={<EditCycle />} />
       <Route path="/review/:cycleId" element={<EditCycle />} />

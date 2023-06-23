@@ -3,8 +3,9 @@ import axios from "axios";
 import { Container, Form, Button } from "react-bootstrap";
 import { AdminContext } from "./AdminContext";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
 const apiUrl = process.env.REACT_APP_API_URL;
-
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const SignUpForm = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -14,7 +15,6 @@ const SignUpForm = () => {
   const [error, setError] = useState("");
 
   const { setAdminId } = useContext(AdminContext);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -48,13 +48,22 @@ const SignUpForm = () => {
     }
   };
 
+  const googleSignup = async (e) => {
+    e.preventDefault();
+    console.log("signu using google");
+  };
+  const responseMessage = (response) => {
+    console.log(response);
+  };
+  const errorMessage = (error) => {
+    console.log(error);
+  };
   return (
     <Container>
       <Form className="FormContainer">
         <h3 className="mainTitle">Sign Up</h3>
         {error && <p className="error">{error}</p>}
         <Form.Group className="mb-3" controlId="formName">
-          <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter your name"
@@ -63,7 +72,6 @@ const SignUpForm = () => {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formEmail">
-          <Form.Label>Email address</Form.Label>
           <Form.Control
             type="email"
             placeholder="Enter email"
@@ -73,7 +81,6 @@ const SignUpForm = () => {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
             placeholder="Password"
@@ -85,7 +92,6 @@ const SignUpForm = () => {
           className="mb-3 confirmPassword"
           controlId="formBasicPassword2"
         >
-          <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type="password"
             placeholder="Confirm Password"
@@ -97,6 +103,10 @@ const SignUpForm = () => {
         <Button className="fullwidth" variant="primary" onClick={handleSubmit}>
           Submit
         </Button>
+        <div className="text-center pt-5">
+          {/* <Button id="signInDiv"></Button> */}
+          <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+        </div>
       </Form>
     </Container>
   );
