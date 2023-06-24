@@ -1,5 +1,6 @@
 body {
   font-family: "Open Sans", sans-serif;
+  background: black;
 }
 h1,
 h2,
@@ -9,12 +10,27 @@ h5,
 h6 {
   font-family: "Open Sans", sans-serif;
 }
+/* color edits*/
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark .container {
+  background: #272424 !important;
+}
+.container-fluid {
+  height: calc(100vh);
+  background: #dcdcdc;
+}
+/*color edits end*/
 .editContainer {
   max-width: 1400px;
 
   padding-top: 5%;
 }
+.container {
+  background-color: #583131 !important;
+}
 
+.signup-wrapper {
+  background: white;
+}
 .customContainer {
   max-width: 1400px;
   padding-top: 5%;
@@ -52,9 +68,9 @@ nav {
 }
 
 button.align-self-center.btn.btn-primary {
-  background-color: black;
-  border-radius: 0px !important;
-  border-color: black;
+  background-color: #302d2d;
+  border-radius: 5px !important;
+  border-color: #302d2d;
 }
 
 .blackBigBtn {
@@ -153,7 +169,6 @@ p.main-goal.title {
 
 /*Signup Form*/
 form.FormContainer {
-  padding-top: 85px;
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
@@ -207,12 +222,19 @@ h3.mainTitle {
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
+.signup-wrapper {
+  max-width: 336px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
 button.fullwidth.btn.btn-primary {
-  border-radius: 0px;
+  border-radius: 5px;
   font-family: sans-serif;
   width: 100%;
-  background: black;
-  border: 1px solid black;
+  background: #302d2d;
+  border: 1px solid #302d2d;
 }
 
 button.fullwidth.btn.btn-primary:hover {
@@ -221,7 +243,15 @@ button.fullwidth.btn.btn-primary:hover {
   transition: 0.3s;
   border: 1px solid black;
 }
-
+form.FormContainer img {
+  width: 121px;
+  display: block;
+  margin: auto;
+}
+.tagline {
+  font-size: 13px;
+  text-align: center;
+}
 /*LOGIN*/
 /* .FormContainer {
   max-width: 400px;
@@ -246,3 +276,32 @@ button.fullwidth.btn.btn-primary:hover {
   width: 100%;
   margin-top: 20px;
 } */
+
+.line-breaker p {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #a09898;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+}
+
+p span {
+  background: #fff;
+  padding: 0 10px;
+}
+
+input#formBasicPassword2.form-rounded,
+input#formBasicPassword.form-rounded,
+input#formEmail.form-rounded,
+input#formName.form-rounded {
+  border-radius: 5px !important;
+}
+
+.navbar-default {
+  margin: 0 !important;
+}
+
+.container-wrapper {
+  padding-top: 30px;
+  height: 100vh !important;
+}
