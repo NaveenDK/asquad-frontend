@@ -45,7 +45,12 @@ const SignUpForm = () => {
       navigate("/overview");
     } catch (error) {
       console.error(error);
-      setError("Failed to create admin");
+      if (error.response && error.response.data && error.response.data.msg) {
+        setError(error.response.data.msg);
+      }
+      // console.log("error.response.data.errors: ");
+      // console.log(error.response.data.errors[0].msg);
+      setError(error.response.data.errors[0].msg);
     }
   };
 
@@ -62,12 +67,12 @@ const SignUpForm = () => {
               <p>Accountability made easy.</p>
             </div>
             <div className="google-auth"></div>
-            <div className="line-breaker">
+            {/* <div className="line-breaker">
               <p>
                 <span>or</span>
               </p>
-            </div>
-            {error && <p className="error">{error}</p>}
+            </div> */}
+
             <Form.Group className="mb-3" controlId="formName">
               <Form.Control
                 className="form-rounded"
@@ -107,6 +112,7 @@ const SignUpForm = () => {
                 value={confirmPassword}
               />
             </Form.Group>
+            {error && <p className="error-message">{error}</p>}
             <Button
               className="fullwidth"
               variant="primary"
