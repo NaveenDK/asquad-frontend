@@ -3,9 +3,9 @@ import axios from "axios";
 import { Container, Form, Button } from "react-bootstrap";
 import { AdminContext } from "./AdminContext";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
+
 const apiUrl = process.env.REACT_APP_API_URL;
-const googleClientId = process.env.GOOGLE_CLIENT_ID;
+
 const SignUpForm = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -15,6 +15,7 @@ const SignUpForm = () => {
   const [error, setError] = useState("");
 
   const { setAdminId } = useContext(AdminContext);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -44,70 +45,84 @@ const SignUpForm = () => {
       navigate("/overview");
     } catch (error) {
       console.error(error);
-      setError("Failed to create admin");
+      if (error.response && error.response.data && error.response.data.msg) {
+        setError(error.response.data.msg);
+      }
+      // console.log("error.response.data.errors: ");
+      // console.log(error.response.data.errors[0].msg);
+      setError(error.response.data.errors[0].msg);
     }
   };
 
-  const googleSignup = async (e) => {
-    e.preventDefault();
-    console.log("signu using google");
-  };
-  const responseMessage = (response) => {
-    console.log(response);
-  };
-  const errorMessage = (error) => {
-    console.log(error);
-  };
   return (
-    <Container>
-      <Form className="FormContainer">
-        <h3 className="mainTitle">Sign Up</h3>
-        {error && <p className="error">{error}</p>}
-        <Form.Group className="mb-3" controlId="formName">
-          <Form.Control
-            type="text"
-            placeholder="Enter your name"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formEmail">
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-        </Form.Group>
+    <Container fluid fill>
+      <div className="container-wrapper align-items-center">
+        <div className="signup-wrapper">
+          <Form className="FormContainer">
+            <img
+              src={process.env.PUBLIC_URL + "/img/logo-asquad.png"}
+              alt="Logo"
+            />
+            <div className="tagline">
+              <p>Accountability made easy.</p>
+            </div>
+            <div className="google-auth"></div>
+            {/* <div className="line-breaker">
+              <p>
+                <span>or</span>
+              </p>
+            </div> */}
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-        </Form.Group>
-        <Form.Group
-          className="mb-3 confirmPassword"
-          controlId="formBasicPassword2"
-        >
-          <Form.Control
-            type="password"
-            placeholder="Confirm Password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            value={confirmPassword}
-          />
-        </Form.Group>
-
-        <Button className="fullwidth" variant="primary" onClick={handleSubmit}>
-          Submit
-        </Button>
-        <div className="text-center pt-5">
-          {/* <Button id="signInDiv"></Button> */}
-          <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+            <Form.Group className="mb-3" controlId="formName">
+              <Form.Control
+                className="form-rounded"
+                type="text"
+                placeholder="Name"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formEmail">
+              <Form.Control
+                className="form-rounded"
+                type="email"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Control
+                className="form-rounded"
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
+            </Form.Group>
+            <Form.Group
+              className="mb-3 confirmPassword"
+              controlId="formBasicPassword2"
+            >
+              <Form.Control
+                className="form-rounded"
+                type="password"
+                placeholder="Confirm Password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={confirmPassword}
+              />
+            </Form.Group>
+            {error && <p className="error-message">{error}</p>}
+            <Button
+              className="fullwidth"
+              variant="primary"
+              onClick={handleSubmit}
+            >
+              Sign Up
+            </Button>
+          </Form>
         </div>
-      </Form>
+      </div>
     </Container>
   );
 };

@@ -45,47 +45,52 @@ const LoginForm = () => {
   };
 
   return (
-    <Container>
-      <Form className="FormContainer">
-        <h3 className="mainTitle">Login</h3>
-        <Form.Group className="mb-3" controlId="formEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
-            vlue={email}
-          />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-        </Form.Group>
-        {error && <div className="error-message">{error}</div>}{" "}
-        {/* Display error message if it exists */}
-        <Button
-          className="fullwidth"
-          variant="primary"
-          onClick={handleSubmit}
-          disabled={loading} // Disable the button while loading
-        >
-          {loading ? (
-            <>
-              <Spinner animation="border" size="sm" /> Loading...
-            </>
-          ) : (
-            "Submit"
-          )}
-        </Button>
-      </Form>
+    <Container fluid fill>
+      <div className="container-wrapper align-items-center">
+        <div className="signup-wrapper">
+          <Form className="FormContainer">
+            <img
+              src={process.env.PUBLIC_URL + "/img/logo-asquad.png"}
+              alt="Logo"
+            />
+            <div className="tagline">
+              <p>Accountability made easy.</p>
+            </div>
+            <Form.Group className="mb-3" controlId="formEmail">
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                onChange={(e) => setEmail(e.target.value)}
+                vlue={email}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
+            </Form.Group>
+            {error && <div className="error-message">{error}</div>}{" "}
+            {/* Display error message if it exists */}
+            <Button
+              className="fullwidth"
+              variant="primary"
+              onClick={handleSubmit}
+              disabled={loading} // Disable the button while loading
+            >
+              {loading ? (
+                <>
+                  <Spinner animation="border" size="sm" /> Loading...
+                </>
+              ) : (
+                "Sign in"
+              )}
+            </Button>
+          </Form>
+        </div>
+      </div>
     </Container>
   );
 };
