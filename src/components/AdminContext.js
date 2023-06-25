@@ -7,11 +7,11 @@ export const AdminProvider = ({ children }) => {
   const [adminId, setAdminId] = useState(storedAdminId || "");
 
   // Set the initial value of adminId here
-  useEffect(() => {
-    console.log("Admin Context was just triggered ");
-    const storedAdminId = localStorage.getItem("adminId");
-    setAdminId(storedAdminId || "");
-  }, []);
+  // useEffect(() => {
+  //   console.log("Admin Context was just triggered ");
+  //   const storedAdminId = localStorage.getItem("adminId");
+  //   setAdminId(storedAdminId || "");
+  // }, []);
 
   return (
     <AdminContext.Provider value={{ adminId, setAdminId }}>

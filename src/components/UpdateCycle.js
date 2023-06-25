@@ -27,6 +27,7 @@ const UpdateCycle = () => {
   const [endDate, setEndDate] = useState(new Date()); // empty endDate set when we start initially
 
   useEffect(() => {
+    console.log("UpdateCycle");
     const token = localStorage.getItem("token");
     axios
       .get(`${apiUrl}/admins/${adminId}/cycles/${cycleId}`, {

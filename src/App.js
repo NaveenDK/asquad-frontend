@@ -54,7 +54,7 @@ function AppRouter() {
     //     /* GoogleAuth object is now initialized and ready to be used */
     //   });
     if (location.pathname === "/" && !isLoggedIn) {
-      navigate("/");
+      navigate("/signup");
     } else if (location.pathname === "/" && isLoggedIn) {
       navigate("/overview");
     } else if (location.pathname === "/overview" && !isLoggedIn) {

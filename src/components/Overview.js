@@ -116,6 +116,7 @@ const Overview = () => {
     };
 
     fetchData();
+    console.log("inOverview");
   }, [adminId]);
   const navigate = useNavigate();
   const navigateToCreate = () => {
