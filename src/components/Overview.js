@@ -20,14 +20,14 @@ function Cycle(props) {
   const options = { year: "numeric", month: "long", day: "numeric" };
 
   return (
-    <Card>
+    <Card className="card h-200 custom-style">
       <Card.Body>
         <Row>
-          <Col className="col-6">
+          <Col className="col-6 d-flex align-items-center">
             {" "}
-            <div className="cyclePeriod  ">
-              <div className="cycleItem">
-                <h5 className="p-2 ">
+            <div className="cyclePeriod   d-flex align-items-center">
+              <div className="cycleItem  d-flex align-items-center">
+                <h5 className="p-2  d-flex align-items-center">
                   {new Date(props.cycle.startDate).toLocaleDateString(
                     "us-EN",
                     options
@@ -41,13 +41,19 @@ function Cycle(props) {
               </div>
             </div>
           </Col>
-          <Col className="col-2">
+          <Col className="col-2 d-flex align-items-center">
             <div className="custom-Button mx-auto">
               {" "}
-              <Link to={`/review/${props.cycle._id}`}>Review</Link>{" "}
+              <Link to={`/review/${props.cycle._id}`}>
+                <img
+                  src={process.env.PUBLIC_URL + "/img/review-v1.png"}
+                  alt="review"
+                />
+                review
+              </Link>{" "}
             </div>
           </Col>
-          <Col className="col-2">
+          <Col className="col-2  d-flex align-items-center">
             <div className="custom-Button mx-auto">
               <Link
                 onClick={() => {
@@ -60,7 +66,7 @@ function Cycle(props) {
             </div>
           </Col>
 
-          <Col className="col-2">
+          <Col className="col-2  d-flex align-items-center">
             <div className="custom-Button">
               {" "}
               <Link to={`/update/${props.cycle._id}`}>Update Cycle</Link>{" "}
