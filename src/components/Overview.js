@@ -18,16 +18,19 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 function Cycle(props) {
   const options = { year: "numeric", month: "long", day: "numeric" };
+  const isLastCard = props.cycle === props.cycles[props.cycles.length - 1];
 
   return (
-    <Card className="card h-200 custom-style">
+    <Card
+      className={`card h-200 custom-style ${isLastCard ? "last-card" : ""}`}
+    >
       <Card.Body>
         <Row>
           <Col className="col-6 d-flex align-items-center">
             {" "}
             <div className="cyclePeriod   d-flex align-items-center">
               <div className="cycleItem  d-flex align-items-center">
-                <h5 className="p-2  d-flex align-items-center">
+                <h6 className="p-2  d-flex align-items-center">
                   {new Date(props.cycle.startDate).toLocaleDateString(
                     "us-EN",
                     options
@@ -37,7 +40,7 @@ function Cycle(props) {
                     "us-EN",
                     options
                   )}
-                </h5>{" "}
+                </h6>{" "}
               </div>
             </div>
           </Col>
@@ -55,13 +58,12 @@ function Cycle(props) {
           </Col>
           <Col className="col-2  d-flex align-items-center">
             <div className="custom-Button mx-auto">
-              <Link
-                onClick={() => {
-                  props.deleteCycle(props.cycle._id);
-                }}
-                to={"#"}
-              >
-                delete
+              <Link to={`/update/${props.cycle._id}`}>
+                <img
+                  src={process.env.PUBLIC_URL + "/img/edit-v1.png"}
+                  alt="update"
+                />
+                update
               </Link>{" "}
             </div>
           </Col>
@@ -69,7 +71,18 @@ function Cycle(props) {
           <Col className="col-2  d-flex align-items-center">
             <div className="custom-Button">
               {" "}
-              <Link to={`/update/${props.cycle._id}`}>Update Cycle</Link>{" "}
+              <Link
+                onClick={() => {
+                  props.deleteCycle(props.cycle._id);
+                }}
+                to={"#"}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/img/delete-v1.png"}
+                  alt="delete"
+                />
+                delete
+              </Link>
             </div>
           </Col>
         </Row>
@@ -164,6 +177,7 @@ const Overview = () => {
                 startDate={currentCycle.startDate}
                 endDate={currentCycle.endDate}
                 key={currentCycle._id}
+                cycles={cycles}
               />
             ))}
             <Row>

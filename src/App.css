@@ -348,15 +348,33 @@ input#formName.form-rounded {
 }
 
 .custom-style.card:hover {
-  background-color: black;
+  background-color: #302d2d;
   color: white;
-  transition: background-color 0.4s;
-  cursor: pointer;
+  transition: background-color 0.3s;
+
   /* Changed transition property to 'background-color 3s' */
 }
 
 .custom-Button a {
   font-size: 12px;
-
+  color: #a09898;
   text-decoration: none;
+}
+
+.custom-Button img {
+  margin-right: 5px;
+}
+.custom-style.card {
+  background: #fefefe;
+}
+.custom-Button a:hover {
+  color: #a09898;
+}
+.custom-style.card:hover {
+  box-shadow: none;
+}
+.custom-style.last-card.card {
+  /* background: red; */
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
 }
