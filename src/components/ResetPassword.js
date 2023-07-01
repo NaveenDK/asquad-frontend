@@ -9,7 +9,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const ResetPassword = ({ handleResetPassword }) => {
   const [email, setEmail] = useState("");
   const [sending, setSending] = useState(false);
-  const [emailSent, setEmailSent] = useState(true);
+  const [emailSent, setEmailSent] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
