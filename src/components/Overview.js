@@ -169,26 +169,38 @@ const Overview = () => {
       ) : (
         <>
           <MainLayout title="Overview">
-            {cycles.map((currentCycle) => (
-              <Cycle
-                adminId={adminId}
-                cycle={currentCycle}
-                deleteCycle={deleteCycle}
-                startDate={currentCycle.startDate}
-                endDate={currentCycle.endDate}
-                key={currentCycle._id}
-                cycles={cycles}
-              />
-            ))}
+            {cycles.length === 0 ? ( // Check if cycles.length is zero
+              <Row className="d-flex justify-content-center align-items-center ">
+                <div className="d-flex justify-content-center wrapper-empty">
+                  <div className="text-empty">
+                    {" "}
+                    No Cycles found, click below to start adding
+                  </div>
+                </div>
+              </Row>
+            ) : (
+              <>
+                {cycles.map((currentCycle) => (
+                  <Cycle
+                    adminId={adminId}
+                    cycle={currentCycle}
+                    deleteCycle={deleteCycle}
+                    startDate={currentCycle.startDate}
+                    endDate={currentCycle.endDate}
+                    key={currentCycle._id}
+                    cycles={cycles}
+                  />
+                ))}
+              </>
+            )}
             <Row>
               <Col className="d-flex justify-content-center">
                 <Button
                   onClick={navigateToCreate}
                   className="align-self-center blackBigBtn"
                 >
-                  {" "}
-                  Create Cycle{" "}
-                </Button>{" "}
+                  Create Cycle
+                </Button>
               </Col>
             </Row>
           </MainLayout>

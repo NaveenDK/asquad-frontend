@@ -78,9 +78,15 @@ function OurNavbar() {
     }
   };
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="light" variant="dark">
       <Container>
-        <Navbar.Brand onClick={navigateToHome}>ASquad</Navbar.Brand>
+        <Navbar.Brand onClick={navigateToHome}>
+          {" "}
+          <img
+            src={process.env.PUBLIC_URL + "/img/asquad-h-logo.png"}
+            alt="Logo"
+          />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">{renderAuthNavLinks()}</Nav>
