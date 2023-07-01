@@ -136,14 +136,20 @@ const CreateCycle = () => {
           <div className="form-group dateFields">
             <label className="boldLabel">Select Dates</label>
             <Row>
-              <Col>
-                <label>Start Date: </label>
-                <DatePicker selected={startDate} onChange={onChangeStartDate} />
+              <Col className="justify-content-end">
+                <DatePicker
+                  selected={startDate}
+                  onChange={onChangeStartDate}
+                  className="rounded-3"
+                />
               </Col>
-              <Col>
+              <Col className="justify-content-start">
                 {" "}
-                <label>End Date: </label>
-                <DatePicker selected={endDate} onChange={onChangeEndDate} />
+                <DatePicker
+                  selected={endDate}
+                  onChange={onChangeEndDate}
+                  className="rounded-3"
+                />
               </Col>
             </Row>
           </div>
@@ -154,29 +160,28 @@ const CreateCycle = () => {
               return (
                 <div className="singleOwnerField" key={index}>
                   <Row>
-                    <Col>
+                    <Col className="justify-content-end">
                       <input
                         name="firstName"
                         placeholder="First Name"
                         value={input.firstName}
                         onChange={(event) => handleAddMore(index, event)}
+                        className="rounded-3"
                       />
                     </Col>
-                    <Col>
+                    <Col className="justify-content-start">
                       <input
                         name="lastName"
                         placeholder="Last Name"
                         value={input.lastName}
                         onChange={(event) => handleAddMore(index, event)}
+                        className="rounded-3"
                       />
-                    </Col>
-
-                    <Col>
                       <button
                         className="btn btn-danger minusMember"
                         onClick={() => removeFields(index)}
                       >
-                        - Member
+                        -
                       </button>
                     </Col>
                   </Row>
@@ -185,9 +190,10 @@ const CreateCycle = () => {
                     return (
                       <div className="goals-wrapper" key={i}>
                         <label className="boldLabel">Add Goal</label>
-                        <Row>
-                          <Col>
+                        <Row className="justify-content-center">
+                          <Col className="d-flex align-items-center justify-content-center">
                             <input
+                              className="mainGoal"
                               name="mainGoal"
                               placeholder="Main Goal Name"
                               value={goal.mainGoal}
@@ -196,14 +202,17 @@ const CreateCycle = () => {
                               }
                             />
                           </Col>
+                        </Row>
+                        <Row className="justify-content-center">
                           <div className="subtasks-outerwrapper">
                             <label className="boldLabel">Add SubTasks</label>
                             {goal.subTasks.map((sb, j) => {
                               return (
                                 <div className="subtask-innerwrapper" key={j}>
-                                  <Row>
-                                    <Col className="subtask-div">
+                                  <Row className="justify-content-center">
+                                    <Col className="subtask-div ">
                                       <input
+                                        className="subTaskField"
                                         name="subTask"
                                         placeholder="Subtask"
                                         value={sb.task}
