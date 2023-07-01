@@ -15,7 +15,7 @@ import {
 function OurNavbar() {
   const isLoggedIn = Boolean(localStorage.getItem("token"));
   const navigate = useNavigate();
-  const { adminId, setAdminId } = useContext(AdminContext);
+  const { adminId, setAdminId, adminName } = useContext(AdminContext);
 
   // const location = useLocation();
   // const adminId = location.pathname.split("/")[1];
@@ -50,10 +50,16 @@ function OurNavbar() {
 
   const renderAuthLinks = () => {
     if (adminId) {
-      // User is logged in
-      return <Nav.Link onClick={logout}>Logout</Nav.Link>;
+      return (
+        <NavDropdown
+          title={<span className="nav-dropdown-name">{adminName}</span>}
+          id="basic-nav-dropdown"
+          align="end"
+        >
+          <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+        </NavDropdown>
+      );
     } else {
-      // User is logged out
       return (
         <>
           <Nav.Link onClick={navigateToSignup}>Signup</Nav.Link>
@@ -78,7 +84,7 @@ function OurNavbar() {
     }
   };
   return (
-    <Navbar collapseOnSelect expand="lg" bg="light" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
       <Container>
         <Navbar.Brand onClick={navigateToHome}>
           {" "}
