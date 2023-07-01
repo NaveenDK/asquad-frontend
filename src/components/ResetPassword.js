@@ -3,12 +3,13 @@ import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Alert from "react-bootstrap/Alert";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const ResetPassword = ({ handleResetPassword }) => {
   const [email, setEmail] = useState("");
   const [sending, setSending] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
+  const [emailSent, setEmailSent] = useState(true);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -58,10 +59,10 @@ const ResetPassword = ({ handleResetPassword }) => {
               {sending ? "Sending..." : "Reset"}
             </Button>
             {emailSent && (
-              <p className="success-message">
+              <Alert variant="success" className="changepwdtxt">
                 Email sent succesfully, if you do not see the email in few
                 minutes, check your 'junk' mail folder or 'spam' folder
-              </p>
+              </Alert>
             )}
           </Form>
         </div>

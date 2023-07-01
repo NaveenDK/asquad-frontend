@@ -228,6 +228,11 @@ p.success-message {
   font-weight: 600;
   padding-bottom: 20px;
 }
+.changepwdtxt {
+  font-size: 13px;
+  font-weight: 600;
+  padding-top: 20px;
+}
 .success-message {
   color: #19c02f;
   font-size: 13px;

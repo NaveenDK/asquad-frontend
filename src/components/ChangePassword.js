@@ -4,6 +4,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
+import { Link } from "react-router-dom";
+import Alert from "react-bootstrap/Alert";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const ChangePassword = ({ handleResetPassword }) => {
@@ -14,6 +16,7 @@ const ChangePassword = ({ handleResetPassword }) => {
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
   const { id, token } = useParams();
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -36,7 +39,10 @@ const ChangePassword = ({ handleResetPassword }) => {
       // Handle error, display an error message or alert the user
     }
   };
-
+  const navigateToLogin = () => {
+    // 👇️ navigate to /contacts
+    navigate("/login");
+  };
   return (
     <Container fluid fill>
       <div className="container-wrapper align-items-center">
@@ -80,10 +86,13 @@ const ChangePassword = ({ handleResetPassword }) => {
             </Button>
           </Form>
           {successMsg && (
-            <p>
-              Password Change successful{" "}
-              <a href="http://localhost:3001/login">Login</a> to continue
-            </p>
+            <Alert
+              variant="success"
+              className="changepwdtxt"
+              onClick={navigateToLogin}
+            >
+              Password Change successful Click here to Login
+            </Alert>
           )}
         </div>
       </div>
