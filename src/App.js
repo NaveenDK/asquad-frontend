@@ -35,34 +35,35 @@ function AppRouter() {
     console.log("encoded JWT ID token: " + response.credential);
   }
 
-  useEffect(() => {
-    /* global google*/
-    // google.accounts.id.initialize({
-    //   client_id: { googleClientId },
-    //   callback: handleCallbackResponse,
-    // });
+  // useEffect(() => {
+  //   /* global google*/
+  //   // google.accounts.id.initialize({
+  //   //   client_id: { googleClientId },
+  //   //   callback: handleCallbackResponse,
+  //   // });
 
-    // google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-    //   theme: "outline",
-    //   size: "large",
-    // });
+  //   // google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+  //   //   theme: "outline",
+  //   //   size: "large",
+  //   // });
 
-    // gapi.auth2
-    //   .init({
-    //     client_id: { googleClientId },
-    //     scope: "profile email",
-    //   })
-    //   .then(function (authInstance) {
-    //     /* GoogleAuth object is now initialized and ready to be used */
-    //   });
-    if (location.pathname === "/" && !isLoggedIn) {
-      navigate("/signup");
-    } else if (location.pathname === "/" && isLoggedIn) {
-      navigate("/overview");
-    } else if (location.pathname === "/overview" && !isLoggedIn) {
-      navigate("/");
-    }
-  }, [isLoggedIn, location.pathname, navigate]);
+  //   // gapi.auth2
+  //   //   .init({
+  //   //     client_id: { googleClientId },
+  //   //     scope: "profile email",
+  //   //   })
+  //   //   .then(function (authInstance) {
+  //   //     /* GoogleAuth object is now initialized and ready to be used */
+  //   //   });
+  //   if (location.pathname === "/" && !isLoggedIn) {
+  //     navigate("/signup");
+  //   } else if (location.pathname === "/" && isLoggedIn) {
+  //     navigate("/overview");
+  //   }
+  //   // } else if (location.pathname === "/overview" && !isLoggedIn) {
+  //   //   navigate("/");
+  //   // }
+  // }, [isLoggedIn, location.pathname, navigate]);
 
   return (
     <Routes>
@@ -73,7 +74,7 @@ function AppRouter() {
           isLoggedIn ? (
             <Navigate to="/overview" replace />
           ) : (
-            <Navigate to="/" replace />
+            <Navigate to="/signup" replace />
           )
         }
       />

@@ -24,7 +24,7 @@ function OurNavbar() {
     if (isLoggedIn) {
       navigate("/overview");
     } else if (!isLoggedIn) {
-      navigate("/");
+      navigate("/signup");
     }
   };
 
