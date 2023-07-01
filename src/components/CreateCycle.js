@@ -203,30 +203,28 @@ const CreateCycle = () => {
                             />
                           </Col>
                         </Row>
-                        <Row className="justify-content-center">
-                          <div className="subtasks-outerwrapper">
-                            <label className="boldLabel">Add SubTasks</label>
-                            {goal.subTasks.map((sb, j) => {
-                              return (
-                                <div className="subtask-innerwrapper" key={j}>
-                                  <Row className="justify-content-center">
-                                    <Col className="subtask-div ">
-                                      <input
-                                        className="subTaskField"
-                                        name="subTask"
-                                        placeholder="Subtask"
-                                        value={sb.task}
-                                        onChange={(event) =>
-                                          handleAddSubTask(index, i, j, event)
-                                        }
-                                      />
-                                    </Col>
-                                  </Row>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </Row>
+
+                        <label className="boldLabel">Add SubTasks</label>
+                        {goal.subTasks.map((sb, j) => {
+                          return (
+                            <div className="subtask-innerwrapper" key={j}>
+                              <Row className="justify-content-center">
+                                <Col className="d-flex align-items-center justify-content-center">
+                                  <input
+                                    className="subTaskField"
+                                    name="subTask"
+                                    placeholder="Subtask"
+                                    value={sb.task}
+                                    onChange={(event) =>
+                                      handleAddSubTask(index, i, j, event)
+                                    }
+                                  />
+                                </Col>
+                              </Row>
+                            </div>
+                          );
+                        })}
+
                         <Button
                           className="subtask-btn"
                           onClick={() => addSubTask(index, i)}
