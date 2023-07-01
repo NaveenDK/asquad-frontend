@@ -218,8 +218,18 @@ h3.mainTitle {
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
+p.success-message {
+  padding-top: 10px;
+}
+
 .error-message {
   color: #de204f;
+  font-size: 13px;
+  font-weight: 600;
+  padding-bottom: 20px;
+}
+.success-message {
+  color: #19c02f;
   font-size: 13px;
   font-weight: 600;
   padding-bottom: 20px;

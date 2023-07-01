@@ -43,7 +43,9 @@ const LoginForm = () => {
       setLoading(false);
     }
   };
-
+  const handleForgotPassword = () => {
+    navigate("/reset");
+  };
   return (
     <Container fluid fill>
       <div className="container-wrapper align-items-center">
@@ -88,6 +90,9 @@ const LoginForm = () => {
                 "Sign in"
               )}
             </Button>
+            <div className="fpwd pt-2 text-center tagline">
+              <p onClick={handleForgotPassword}> Forgot Password?</p>
+            </div>
           </Form>
         </div>
       </div>

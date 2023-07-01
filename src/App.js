@@ -14,6 +14,8 @@ import { GoogleLogin } from "@react-oauth/google";
 import Login from "./components/LoginForm";
 import LandingNav from "./components/LandingNav";
 import LandingPage from "./components/LandingPage";
+import ResetPassword from "./components/ResetPassword";
+import ChangePassword from "./components/ChangePassword";
 import {
   BrowserRouter as Router,
   Route,
@@ -83,6 +85,8 @@ function AppRouter() {
       <Route path="/update/:cycleId" element={<UpdateCycle />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/reset" element={<ResetPassword />} />
+      <Route path="/changepwd/:id/:token" element={<ChangePassword />} />
     </Routes>
   );
 }
