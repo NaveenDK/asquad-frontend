@@ -35,25 +35,25 @@ const CreateCycle = () => {
   const [startDate, setStartDate] = useState(new Date()); // empty startDate set when we start initially
   const [endDate, setEndDate] = useState(new Date()); // empty endDate set when we start initially
 
-  const onSubmit = (e) => {
-    const token = localStorage.getItem("token");
+  const onSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("token");
     const cycle = {
       startDate: startDate,
       endDate: endDate,
       users: users,
     };
 
-    //axios.post
-    axios.post(`${apiUrl}/admins/${adminId}`, cycle, {
-      headers: {
-        "x-auth-token": token,
-      },
-    });
-
-    navigate("/overview");
-
-    //window.location = '/'
+    try {
+      await axios.post(`${apiUrl}/admins/${adminId}`, cycle, {
+        headers: {
+          "x-auth-token": token,
+        },
+      });
+      navigate("/overview");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleAddMore = (index, event) => {
