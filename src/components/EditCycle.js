@@ -74,7 +74,7 @@ const EditCycle = () => {
     let calculatedProgress = (
       (subtasksCompleted / totalSubTasksOfGoal) *
       100
-    ).toFixed(2);
+    ).toFixed(0);
 
     tempUsers[userIndex].goals[goalIndex].progress = calculatedProgress;
 
