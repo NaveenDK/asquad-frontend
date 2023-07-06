@@ -22,6 +22,7 @@ const EditCycle = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isChecked, setIsChecked] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(null);
   const { adminId } = useContext(AdminContext);
   const { cycleId } = useParams();
 
@@ -122,7 +123,11 @@ const EditCycle = () => {
                   cycle.users.map((user, i) => {
                     return (
                       <div key={i}>
-                        <Accordion.Item eventKey={i}>
+                        <Accordion.Item
+                          eventKey={i}
+                          active={activeIndex === i}
+                          onClick={() => setActiveIndex(i)}
+                        >
                           <Accordion.Header>{user.firstName}</Accordion.Header>
                           <Accordion.Body>
                             {user.goals &&
