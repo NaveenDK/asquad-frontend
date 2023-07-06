@@ -3,6 +3,7 @@ import axios from "axios";
 import { Container, Form, Button } from "react-bootstrap";
 import { AdminContext } from "./AdminContext";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -55,75 +56,81 @@ const SignUpForm = () => {
   };
 
   return (
-    <Container fluid fill>
-      <div className="container-wrapper align-items-center">
-        <div className="signup-wrapper">
-          <Form className="FormContainer">
-            <img
-              src={process.env.PUBLIC_URL + "/img/logo-asquad.png"}
-              alt="Logo"
-            />
-            <div className="tagline">
-              <p>Accountability made easy.</p>
-            </div>
-            <div className="google-auth"></div>
-            {/* <div className="line-breaker">
+    <>
+      <Helmet>
+        <title>Signup </title>
+        <meta name="description" content="Asquad - accountability made easy" />
+      </Helmet>
+      <Container fluid fill>
+        <div className="container-wrapper align-items-center">
+          <div className="signup-wrapper">
+            <Form className="FormContainer">
+              <img
+                src={process.env.PUBLIC_URL + "/img/logo-asquad.png"}
+                alt="Logo"
+              />
+              <div className="tagline">
+                <p>Accountability made easy.</p>
+              </div>
+              <div className="google-auth"></div>
+              {/* <div className="line-breaker">
               <p>
                 <span>or</span>
               </p>
             </div> */}
 
-            <Form.Group className="mb-3" controlId="formName">
-              <Form.Control
-                className="form-rounded"
-                type="text"
-                placeholder="Name"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formEmail">
-              <Form.Control
-                className="form-rounded"
-                type="email"
-                placeholder="Email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Control
-                className="form-rounded"
-                type="password"
-                placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-              />
-            </Form.Group>
-            <Form.Group
-              className="mb-3 confirmPassword"
-              controlId="formBasicPassword2"
-            >
-              <Form.Control
-                className="form-rounded"
-                type="password"
-                placeholder="Confirm Password"
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                value={confirmPassword}
-              />
-            </Form.Group>
-            {error && <p className="error-message">{error}</p>}
-            <Button
-              className="fullwidth"
-              variant="primary"
-              onClick={handleSubmit}
-            >
-              Sign Up
-            </Button>
-          </Form>
+              <Form.Group className="mb-3" controlId="formName">
+                <Form.Control
+                  className="form-rounded"
+                  type="text"
+                  placeholder="Name"
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formEmail">
+                <Form.Control
+                  className="form-rounded"
+                  type="email"
+                  placeholder="Email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Control
+                  className="form-rounded"
+                  type="password"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3 confirmPassword"
+                controlId="formBasicPassword2"
+              >
+                <Form.Control
+                  className="form-rounded"
+                  type="password"
+                  placeholder="Confirm Password"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  value={confirmPassword}
+                />
+              </Form.Group>
+              {error && <p className="error-message">{error}</p>}
+              <Button
+                className="fullwidth"
+                variant="primary"
+                onClick={handleSubmit}
+              >
+                Sign Up
+              </Button>
+            </Form>
+          </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </>
   );
 };
 

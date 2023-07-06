@@ -11,6 +11,7 @@ import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import MainLayout from "./MainLayout";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
+import { Helmet } from "react-helmet-async";
 
 import { format, parseISO } from "date-fns";
 
@@ -161,52 +162,58 @@ const Overview = () => {
   // };
 
   return (
-    <Container>
-      {loading ? (
-        <div className="d-flex justify-content-center align-items-center vh-100">
-          <Spinner animation="border" />
-        </div>
-      ) : (
-        <>
-          <MainLayout title="Overview">
-            {cycles.length === 0 ? ( // Check if cycles.length is zero
-              <Row className="d-flex justify-content-center align-items-center ">
-                <div className="d-flex justify-content-center wrapper-empty">
-                  <div className="text-empty">
-                    {" "}
-                    No Cycles found, click below to start adding
+    <>
+      <Helmet>
+        <title>Overview </title>
+        <meta name="description" content="Asquad - accountability made easy" />
+      </Helmet>
+      <Container>
+        {loading ? (
+          <div className="d-flex justify-content-center align-items-center vh-100">
+            <Spinner animation="border" />
+          </div>
+        ) : (
+          <>
+            <MainLayout title="Overview">
+              {cycles.length === 0 ? ( // Check if cycles.length is zero
+                <Row className="d-flex justify-content-center align-items-center ">
+                  <div className="d-flex justify-content-center wrapper-empty">
+                    <div className="text-empty">
+                      {" "}
+                      No Cycles found, click below to start adding
+                    </div>
                   </div>
-                </div>
+                </Row>
+              ) : (
+                <>
+                  {cycles.map((currentCycle) => (
+                    <Cycle
+                      adminId={adminId}
+                      cycle={currentCycle}
+                      deleteCycle={deleteCycle}
+                      startDate={currentCycle.startDate}
+                      endDate={currentCycle.endDate}
+                      key={currentCycle._id}
+                      cycles={cycles}
+                    />
+                  ))}
+                </>
+              )}
+              <Row>
+                <Col className="d-flex justify-content-center">
+                  <Button
+                    onClick={navigateToCreate}
+                    className="align-self-center blackBigBtn"
+                  >
+                    Create Cycle
+                  </Button>
+                </Col>
               </Row>
-            ) : (
-              <>
-                {cycles.map((currentCycle) => (
-                  <Cycle
-                    adminId={adminId}
-                    cycle={currentCycle}
-                    deleteCycle={deleteCycle}
-                    startDate={currentCycle.startDate}
-                    endDate={currentCycle.endDate}
-                    key={currentCycle._id}
-                    cycles={cycles}
-                  />
-                ))}
-              </>
-            )}
-            <Row>
-              <Col className="d-flex justify-content-center">
-                <Button
-                  onClick={navigateToCreate}
-                  className="align-self-center blackBigBtn"
-                >
-                  Create Cycle
-                </Button>
-              </Col>
-            </Row>
-          </MainLayout>
-        </>
-      )}
-    </Container>
+            </MainLayout>
+          </>
+        )}
+      </Container>
+    </>
   );
 };
 
