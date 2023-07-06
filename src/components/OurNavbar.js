@@ -16,6 +16,7 @@ function OurNavbar() {
   const isLoggedIn = Boolean(localStorage.getItem("token"));
   const navigate = useNavigate();
   const { adminId, setAdminId, adminName } = useContext(AdminContext);
+  const [expanded, setExpanded] = useState(false);
 
   // const location = useLocation();
   // const adminId = location.pathname.split("/")[1];
@@ -26,20 +27,24 @@ function OurNavbar() {
     } else if (!isLoggedIn) {
       navigate("/signup");
     }
+    setExpanded(false); //
   };
 
   const navigateToCreate = () => {
     // 👇️ navigate to /contacts
     navigate("/create");
+    setExpanded(false); //
   };
   const navigateToLogin = () => {
     // 👇️ navigate to /contacts
     navigate("/login");
+    setExpanded(false); //
   };
 
   const navigateToSignup = () => {
     // 👇️ navigate to /contacts
     navigate("/signup");
+    setExpanded(false); //
   };
   const logout = () => {
     localStorage.removeItem("token");
@@ -84,7 +89,14 @@ function OurNavbar() {
     }
   };
   return (
-    <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+    <Navbar
+      collapseOnSelect
+      expanded={expanded}
+      onToggle={(expanded) => setExpanded(expanded)}
+      expand="lg"
+      bg="light"
+      variant="light"
+    >
       <Container>
         <Navbar.Brand onClick={navigateToHome}>
           {" "}
