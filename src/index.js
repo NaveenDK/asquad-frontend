@@ -5,13 +5,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { HelmetProvider } from "react-helmet-async";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 root.render(
   <GoogleOAuthProvider clientId={googleClientId}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <HelmetProvider>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </HelmetProvider>
   </GoogleOAuthProvider>
 );
 

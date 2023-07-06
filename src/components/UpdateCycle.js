@@ -10,6 +10,7 @@ import Label from "react-bootstrap/FormLabel";
 import MainLayout from "./MainLayout";
 import { AdminContext } from "./AdminContext";
 import { useParams, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import Form from "react-bootstrap/Form";
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -149,130 +150,140 @@ const UpdateCycle = () => {
     setUsers(data);
   };
   return (
-    <Container>
-      <MainLayout title="Create Cycle">
-        <form className="cycleForm" onSubmit={onSubmit}>
-          <div className="form-group dateFields">
-            <label className="boldLabel">Select Dates</label>
-            <Row>
-              <Col>
-                <label>Start Date: </label>
-                <DatePicker selected={startDate} onChange={onChangeStartDate} />
-              </Col>
-              <Col>
-                {" "}
-                <label>End Date: </label>
-                <DatePicker selected={endDate} onChange={onChangeEndDate} />
-              </Col>
-            </Row>
-          </div>
-          <div className="form-group ownerFields">
-            <label className="boldLabel">Add Member</label>
-            {users.map((input, index) => {
-              //initially we are mappin through the empty users array and creating one field in the return section
-              return (
-                <div className="singleOwnerField" key={index}>
-                  <Row>
-                    <Col>
-                      <input
-                        name="firstName"
-                        placeholder="First Name"
-                        value={input.firstName}
-                        onChange={(event) => handleAddMore(index, event)}
-                      />
-                    </Col>
-                    <Col>
-                      <input
-                        name="lastName"
-                        placeholder="Last Name"
-                        value={input.lastName}
-                        onChange={(event) => handleAddMore(index, event)}
-                      />
-                    </Col>
-
-                    <Col>
-                      <button
-                        className="btn btn-danger minusMember"
-                        onClick={() => removeFields(index)}
-                      >
-                        - Member
-                      </button>
-                    </Col>
-                  </Row>
-
-                  {input.goals.map((goal, i) => {
-                    return (
-                      <div className="goals-wrapper" key={i}>
-                        <label className="boldLabel">Add Goal</label>
-                        <Row>
-                          <Col>
-                            <input
-                              name="mainGoal"
-                              placeholder="Main Goal Name"
-                              value={goal.mainGoal}
-                              onChange={(event) =>
-                                handleAddGoal(index, i, event)
-                              }
-                            />
-                          </Col>
-                          <div className="subtasks-outerwrapper">
-                            <label className="boldLabel">Add SubTasks</label>
-                            {goal.subTasks.map((sb, j) => {
-                              return (
-                                <div className="subtask-innerwrapper" key={j}>
-                                  <Row>
-                                    <Col className="subtask-div">
-                                      <input
-                                        name="subTask"
-                                        placeholder="Subtask"
-                                        value={sb.task}
-                                        onChange={(event) =>
-                                          handleAddSubTask(index, i, j, event)
-                                        }
-                                      />
-                                    </Col>
-                                  </Row>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </Row>
-                        <Button
-                          className="subtask-btn"
-                          onClick={() => addSubTask(index, i)}
-                        >
-                          {" "}
-                          + subtask{" "}
-                        </Button>
-                      </div>
-                    );
-                  })}
-                  <Button onClick={() => addGoal(index)}> + goal </Button>
-                </div>
-              );
-            })}
-            <div className="plusMember">
-              <button
-                onClick={addFields}
-                type="button"
-                className="btn btn-dark plusMember"
-              >
-                {" "}
-                + Member
-              </button>
+    <>
+      {" "}
+      <Helmet>
+        <title> Update Cycle </title>
+        <meta name="description" content="Asquad - accountability made easy" />
+      </Helmet>
+      <Container>
+        <MainLayout title="Create Cycle">
+          <form className="cycleForm" onSubmit={onSubmit}>
+            <div className="form-group dateFields">
+              <label className="boldLabel">Select Dates</label>
+              <Row>
+                <Col>
+                  <label>Start Date: </label>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={onChangeStartDate}
+                  />
+                </Col>
+                <Col>
+                  {" "}
+                  <label>End Date: </label>
+                  <DatePicker selected={endDate} onChange={onChangeEndDate} />
+                </Col>
+              </Row>
             </div>
-          </div>
+            <div className="form-group ownerFields">
+              <label className="boldLabel">Add Member</label>
+              {users.map((input, index) => {
+                //initially we are mappin through the empty users array and creating one field in the return section
+                return (
+                  <div className="singleOwnerField" key={index}>
+                    <Row>
+                      <Col>
+                        <input
+                          name="firstName"
+                          placeholder="First Name"
+                          value={input.firstName}
+                          onChange={(event) => handleAddMore(index, event)}
+                        />
+                      </Col>
+                      <Col>
+                        <input
+                          name="lastName"
+                          placeholder="Last Name"
+                          value={input.lastName}
+                          onChange={(event) => handleAddMore(index, event)}
+                        />
+                      </Col>
 
-          <div className="form-group btnSection">
-            <input
-              type="submit"
-              value="Update"
-              className="btn  btn-dark createCycle"
-            />
-          </div>
-        </form>
-      </MainLayout>
-    </Container>
+                      <Col>
+                        <button
+                          className="btn btn-danger minusMember"
+                          onClick={() => removeFields(index)}
+                        >
+                          - Member
+                        </button>
+                      </Col>
+                    </Row>
+
+                    {input.goals.map((goal, i) => {
+                      return (
+                        <div className="goals-wrapper" key={i}>
+                          <label className="boldLabel">Add Goal</label>
+                          <Row>
+                            <Col>
+                              <input
+                                name="mainGoal"
+                                placeholder="Main Goal Name"
+                                value={goal.mainGoal}
+                                onChange={(event) =>
+                                  handleAddGoal(index, i, event)
+                                }
+                              />
+                            </Col>
+                            <div className="subtasks-outerwrapper">
+                              <label className="boldLabel">Add SubTasks</label>
+                              {goal.subTasks.map((sb, j) => {
+                                return (
+                                  <div className="subtask-innerwrapper" key={j}>
+                                    <Row>
+                                      <Col className="subtask-div">
+                                        <input
+                                          name="subTask"
+                                          placeholder="Subtask"
+                                          value={sb.task}
+                                          onChange={(event) =>
+                                            handleAddSubTask(index, i, j, event)
+                                          }
+                                        />
+                                      </Col>
+                                    </Row>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </Row>
+                          <Button
+                            className="subtask-btn"
+                            onClick={() => addSubTask(index, i)}
+                          >
+                            {" "}
+                            + subtask{" "}
+                          </Button>
+                        </div>
+                      );
+                    })}
+                    <Button onClick={() => addGoal(index)}> + goal </Button>
+                  </div>
+                );
+              })}
+              <div className="plusMember">
+                <button
+                  onClick={addFields}
+                  type="button"
+                  className="btn btn-dark plusMember"
+                >
+                  {" "}
+                  + Member
+                </button>
+              </div>
+            </div>
+
+            <div className="form-group btnSection">
+              <input
+                type="submit"
+                value="Update"
+                className="btn  btn-dark createCycle"
+              />
+            </div>
+          </form>
+        </MainLayout>
+      </Container>
+    </>
   );
 };
 

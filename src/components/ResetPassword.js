@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
+import { Helmet } from "react-helmet-async";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const ResetPassword = ({ handleResetPassword }) => {
@@ -30,44 +31,50 @@ const ResetPassword = ({ handleResetPassword }) => {
   };
 
   return (
-    <Container fluid fill>
-      <div className="container-wrapper align-items-center">
-        <div className="signup-wrapper">
-          <Form className="FormContainer">
-            <img
-              src={process.env.PUBLIC_URL + "/img/logo-asquad.png"}
-              alt="Logo"
-            />
-            <div className="tagline">
-              <p>Accountability made easy.</p>
-            </div>
-            <Form.Group controlId="formEmail">
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
+    <>
+      <Helmet>
+        <title>Change Password</title>
+        <meta name="description" content="Asquad - accountability made easy" />
+      </Helmet>
+      <Container fluid fill>
+        <div className="container-wrapper align-items-center">
+          <div className="signup-wrapper">
+            <Form className="FormContainer">
+              <img
+                src={process.env.PUBLIC_URL + "/img/logo-asquad.png"}
+                alt="Logo"
               />
-            </Form.Group>
-            <Button
-              className="fullwidth"
-              variant="primary"
-              onClick={handleSubmit}
-              disabled={sending}
-            >
-              {sending ? "Sending..." : "Reset"}
-            </Button>
-            {emailSent && (
-              <Alert variant="success" className="changepwdtxt">
-                Email sent succesfully, if you do not see the email in few
-                minutes, check your 'junk' mail folder or 'spam' folder
-              </Alert>
-            )}
-          </Form>
+              <div className="tagline">
+                <p>Accountability made easy.</p>
+              </div>
+              <Form.Group controlId="formEmail">
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Button
+                className="fullwidth"
+                variant="primary"
+                onClick={handleSubmit}
+                disabled={sending}
+              >
+                {sending ? "Sending..." : "Reset"}
+              </Button>
+              {emailSent && (
+                <Alert variant="success" className="changepwdtxt">
+                  Email sent succesfully, if you do not see the email in few
+                  minutes, check your 'junk' mail folder or 'spam' folder
+                </Alert>
+              )}
+            </Form>
+          </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </>
   );
 };
 
