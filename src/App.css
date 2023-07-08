@@ -145,9 +145,16 @@ input.btn.btn-dark.createCycle {
 }
 /*might need to change later*/
 button.subtask-btn.btn.btn-primary {
-  background: #6060b9;
+  background: #d0d0d0;
   margin-bottom: 10px;
   margin-top: 10px;
+  color: white;
+  border: 1px solid black;
+}
+button.btn.btn-primary {
+  background: #d0d0d0;
+  color: white;
+  border: 1px solid black;
 }
 .subtask-div input {
   margin-top: 10px;
@@ -424,28 +431,28 @@ input.subTaskField {
 }
 
 .accordion-flush .accordion-item.active .accordion-header {
-  background-color: black;
+  background-color: #302d2d;
   color: white;
 }
 .accordion-button:not(.collapsed) {
   color: white !important;
-  background-color: black !important;
+  background-color: #302d2d !important;
 }
 .accordion-button:focus {
   z-index: 3;
-  border-color: black;
+  border-color: #302d2d;
   outline: 0;
   box-shadow: var(--bs-accordion-btn-focus-box-shadow);
 }
 .accordion-button:focus {
   z-index: 3;
-  border-color: black;
+  border-color: #302d2d;
   outline: 0;
   box-shadow: var(--bs-accordion-btn-focus-box-shadow);
 }
 
 .accordion-button:focus {
-  border-color: black !important;
+  border-color: #302d2d !important;
 }
 .accordion-button:focus {
   box-shadow: none !important;
@@ -469,6 +476,80 @@ input.subTaskField {
 }
 
 .form-check-input:checked {
-  background-color: black;
-  border-color: black;
+  background-color: #302d2d !important;
+  border-color: #302d2d !important;
+}
+
+@media screen and (max-width: 600px) {
+  .cycleItem h6 {
+    font-size: 12px !important;
+  }
+
+  .custom-Button a {
+    font-size: 8px;
+  }
+  .innerContentWrap {
+    padding-top: 20px;
+  }
+  h5.customTitle {
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+@media screen and (min-width: 601px) {
+  input.rounded-3.custom-datepicker-left {
+    float: right;
+  }
+}
+
+.react-datepicker__input-container input {
+  display: block;
+
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  border-radius: 0.375rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+input.mainGoal {
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  border-radius: 0.375rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+input.subTaskField {
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  border-radius: 0.375rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.mobile-date .react-datepicker__input-container {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
