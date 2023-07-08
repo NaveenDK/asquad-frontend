@@ -200,8 +200,8 @@ const UpdateCycle = () => {
                   <DatePicker
                     selected={endDate}
                     onChange={onChangeEndDate}
-                    className="rounded-3 custom-datepicker-left"
-                    placeholderText={"Start date"}
+                    className="rounded-3 custom-datepicker-right"
+                    placeholderText={"End date"}
                   />
                 </Col>
               </Row>
@@ -261,6 +261,7 @@ const UpdateCycle = () => {
                           <Row className="justify-content-center">
                             <Col className="d-flex align-items-center justify-content-center">
                               <input
+                                className="mainGoal"
                                 name="mainGoal"
                                 placeholder="Main Goal Name"
                                 value={goal.mainGoal}
