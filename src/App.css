@@ -123,9 +123,9 @@ input.btn.btn-dark.createCycle {
 
 .singleOwnerField {
   /* border-radius: 30px; */
+  padding: 20px;
   margin-bottom: 10px;
   border-bottom: 2px solid #9393a1;
-  padding: 30px;
 }
 
 .editContainer {
@@ -408,14 +408,25 @@ input#formName.form-rounded {
 .d-flex.justify-content-center.wrapper-empty {
   height: 120px;
   border-radius: 6px;
-  border: 1px solid black;
+  border: 1px solid #302d2d;
   align-items: center;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+form.cycleForm {
+  border: 1px solid #302d2d;
+  border-radius: 5px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 /*Create form*/
 .form-group.dateFields {
   text-align: center;
+
+  padding-top: 30px;
+
+  /* justify-content: center!important; */
+
   /* justify-content: center!important; */
 }
 .form-group.ownerFields {
@@ -495,6 +506,32 @@ input.subTaskField {
     font-size: 13px;
     font-weight: 600;
   }
+
+  .mobile-date .react-datepicker__input-container {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .form-group.ownerFields label.boldLabel,
+  .form-group.dateFields label.boldLabel {
+    text-align: center !important;
+    font-weight: bold;
+    padding-bottom: 20px;
+    font-size: 12px;
+  }
+  p.main-goal.title {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  label.form-check-label {
+    font-size: 12px;
+  }
+  button.accordion-button {
+    font-size: 13px;
+  }
 }
 
 @media screen and (min-width: 601px) {
@@ -543,13 +580,4 @@ input.subTaskField {
   appearance: none;
   border-radius: 0.375rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.mobile-date .react-datepicker__input-container {
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

@@ -48,8 +48,8 @@ const CreateCycle = () => {
   const [gaols, setGoals] = useState([""]);
   const [subTasks, setsubTasks] = useState([""]);
 
-  const [startDate, setStartDate] = useState(new Date()); // empty startDate set when we start initially
-  const [endDate, setEndDate] = useState(new Date()); // empty endDate set when we start initially
+  const [startDate, setStartDate] = useState(); // empty startDate set when we start initially
+  const [endDate, setEndDate] = useState(); // empty endDate set when we start initially
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -169,6 +169,7 @@ const CreateCycle = () => {
                     selected={startDate}
                     onChange={onChangeStartDate}
                     className="rounded-3 custom-datepicker-left"
+                    placeholderText={"Start date"}
                   />
                 </Col>
                 <Col
@@ -183,16 +184,17 @@ const CreateCycle = () => {
                     selected={endDate}
                     onChange={onChangeEndDate}
                     className="rounded-3 custom-datepicker-right"
+                    placeholderText={"End date"}
                   />
                 </Col>
               </Row>
             </div>
             <div className="form-group ownerFields">
-              <label className="boldLabel">Add Member</label>
               {users.map((input, index) => {
                 //initially we are mappin through the empty users array and creating one field in the return section
                 return (
                   <div className="singleOwnerField" key={index}>
+                    <label className="boldLabel">Add Member</label>
                     <Row>
                       <Col
                         xs={12}

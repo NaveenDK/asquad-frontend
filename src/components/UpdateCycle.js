@@ -17,6 +17,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const UpdateCycle = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const [cycle, setCycle] = useState([]);
   //empty users array set when we start
@@ -24,8 +25,8 @@ const UpdateCycle = () => {
   const { adminId } = useContext(AdminContext);
   const { cycleId } = useParams();
 
-  const [startDate, setStartDate] = useState(new Date()); // empty startDate set when we start initially
-  const [endDate, setEndDate] = useState(new Date()); // empty endDate set when we start initially
+  const [startDate, setStartDate] = useState(); // empty startDate set when we start initially
+  const [endDate, setEndDate] = useState(); // empty endDate set when we start initially
 
   useEffect(() => {
     console.log("UpdateCycle");
@@ -48,6 +49,18 @@ const UpdateCycle = () => {
         }
         console.log(error);
       });
+
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768); // Adjust the breakpoint value as needed
+    };
+
+    // Add event listener on component mount
+    window.addEventListener("resize", handleResize);
+
+    // Remove event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [cycleId, adminId]);
   const onSubmit = (e) => {
     const token = localStorage.getItem("token");
@@ -157,55 +170,86 @@ const UpdateCycle = () => {
         <meta name="description" content="Asquad - accountability made easy" />
       </Helmet>
       <Container>
-        <MainLayout title="Create Cycle">
+        <MainLayout title="Update Cycle">
           <form className="cycleForm" onSubmit={onSubmit}>
             <div className="form-group dateFields">
               <label className="boldLabel">Select Dates</label>
               <Row>
-                <Col>
-                  <label>Start Date: </label>
+                <Col
+                  xs={12}
+                  md={6}
+                  className={`${
+                    isDesktop ? "justify-content-end" : "mobile-date"
+                  }`}
+                >
                   <DatePicker
                     selected={startDate}
                     onChange={onChangeStartDate}
+                    className="rounded-3 custom-datepicker-left"
+                    placeholderText={"Start date"}
                   />
                 </Col>
-                <Col>
+                <Col
+                  xs={12}
+                  md={6}
+                  className={`${
+                    isDesktop ? "justify-content-start" : "mobile-date"
+                  }`}
+                >
                   {" "}
-                  <label>End Date: </label>
-                  <DatePicker selected={endDate} onChange={onChangeEndDate} />
+                  <DatePicker
+                    selected={endDate}
+                    onChange={onChangeEndDate}
+                    className="rounded-3 custom-datepicker-left"
+                    placeholderText={"Start date"}
+                  />
                 </Col>
               </Row>
             </div>
             <div className="form-group ownerFields">
-              <label className="boldLabel">Add Member</label>
               {users.map((input, index) => {
                 //initially we are mappin through the empty users array and creating one field in the return section
                 return (
                   <div className="singleOwnerField" key={index}>
+                    <label className="boldLabel">Add Member</label>
                     <Row>
-                      <Col>
-                        <input
+                      <Col
+                        xs={12}
+                        md={5}
+                        className={`${isDesktop ? " justify-content-end" : ""}`}
+                      >
+                        <Form.Control
+                          type="text"
                           name="firstName"
                           placeholder="First Name"
                           value={input.firstName}
                           onChange={(event) => handleAddMore(index, event)}
+                          className="rounded-3"
                         />
                       </Col>
-                      <Col>
-                        <input
+                      <Col
+                        xs={12}
+                        md={5}
+                        className={`${
+                          isDesktop ? " justify-content-start" : ""
+                        }`}
+                      >
+                        <Form.Control
+                          type="text"
                           name="lastName"
                           placeholder="Last Name"
                           value={input.lastName}
                           onChange={(event) => handleAddMore(index, event)}
+                          className="rounded-3"
                         />
                       </Col>
 
-                      <Col>
+                      <Col xs={12} md={2} className="text-left">
                         <button
                           className="btn btn-danger minusMember"
                           onClick={() => removeFields(index)}
                         >
-                          - Member
+                          X
                         </button>
                       </Col>
                     </Row>
@@ -214,8 +258,8 @@ const UpdateCycle = () => {
                       return (
                         <div className="goals-wrapper" key={i}>
                           <label className="boldLabel">Add Goal</label>
-                          <Row>
-                            <Col>
+                          <Row className="justify-content-center">
+                            <Col className="d-flex align-items-center justify-content-center">
                               <input
                                 name="mainGoal"
                                 placeholder="Main Goal Name"
@@ -225,27 +269,27 @@ const UpdateCycle = () => {
                                 }
                               />
                             </Col>
-                            <div className="subtasks-outerwrapper">
-                              <label className="boldLabel">Add SubTasks</label>
-                              {goal.subTasks.map((sb, j) => {
-                                return (
-                                  <div className="subtask-innerwrapper" key={j}>
-                                    <Row>
-                                      <Col className="subtask-div">
-                                        <input
-                                          name="subTask"
-                                          placeholder="Subtask"
-                                          value={sb.task}
-                                          onChange={(event) =>
-                                            handleAddSubTask(index, i, j, event)
-                                          }
-                                        />
-                                      </Col>
-                                    </Row>
-                                  </div>
-                                );
-                              })}
-                            </div>
+
+                            <label className="boldLabel">Add SubTasks</label>
+                            {goal.subTasks.map((sb, j) => {
+                              return (
+                                <div className="subtask-innerwrapper" key={j}>
+                                  <Row className="justify-content-center">
+                                    <Col className="d-flex align-items-center justify-content-center">
+                                      <input
+                                        className="subTaskField"
+                                        name="subTask "
+                                        placeholder="Subtask"
+                                        value={sb.task}
+                                        onChange={(event) =>
+                                          handleAddSubTask(index, i, j, event)
+                                        }
+                                      />
+                                    </Col>
+                                  </Row>
+                                </div>
+                              );
+                            })}
                           </Row>
                           <Button
                             className="subtask-btn"
