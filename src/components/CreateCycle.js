@@ -13,11 +13,26 @@ import { Helmet } from "react-helmet-async";
 import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 
+import "react-datepicker/dist/react-datepicker-cssmodules.css";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const CreateCycle = () => {
+  const [isDesktop, setIsDesktop] = useState(false);
   const navigate = useNavigate();
   const { adminId } = useContext(AdminContext);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768); // Adjust the breakpoint value as needed
+    };
+
+    // Add event listener on component mount
+    window.addEventListener("resize", handleResize);
+
+    // Remove event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const [users, setUsers] = useState([
     {
@@ -141,20 +156,33 @@ const CreateCycle = () => {
           <form className="cycleForm" onSubmit={onSubmit}>
             <div className="form-group dateFields">
               <label className="boldLabel">Select Dates</label>
+              <br></br>
               <Row>
-                <Col className="justify-content-end">
+                <Col
+                  xs={12}
+                  md={6}
+                  className={`${
+                    isDesktop ? "justify-content-end" : "mobile-date"
+                  }`}
+                >
                   <DatePicker
                     selected={startDate}
                     onChange={onChangeStartDate}
-                    className="rounded-3"
+                    className="rounded-3 custom-datepicker-left"
                   />
                 </Col>
-                <Col className="justify-content-start">
+                <Col
+                  xs={12}
+                  md={6}
+                  className={`${
+                    isDesktop ? "justify-content-start" : "mobile-date"
+                  }`}
+                >
                   {" "}
                   <DatePicker
                     selected={endDate}
                     onChange={onChangeEndDate}
-                    className="rounded-3"
+                    className="rounded-3 custom-datepicker-right"
                   />
                 </Col>
               </Row>
@@ -166,28 +194,56 @@ const CreateCycle = () => {
                 return (
                   <div className="singleOwnerField" key={index}>
                     <Row>
-                      <Col className="justify-content-end">
-                        <input
+                      <Col
+                        xs={12}
+                        md={5}
+                        className={`${isDesktop ? " justify-content-end" : ""}`}
+                      >
+                        <Form.Control
+                          type="text"
                           name="firstName"
                           placeholder="First Name"
                           value={input.firstName}
                           onChange={(event) => handleAddMore(index, event)}
                           className="rounded-3"
                         />
+                        {/* <input
+                          name="firstName"
+                          placeholder="First Name"
+                          value={input.firstName}
+                          onChange={(event) => handleAddMore(index, event)}
+                          className="rounded-3"
+                        /> */}
                       </Col>
-                      <Col className="justify-content-start">
-                        <input
+                      <Col
+                        xs={12}
+                        md={5}
+                        className={`${
+                          isDesktop ? " justify-content-start" : ""
+                        }`}
+                      >
+                        <Form.Control
+                          type="text"
                           name="lastName"
                           placeholder="Last Name"
                           value={input.lastName}
                           onChange={(event) => handleAddMore(index, event)}
                           className="rounded-3"
                         />
+                        {/* <input
+                          name="lastName"
+                          placeholder="Last Name"
+                          value={input.lastName}
+                          onChange={(event) => handleAddMore(index, event)}
+                          className="rounded-3"
+                        /> */}
+                      </Col>
+                      <Col xs={12} md={2} className="text-left">
                         <button
                           className="btn btn-danger minusMember"
                           onClick={() => removeFields(index)}
                         >
-                          -
+                          X
                         </button>
                       </Col>
                     </Row>
