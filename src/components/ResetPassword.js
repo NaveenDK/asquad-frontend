@@ -11,6 +11,7 @@ const ResetPassword = ({ handleResetPassword }) => {
   const [email, setEmail] = useState("");
   const [sending, setSending] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [emailError, setEmailError] = useState();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -25,6 +26,7 @@ const ResetPassword = ({ handleResetPassword }) => {
       // Handle success, display a notification or redirect the user
     } catch (error) {
       console.error(error);
+      setEmailError(error);
       setSending(false);
       // Handle error, display an error message or alert the user
     }
@@ -68,6 +70,11 @@ const ResetPassword = ({ handleResetPassword }) => {
                 <Alert variant="success" className="changepwdtxt">
                   Email sent succesfully, if you do not see the email in few
                   minutes, check your 'junk' mail folder or 'spam' folder
+                </Alert>
+              )}
+              {emailError && (
+                <Alert variant="warning" className="changepwdtxt">
+                  sorry something isn't right
                 </Alert>
               )}
             </Form>
