@@ -4,8 +4,9 @@ import { Container, Form, Button } from "react-bootstrap";
 import { AdminContext } from "./AdminContext";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-
+import googleOneTap from "google-one-tap";
 const apiUrl = process.env.REACT_APP_API_URL;
+const client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -16,6 +17,41 @@ const SignUpForm = () => {
   const [error, setError] = useState("");
 
   const { setAdminId } = useContext(AdminContext);
+
+  function handleGoogle() {
+    const options = {
+      client_id: client_id,
+    };
+    googleOneTap(options, (response) => {
+      // Send response to server
+      console.log("googleonetap-triggered");
+      console.log(response);
+    });
+    console.log("handle google");
+  }
+  // try {
+  //   googleOneTap(options, async (response) => {
+  //     console.log(response);
+  //     console.log("google one tap 2");
+  //     try {
+  //       const res = await axios.post(
+  //         "http://localhost:5000/admins/google-login",
+  //         {
+  //           token: response.credentials,
+  //         }
+  //       );
+  //       const data = res.data;
+  //       console.log("Data:", data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   });
+  // } catch (error) {
+  //   console.log("error encountered on googleonetap..." + error);
+  // }
+
+  // console.log("Data " + data)
+  //};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,7 +114,6 @@ const SignUpForm = () => {
                 <span>or</span>
               </p>
             </div> */}
-
               <Form.Group className="mb-3" controlId="formName">
                 <Form.Control
                   className="form-rounded"
@@ -126,7 +161,9 @@ const SignUpForm = () => {
               >
                 Sign Up !
               </Button>
+              or
             </Form>
+            <Button onClick={handleGoogle}>Google Sign Up</Button>
           </div>
         </div>
       </Container>

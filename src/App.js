@@ -16,6 +16,7 @@ import LandingNav from "./components/LandingNav";
 import LandingPage from "./components/LandingPage";
 import ResetPassword from "./components/ResetPassword";
 import ChangePassword from "./components/ChangePassword";
+import googleOneTap from "google-one-tap";
 import {
   BrowserRouter as Router,
   Route,
@@ -25,7 +26,7 @@ import {
   Redirect,
   Navigate,
 } from "react-router-dom";
-const googleClientId = process.env.GOOGLE_CLIENT_ID;
+
 function AppRouter() {
   const navigate = useNavigate();
   const location = useLocation();
