@@ -124,7 +124,7 @@ const SignUpForm = () => {
                 variant="primary"
                 onClick={handleSubmit}
               >
-                Sign Up
+                Sign Up !
               </Button>
             </Form>
           </div>
