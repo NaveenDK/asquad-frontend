@@ -4,9 +4,9 @@ import { Container, Form, Button } from "react-bootstrap";
 import { AdminContext } from "./AdminContext";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import googleOneTap from "google-one-tap";
+import { GoogleLogin } from '@react-oauth/google';
+
 const apiUrl = process.env.REACT_APP_API_URL;
-const client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -18,17 +18,7 @@ const SignUpForm = () => {
 
   const { setAdminId } = useContext(AdminContext);
 
-  function handleGoogle() {
-    const options = {
-      client_id: client_id,
-    };
-    googleOneTap(options, (response) => {
-      // Send response to server
-      console.log("googleonetap-triggered");
-      console.log(response);
-    });
-    console.log("handle google");
-  }
+  
   // try {
   //   googleOneTap(options, async (response) => {
   //     console.log(response);
@@ -163,7 +153,14 @@ const SignUpForm = () => {
               </Button>
               or
             </Form>
-            <Button onClick={handleGoogle}>Google Sign Up</Button>
+            <GoogleLogin
+              onSuccess={credentialResponse => {
+                console.log(credentialResponse);
+              }}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+            />
           </div>
         </div>
       </Container>

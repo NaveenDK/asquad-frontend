@@ -12,7 +12,6 @@ import MainLayout from "./MainLayout";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import { Helmet } from "react-helmet-async";
-
 import { format, parseISO } from "date-fns";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -103,6 +102,9 @@ const Overview = () => {
       .delete(`${apiUrl}/admins/${adminId}/cycles/${id}`, {
         headers: {
           "x-auth-token": token,
+
+
+          
         },
       })
       .then((res) => console.log(res.data));
