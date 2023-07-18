@@ -8,6 +8,7 @@ import MainLayout from "./MainLayout";
 import Spinner from "react-bootstrap/Spinner";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from '@react-oauth/google';
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const LoginForm = () => {
@@ -101,6 +102,39 @@ const LoginForm = () => {
                 <p onClick={handleForgotPassword}> Forgot Password?</p>
               </div>
             </Form>
+            <GoogleLogin
+  onSuccess={ async credentialResponse => {
+  //relet accessToken = credentialResponse.credential
+     
+    try{
+      
+      
+      
+     const res =  await axios.post(`http://localhost:5001/admins/google-login`, {
+     response:credentialResponse
+      });
+     
+      const token = res.data.token;
+     
+
+      localStorage.setItem("token", token); //
+
+      const adminId = res.data.adminId; // Assuming the API response contains the adminId
+      localStorage.setItem("adminId", adminId);
+      setAdminId(adminId);
+   
+      navigate("/overview");
+
+
+    }
+    catch(error){
+      console.log("We are facing this error: " + error)
+    }
+  }}
+  onError={() => {
+    console.log('Login Failed');
+  }}
+/>
           </div>
         </div>
       </Container>

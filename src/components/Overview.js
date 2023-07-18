@@ -115,9 +115,10 @@ const Overview = () => {
   useEffect(() => {
     setLoading(true);
     const token = localStorage.getItem("token"); //
+    const isLoggedIn = Boolean(localStorage.getItem("token"));
     const fetchData = async () => {
       try {
-        if (adminId) {
+        if (adminId && isLoggedIn) {
           // Check if adminId is defined
           const response = await axios.get(
             `${apiUrl}/admins/${adminId}/cycles`,
@@ -129,6 +130,9 @@ const Overview = () => {
           );
 
           setCycles(response.data);
+        }
+        else{
+          navigate("/signup")
         }
       } catch (error) {
         console.error(error.message);
