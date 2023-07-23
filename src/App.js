@@ -16,6 +16,8 @@ import LandingNav from "./components/LandingNav";
 import LandingPage from "./components/LandingPage";
 import ResetPassword from "./components/ResetPassword";
 import ChangePassword from "./components/ChangePassword";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 import {
   BrowserRouter as Router,
   Route,
@@ -25,7 +27,7 @@ import {
   Redirect,
   Navigate,
 } from "react-router-dom";
-const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 function AppRouter() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -94,12 +96,14 @@ function AppRouter() {
 
 function App() {
   return (
-    <Router>
-      <AdminProvider>
-        <OurNavbar />
-        <AppRouter />
-      </AdminProvider>
-    </Router>
+    <GoogleOAuthProvider clientId={googleClientId}>
+      <Router>
+        <AdminProvider>
+          <OurNavbar />
+          <AppRouter />
+        </AdminProvider>
+      </Router>
+    </GoogleOAuthProvider>
   );
 }
 

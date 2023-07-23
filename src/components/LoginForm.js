@@ -8,6 +8,8 @@ import MainLayout from "./MainLayout";
 import Spinner from "react-bootstrap/Spinner";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const LoginForm = () => {
@@ -18,6 +20,32 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const { setAdminId } = useContext(AdminContext);
+
+  
+  const login = useGoogleLogin({
+    onSuccess: async credentialResponse => {
+
+   
+      try{ 
+      const res =  await axios.post(`http://localhost:5001/admins/google-login-custom-btn`, {
+      response:credentialResponse
+        });
+        
+        const token = res.data.token;
+        localStorage.setItem("token", token); //
+        const adminId = res.data.adminId; // Assuming the API response contains the adminId
+        localStorage.setItem("adminId", adminId);
+        setAdminId(adminId);
+        navigate("/overview");
+      }
+      catch(error){
+        console.log("We are facing this error: " + error)
+        console.log("error " + JSON.stringify(error))
+      }
+}}
+  );
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(email, password);
@@ -100,7 +128,12 @@ const LoginForm = () => {
               <div className="fpwd pt-2 text-center tagline">
                 <p onClick={handleForgotPassword}> Forgot Password?</p>
               </div>
+              <div className="divider"> <span className="line-grey"> </span> or<span className="line-grey"> </span> </div>
             </Form>
+            <div className="googleBtn" onClick={() => login()}>
+               Continue with Google
+              </div>
+    
           </div>
         </div>
       </Container>

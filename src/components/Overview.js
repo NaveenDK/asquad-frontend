@@ -12,7 +12,6 @@ import MainLayout from "./MainLayout";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import { Helmet } from "react-helmet-async";
-
 import { format, parseISO } from "date-fns";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -103,6 +102,9 @@ const Overview = () => {
       .delete(`${apiUrl}/admins/${adminId}/cycles/${id}`, {
         headers: {
           "x-auth-token": token,
+
+
+          
         },
       })
       .then((res) => console.log(res.data));
@@ -113,9 +115,10 @@ const Overview = () => {
   useEffect(() => {
     setLoading(true);
     const token = localStorage.getItem("token"); //
+    const isLoggedIn = Boolean(localStorage.getItem("token"));
     const fetchData = async () => {
       try {
-        if (adminId) {
+        if (adminId && isLoggedIn) {
           // Check if adminId is defined
           const response = await axios.get(
             `${apiUrl}/admins/${adminId}/cycles`,
@@ -127,6 +130,9 @@ const Overview = () => {
           );
 
           setCycles(response.data);
+        }
+        else{
+          navigate("/signup")
         }
       } catch (error) {
         console.error(error.message);
