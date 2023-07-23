@@ -11,6 +11,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 
 
+
 const SignUpForm = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -23,9 +24,36 @@ const SignUpForm = () => {
 
 
 
-  const login = ()=>{
+  const login = useGoogleLogin({
+    onSuccess: async credentialResponse => {
 
-  }
+      
+      try{ 
+      const res =  await axios.post(`http://localhost:5001/admins/google-register-custom-btn`, {
+      response:credentialResponse
+        });
+        
+        const token = res.data.token;
+        localStorage.setItem("token", token); //
+        const adminId = res.data.adminId; // Assuming the API response contains the adminId
+        localStorage.setItem("adminId", adminId);
+        setAdminId(adminId);
+        navigate("/overview");
+      }
+      catch(error){
+        console.log("We are facing this error: " + error)
+        console.log("We are facing this error: " + error.response)
+        console.log("error.response.data.message" + JSON.stringify(error.response.data.message))
+        if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      }
+      }
+}}
+
+
+
+
+  );
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -134,29 +162,12 @@ const SignUpForm = () => {
               >
                 Sign Up !
               </Button>
-              or
+             <div className="divider"> <span className="line-grey"> </span> or<span className="line-grey"> </span> </div>
             </Form>
-          <GoogleLogin
-           onSuccess={ async credentialResponse => {
-                    try{ 
-                    const res =  await axios.post(`http://localhost:5001/admins/google-register`, {
-                    response:credentialResponse
-                      });
-                      const token = res.data.token;
-                      localStorage.setItem("token", token); //
-                      const adminId = res.data.adminId; // Assuming the API response contains the adminId
-                      localStorage.setItem("adminId", adminId);
-                      setAdminId(adminId);
-                      navigate("/overview");
-                    }
-                    catch(error){
-                      console.log("We are facing this error: " + error)
-                    }
-              }}
-              onError={() => {
-                console.log('Login Failed');
-              }}
-            />
+            <div className="googleBtn" onClick={() => login()}>
+               Continue with Google
+              </div>
+          
           </div>
         </div>
       </Container>
