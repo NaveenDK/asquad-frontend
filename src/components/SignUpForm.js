@@ -29,7 +29,7 @@ const SignUpForm = () => {
 
       
       try{ 
-      const res =  await axios.post(`http://localhost:5001/admins/google-register-custom-btn`, {
+      const res =  await axios.post(`${apiUrl}/admins/google-register-custom-btn`, {
       response:credentialResponse
         });
         
