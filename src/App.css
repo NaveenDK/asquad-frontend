@@ -684,7 +684,7 @@ span.line-grey {
 }
 
 .sectionFooter2.container {
-  margin-top:40px;
+ 
   max-width: 100%;
   background: #1a1c1d;
   color:#acb5bd;
@@ -692,4 +692,25 @@ span.line-grey {
 .FooterWrapper.container{
   max-width:100%;
   background:#2b3035!important;
+}
+.footer-main{
+  color:#adb5bd;
+}
+
+
+
+ul.footerlinks {
+    list-style-type: none!important;
+}
+.footer-main.row p a {
+  color: white;
+}
+
+.lists {
+  font-size: 22px;
+}
+.section-one.container {
+  max-width: 100%;
+  color: white;
+  background: #2b3035;
 }

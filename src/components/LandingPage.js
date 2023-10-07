@@ -5,72 +5,99 @@ import FooterLanding from "./FooterLanding";
 const LandingPage = () => {
   return (
     <>
-      <Container>
-        <Row>
-          <Col>
-            <div
-              className="first-section pt-5"
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              <h1> ASquad </h1>
-            </div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <p>Accountability made easy ! </p>
-            </div>
-            <Row>
-              <Col style={{ display: "flex", justifyContent: "flex-end" }}>
-                <Button variant="dark">Contribute </Button>
-              </Col>
-              <Col>
-                <Button variant="dark">How it works</Button>
-              </Col>
-            </Row>
-            <Row>
-              <h4
-                className="pt-5"
+      <Container className="section-one">
+        <Container>
+          <Row>
+            <Col>
+              <div
+                className="first-section pt-5"
                 style={{ display: "flex", justifyContent: "center" }}
               >
-                {" "}
-                How it works?{" "}
-              </h4>
+                <h1> ASQUAD </h1>
+              </div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <p>Accountability made easy ! </p>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <p style={{ maxWidth: "600px", textAlign: "center" }}>
+                  Easily create and discover accountability groups, and
+                  together, reach your goals faster. Join us today and start
+                  achieving your dreams with Asquad.
+                </p>
+              </div>
+
               <Row>
-                <Col className="pt-5">
-                  <iframe
-                    width="100%"
-                    height="400"
-                    src="https://www.youtube.com/embed/WxboAmyt-f4"
-                    title="Asquad Intro &amp; how you can contribute (4th Oct) - MERN stack"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen
-                  ></iframe>
+                <Col style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <Button variant="dark">Contribute </Button>
                 </Col>
-                <Col
-                  className="pt-5"
-                  style={{
-                    display: "flex",
-                  }}
-                >
-                  <div className="lists pt-3">
-                    <ul className="no-bullets">
-                      <li>✅ Find groups</li>
-                      <li>✅ Create groups</li>
-                      <li>✅ Create goals and cycles</li>
-                      <li>✅ Review and stay accountable</li>
-                    </ul>
-                  </div>
+                <Col>
+                  <Button variant="dark">How it works</Button>
                 </Col>
               </Row>
+              <Row>
+                <p
+                  style={{
+                    paddingTop: "20px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  Current Version : V1.1
+                </p>
+              </Row>
 
-              <div></div>
-            </Row>
-          </Col>
-        </Row>
+              <Row className="pb-5">
+                <h4
+                  className="pt-5"
+                  style={{ display: "flex", justifyContent: "center" }}
+                >
+                  {" "}
+                  How it works?{" "}
+                </h4>
+                <Row>
+                  <Col className="pt-5">
+                    <iframe
+                      width="100%"
+                      height="300"
+                      src="https://www.youtube.com/embed/WxboAmyt-f4"
+                      title="Asquad Intro &amp; how you can contribute (4th Oct) - MERN stack"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowfullscreen
+                    ></iframe>
+                  </Col>
+                  <Col
+                    className="pt-5"
+                    style={{
+                      display: "flex",
+                    }}
+                  >
+                    <div className="lists pt-3">
+                      <ul className="no-bullets">
+                        <li>✅ Find groups</li>
+                        <li>✅ Create groups</li>
+                        <li>✅ Create goals and cycles</li>
+                        <li>✅ Review and stay accountable</li>
+                      </ul>
+                    </div>
+                  </Col>
+                </Row>
+
+                <div></div>
+              </Row>
+            </Col>
+          </Row>
+        </Container>
       </Container>
 
       <Container className="sectionFooter2">
         <Container>
-          <Row className="sectionFooter pt-5">
+          <Row className="sectionFooter pt-5 pb-3">
             <Col>
               <h4>Unlock Your Full Potential with Asquad </h4>
               <p>
