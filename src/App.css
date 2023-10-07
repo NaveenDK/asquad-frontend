@@ -18,6 +18,10 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark .container {
   height: calc(100vh);
   background: #dcdcdc;
 }
+
+ul.no-bullets {
+  list-style-type:none!important ;
+}
 /*color edits end*/
 .editContainer {
   max-width: 1400px;
@@ -677,4 +681,15 @@ span.line-grey {
   align-items: center;
   justify-content: center;
   height: 60px;
+}
+
+.sectionFooter2.container {
+  margin-top:40px;
+  max-width: 100%;
+  background: #1a1c1d;
+  color:#acb5bd;
+}
+.FooterWrapper.container{
+  max-width:100%;
+  background:#2b3035!important;
 }

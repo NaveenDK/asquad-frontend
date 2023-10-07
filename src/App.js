@@ -74,14 +74,15 @@ function AppRouter() {
         path="/"
         element={
           isLoggedIn ? (
-            <Navigate to="/overview" replace />
+            <Navigate to="/userwelcome" replace />
           ) : (
-            <Navigate to="/signup" replace />
+            <Navigate to="/welcome" replace />
           )
         }
       />
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/welcome" element={<LandingPage />} />
       <Route path="/overview" element={<Overview />} />
+      <Route path="/userwelcome" element={<Overview />} />
       <Route path="/edit/" element={<EditCycle />} />
       <Route path="/review/:cycleId" element={<EditCycle />} />
       <Route path="/create" element={<CreateCycle />} />
