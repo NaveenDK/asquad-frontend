@@ -36,7 +36,7 @@ const LandingPage = () => {
                   <Button variant="dark">Contribute </Button>
                 </Col>
                 <Col>
-                  <Button variant="dark">How it works</Button>
+                  <Button variant="dark">Sign Up</Button>
                 </Col>
               </Row>
               <Row>
@@ -50,47 +50,54 @@ const LandingPage = () => {
                   Current Version : V1.1
                 </p>
               </Row>
-
-              <Row className="pb-5">
-                <h4
-                  className="pt-5"
-                  style={{ display: "flex", justifyContent: "center" }}
-                >
-                  {" "}
-                  How it works?{" "}
-                </h4>
-                <Row>
-                  <Col className="pt-5">
-                    <iframe
-                      width="100%"
-                      height="300"
-                      src="https://www.youtube.com/embed/WxboAmyt-f4"
-                      title="Asquad Intro &amp; how you can contribute (4th Oct) - MERN stack"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowfullscreen
-                    ></iframe>
-                  </Col>
-                  <Col
-                    className="pt-5"
-                    style={{
-                      display: "flex",
-                    }}
-                  >
-                    <div className="lists pt-3">
-                      <ul className="no-bullets">
-                        <li>✅ Find groups</li>
-                        <li>✅ Create groups</li>
-                        <li>✅ Create goals and cycles</li>
-                        <li>✅ Review and stay accountable</li>
-                      </ul>
-                    </div>
-                  </Col>
-                </Row>
-
-                <div></div>
-              </Row>
             </Col>
+          </Row>
+        </Container>
+      </Container>
+      <Container>
+        <Container>
+          <Row className="pb-5">
+            <h2
+              className="pt-5"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                fontWeight: "800",
+              }}
+            >
+              {" "}
+              How it works?{" "}
+            </h2>
+            <Row>
+              <Col className="pt-5">
+                <iframe
+                  width="100%"
+                  height="300"
+                  src="https://www.youtube.com/embed/WxboAmyt-f4"
+                  title="Asquad Intro &amp; how you can contribute (4th Oct) - MERN stack"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </Col>
+              <Col
+                className="pt-5"
+                style={{
+                  display: "flex",
+                }}
+              >
+                <div className="lists pt-3">
+                  <ul className="no-bullets">
+                    <li>✅ Find groups</li>
+                    <li>✅ Create groups</li>
+                    <li>✅ Create goals and cycles</li>
+                    <li>✅ Review and stay accountable</li>
+                  </ul>
+                </div>
+              </Col>
+            </Row>
+
+            <div></div>
           </Row>
         </Container>
       </Container>
