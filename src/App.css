@@ -260,6 +260,7 @@ span.navbar-brand img {
 }
 .general-form-wrapper{
   width: 536px;
+  border-radius:20px;
  
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
   padding: 30px;
@@ -791,4 +792,9 @@ ul.footerlinks {
 }
 .mainrow{
   padding-top:40px;
+}
+
+button.btn.btn-outline-dark.customWidthBtn.btn.btn-primary {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
