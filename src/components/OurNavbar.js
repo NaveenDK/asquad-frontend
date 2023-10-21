@@ -10,11 +10,13 @@ import {
   useNavigate,
   useParams,
   useLocation,
+  Link,
 } from "react-router-dom";
 
 function OurNavbar() {
   const isLoggedIn = Boolean(localStorage.getItem("token"));
   const navigate = useNavigate();
+  const location = useLocation();
   const { adminId, setAdminId, adminName } = useContext(AdminContext);
   const [expanded, setExpanded] = useState(false);
 
@@ -67,14 +69,19 @@ function OurNavbar() {
     } else {
       return (
         <>
-          <Nav.Link onClick={navigateToSignup}>Signup</Nav.Link>
-          <Nav.Link onClick={navigateToLogin}>Login</Nav.Link>
+          <Nav.Link as={Link} to={"/signup"}>
+            Signup
+          </Nav.Link>
+          <Nav.Link as={Link} to={"/login"}>
+            Login
+          </Nav.Link>
         </>
       );
     }
   };
 
   const renderAuthNavLinks = () => {
+    console.log(location.pathname);
     if (adminId) {
       // User is logged in
       return (
@@ -107,8 +114,12 @@ function OurNavbar() {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">{renderAuthNavLinks()}</Nav>
-          <Nav>{renderAuthLinks()}</Nav>
+          <Nav activeKey={location.pathname} className="me-auto">
+            {renderAuthNavLinks()}
+          </Nav>
+          <Nav activeKey={location.pathname} className="shift">
+            {renderAuthLinks()}
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

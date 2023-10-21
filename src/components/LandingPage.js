@@ -1,11 +1,30 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import FooterLanding from "./FooterLanding";
+import {
+  Routes,
+  Route,
+  useNavigate,
+  useParams,
+  useLocation,
+} from "react-router-dom";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+  const navigateToLogin = () => {
+    // 👇️ navigate to /contacts
+    navigate("/login");
+  };
+
+  const navigateToSignup = () => {
+    // 👇️ navigate to /contacts
+    navigate("/signup");
+
+    //
+  };
   return (
     <>
-      <Container className="section-one">
+      <Container className="section-one pb-5">
         <Container>
           <Row>
             <Col>
@@ -32,11 +51,13 @@ const LandingPage = () => {
               </div>
 
               <Row>
-                <Col style={{ display: "flex", justifyContent: "flex-end" }}>
+                {/* <Col style={{ display: "flex", justifyContent: "flex-end" }}>
                   <Button variant="dark">Contribute </Button>
-                </Col>
-                <Col>
-                  <Button variant="dark">Sign Up</Button>
+                </Col> */}
+                <Col style={{ display: "flex", justifyContent: "center" }}>
+                  <Button variant="dark" onClick={navigateToSignup}>
+                    Register
+                  </Button>
                 </Col>
               </Row>
               <Row>
@@ -88,10 +109,30 @@ const LandingPage = () => {
               >
                 <div className="lists pt-3">
                   <ul className="no-bullets">
-                    <li>✅ Find groups</li>
-                    <li>✅ Create groups</li>
-                    <li>✅ Create goals and cycles</li>
-                    <li>✅ Review and stay accountable</li>
+                    <li>✅ Discover Accountability Groups: </li>
+                    <p>
+                      Explore and connect with like-minded individuals by
+                      finding existing accountability groups that align with
+                      your goals and interests.
+                    </p>
+                    <li>✅ Build your own groups</li>
+                    <p>
+                      Take the lead and create your accountability group,
+                      inviting friends or new connections to join and support
+                      each other.
+                    </p>
+                    <li>✅ Set Goals and Cycles: </li>
+                    <p>
+                      Define your objectives, establish achievable milestones,
+                      and track your progress with customizable goals and
+                      cycles.
+                    </p>
+                    <li>✅ Stay on Course:</li>
+                    <p>
+                      Regularly review your progress, engage with your group
+                      members, and hold each other accountable, ensuring you're
+                      on the path to success.
+                    </p>
                   </ul>
                 </div>
               </Col>

@@ -3,6 +3,7 @@ import "./App.css";
 import { useEffect } from "react";
 
 import Overview from "./components/Overview";
+import WelcomeUser from "./screens/WelcomeUser";
 import OurNavbar from "./components/OurNavbar";
 import EditCycle from "./components/EditCycle";
 import CreateCycle from "./components/CreateCycle";
@@ -15,8 +16,11 @@ import Login from "./components/LoginForm";
 import LandingNav from "./components/LandingNav";
 import LandingPage from "./components/LandingPage";
 import ResetPassword from "./components/ResetPassword";
+import BrowseGroups from "./screens/BrowseGroups";
 import ChangePassword from "./components/ChangePassword";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import CreateGroup from "./screens/CreateGroup";
+import MyGroups from "./screens/MyGroups";
 
 import {
   BrowserRouter as Router,
@@ -37,36 +41,6 @@ function AppRouter() {
     console.log("encoded JWT ID token: " + response.credential);
   }
 
-  // useEffect(() => {
-  //   /* global google*/
-  //   // google.accounts.id.initialize({
-  //   //   client_id: { googleClientId },
-  //   //   callback: handleCallbackResponse,
-  //   // });
-
-  //   // google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-  //   //   theme: "outline",
-  //   //   size: "large",
-  //   // });
-
-  //   // gapi.auth2
-  //   //   .init({
-  //   //     client_id: { googleClientId },
-  //   //     scope: "profile email",
-  //   //   })
-  //   //   .then(function (authInstance) {
-  //   //     /* GoogleAuth object is now initialized and ready to be used */
-  //   //   });
-  //   if (location.pathname === "/" && !isLoggedIn) {
-  //     navigate("/signup");
-  //   } else if (location.pathname === "/" && isLoggedIn) {
-  //     navigate("/overview");
-  //   }
-  //   // } else if (location.pathname === "/overview" && !isLoggedIn) {
-  //   //   navigate("/");
-  //   // }
-  // }, [isLoggedIn, location.pathname, navigate]);
-
   return (
     <Routes>
       <Route
@@ -81,8 +55,11 @@ function AppRouter() {
         }
       />
       <Route path="/welcome" element={<LandingPage />} />
+      <Route path="/creategroup" element={<CreateGroup />} />
+      <Route path="/browsegroups" element={<BrowseGroups />} />
+      <Route path="/mygroups" element={<MyGroups />} />
       <Route path="/overview" element={<Overview />} />
-      <Route path="/userwelcome" element={<Overview />} />
+      <Route path="/userwelcome" element={<WelcomeUser />} />
       <Route path="/edit/" element={<EditCycle />} />
       <Route path="/review/:cycleId" element={<EditCycle />} />
       <Route path="/create" element={<CreateCycle />} />

@@ -4,13 +4,10 @@ import { Container, Form, Button } from "react-bootstrap";
 import { AdminContext } from "./AdminContext";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { GoogleLogin } from '@react-oauth/google';
-import { useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-
-
-
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -22,38 +19,39 @@ const SignUpForm = () => {
 
   const { setAdminId } = useContext(AdminContext);
 
-
-
   const login = useGoogleLogin({
-    onSuccess: async credentialResponse => {
+    onSuccess: async (credentialResponse) => {
+      try {
+        const res = await axios.post(
+          `${apiUrl}/admins/google-register-custom-btn`,
+          {
+            response: credentialResponse,
+          }
+        );
 
-      
-      try{ 
-      const res =  await axios.post(`${apiUrl}/admins/google-register-custom-btn`, {
-      response:credentialResponse
-        });
-        
         const token = res.data.token;
         localStorage.setItem("token", token); //
         const adminId = res.data.adminId; // Assuming the API response contains the adminId
         localStorage.setItem("adminId", adminId);
         setAdminId(adminId);
         navigate("/overview");
+      } catch (error) {
+        console.log("We are facing this error: " + error);
+        console.log("We are facing this error: " + error.response);
+        console.log(
+          "error.response.data.message" +
+            JSON.stringify(error.response.data.message)
+        );
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          setError(error.response.data.message);
+        }
       }
-      catch(error){
-        console.log("We are facing this error: " + error)
-        console.log("We are facing this error: " + error.response)
-        console.log("error.response.data.message" + JSON.stringify(error.response.data.message))
-        if (error.response && error.response.data && error.response.data.message) {
-        setError(error.response.data.message);
-      }
-      }
-}}
-
-
-
-
-  );
+    },
+  });
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -80,7 +78,7 @@ const SignUpForm = () => {
       localStorage.setItem("adminId", adminId);
       setAdminId(adminId);
 
-      navigate("/overview");
+      navigate("/userwelcome");
     } catch (error) {
       console.error(error);
       if (error.response && error.response.data && error.response.data.msg) {
@@ -110,11 +108,7 @@ const SignUpForm = () => {
                 <p>Accountability made easy.</p>
               </div>
               <div className="google-auth"></div>
-              {/* <div className="line-breaker">
-              <p>
-                <span>or</span>
-              </p>
-            </div> */}
+
               <Form.Group className="mb-3" controlId="formName">
                 <Form.Control
                   className="form-rounded"
@@ -162,12 +156,15 @@ const SignUpForm = () => {
               >
                 Sign Up !
               </Button>
-             <div className="divider"> <span className="line-grey"> </span> or<span className="line-grey"> </span> </div>
+              <div className="divider">
+                {" "}
+                <span className="line-grey"> </span> or
+                <span className="line-grey"> </span>{" "}
+              </div>
             </Form>
             <div className="googleBtn" onClick={() => login()}>
-               Continue with Google
-              </div>
-          
+              Continue with Google
+            </div>
           </div>
         </div>
       </Container>
