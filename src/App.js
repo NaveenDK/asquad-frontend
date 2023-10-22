@@ -21,6 +21,7 @@ import ChangePassword from "./components/ChangePassword";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import CreateGroup from "./screens/CreateGroup";
 import MyGroups from "./screens/MyGroups";
+import MyGroup from "./screens/MyGroup";
 
 import {
   BrowserRouter as Router,
@@ -62,6 +63,7 @@ function AppRouter() {
       <Route path="/userwelcome" element={<WelcomeUser />} />
       <Route path="/edit/" element={<EditCycle />} />
       <Route path="/review/:cycleId" element={<EditCycle />} />
+      <Route path="/mygroup/:groupId" element={<MyGroup />} />
       <Route path="/create" element={<CreateCycle />} />
       <Route path="/update/:cycleId" element={<UpdateCycle />} />
       <Route path="/signup" element={<SignUp />} />
