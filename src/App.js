@@ -1,46 +1,33 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { useEffect } from "react";
-
-import Overview from "./components/Overview";
-import WelcomeUser from "./screens/WelcomeUser";
-import OurNavbar from "./components/OurNavbar";
-import EditCycle from "./components/EditCycle";
-import CreateCycle from "./components/CreateCycle";
-import UpdateCycle from "./components/UpdateCycle";
-import { AdminProvider } from "./components/AdminContext";
-import { createBrowserHistory } from "history";
-import SignUp from "./components/SignUpForm";
-import { GoogleLogin } from "@react-oauth/google";
-import Login from "./components/LoginForm";
-import LandingNav from "./components/LandingNav";
-import LandingPage from "./components/LandingPage";
-import ResetPassword from "./components/ResetPassword";
-import BrowseGroups from "./screens/BrowseGroups";
-import ChangePassword from "./components/ChangePassword";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { AdminProvider } from "./components/AdminContext";
+import ChangePassword from "./components/ChangePassword";
+import CreateCycle from "./components/CreateCycle/CreateCycle";
+import EditCycle from "./components/EditCycle";
+import LandingPage from "./components/LandingPage";
+import Login from "./components/LoginForm";
+import OurNavbar from "./components/OurNavbar";
+import Overview from "./components/Overview";
+import ResetPassword from "./components/ResetPassword";
+import SignUp from "./components/SignUpForm";
+import UpdateCycle from "./components/UpdateCycle/";
+import BrowseGroups from "./screens/BrowseGroups";
 import CreateGroup from "./screens/CreateGroup";
-import MyGroups from "./screens/MyGroups";
 import MyGroup from "./screens/MyGroup";
+import MyGroups from "./screens/MyGroups";
+import WelcomeUser from "./screens/WelcomeUser";
 
 import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-  Redirect,
   Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
 } from "react-router-dom";
-const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-function AppRouter() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const isLoggedIn = Boolean(localStorage.getItem("token"));
 
-  function handleCallbackResponse(response) {
-    console.log("encoded JWT ID token: " + response.credential);
-  }
+const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
+function AppRouter() {
+  const isLoggedIn = Boolean(localStorage.getItem("token"));
 
   return (
     <Routes>

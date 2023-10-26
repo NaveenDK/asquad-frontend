@@ -65,7 +65,6 @@ const CreateGroup = ({
                 />
                 <Stack direction="horizontal" className="button-bottom">
                   <Button type="submit" className="btn-grp-save">
-                    {" "}
                     Save
                   </Button>
                   <Link to="..">
