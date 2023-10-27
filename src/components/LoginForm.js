@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
-import { AdminContext } from "./AdminContext";
+import { UserContext } from "./UserContext";
 import Button from "react-bootstrap/Button";
 import MainLayout from "./MainLayout";
 import Spinner from "react-bootstrap/Spinner";
@@ -19,27 +19,40 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { setAdminId } = useContext(AdminContext);
+  const { setUserId } = useContext(UserContext);
 
   const login = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
       try {
         const res = await axios.post(
-          `${apiUrl}/admins/google-login-custom-btn`,
+          `${apiUrl}/users/google-login-custom-btn`,
           {
             response: credentialResponse,
           }
         );
-
+        //    console.log("responsse:: ");
         const token = res.data.token;
+        //  console.log(JSON.stringify(res.data));
         localStorage.setItem("token", token); //
-        const adminId = res.data.adminId; // Assuming the API response contains the adminId
-        localStorage.setItem("adminId", adminId);
-        setAdminId(adminId);
+        const userId = res.data.userId; // Assuming the API response contains the adminId
+        localStorage.setItem("userId", userId);
+        setUserId(userId);
+
         navigate("/userwelcome");
       } catch (error) {
         console.log("We are facing this error: " + error);
-        console.log("error " + JSON.stringify(error));
+        console.log("We are facing this error: " + error.response);
+        console.log(
+          "error.response.data.message" +
+            JSON.stringify(error.response.data.message)
+        );
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          setError(error.response.data.message);
+        }
       }
     },
   });
@@ -58,11 +71,11 @@ const LoginForm = () => {
 
       localStorage.setItem("token", token); //
 
-      const adminId = response.data.adminId; // Assuming the API response contains the adminId
-      localStorage.setItem("adminId", adminId);
-      setAdminId(adminId);
+      const userId = response.data.userId; // Assuming the API response contains the adminId
+      localStorage.setItem("userId", userId);
+      setUserId(userId);
 
-      navigate("/overview");
+      navigate("/userwelcome");
     } catch (error) {
       console.error(error);
       setError("Oops, Please check your credentials ");

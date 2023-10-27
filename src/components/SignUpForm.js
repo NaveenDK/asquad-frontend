@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { Container, Form, Button } from "react-bootstrap";
-import { AdminContext } from "./AdminContext";
+import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { GoogleLogin } from "@react-oauth/google";
@@ -17,24 +17,26 @@ const SignUpForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { setAdminId } = useContext(AdminContext);
+  const { setUserId } = useContext(UserContext);
 
   const login = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
       try {
         const res = await axios.post(
-          `${apiUrl}/admins/google-register-custom-btn`,
+          `${apiUrl}/users/google-register-custom-btn`,
           {
             response: credentialResponse,
           }
         );
-
+        //    console.log("responsse:: ");
         const token = res.data.token;
+        //  console.log(JSON.stringify(res.data));
         localStorage.setItem("token", token); //
-        const adminId = res.data.adminId; // Assuming the API response contains the adminId
-        localStorage.setItem("adminId", adminId);
-        setAdminId(adminId);
-        navigate("/overview");
+        const userId = res.data.userId; // Assuming the API response contains the adminId
+        localStorage.setItem("userId", userId);
+        setUserId(userId);
+
+        navigate("/userwelcome");
       } catch (error) {
         console.log("We are facing this error: " + error);
         console.log("We are facing this error: " + error.response);
@@ -61,22 +63,21 @@ const SignUpForm = () => {
       return;
     }
 
-    const admin = {
+    const user = {
       name: name,
       email: email,
       password: password,
-      confirmpassword: confirmPassword,
     };
 
     try {
-      const response = await axios.post(`${apiUrl}/admins`, admin);
-      const token = response.data.token;
+      const response = await axios.post(`${apiUrl}/users`, user);
+      // const token = response.data.token;
 
-      localStorage.setItem("token", token); //
+      // localStorage.setItem("token", token); //
 
       const adminId = response.data.adminId; // Assuming the API response contains the adminId
       localStorage.setItem("adminId", adminId);
-      setAdminId(adminId);
+      setUserId(adminId);
 
       navigate("/userwelcome");
     } catch (error) {

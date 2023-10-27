@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import React, { Component, useEffect, useState, useContext } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { AdminContext } from "./AdminContext";
+import { UserContext } from "./UserContext";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import {
   Routes,
@@ -17,7 +17,7 @@ function OurNavbar() {
   const isLoggedIn = Boolean(localStorage.getItem("token"));
   const navigate = useNavigate();
   const location = useLocation();
-  const { adminId, setAdminId, adminName } = useContext(AdminContext);
+  const { userId, setUserId, userName } = useContext(UserContext);
   const [expanded, setExpanded] = useState(false);
 
   // const location = useLocation();
@@ -50,16 +50,16 @@ function OurNavbar() {
   };
   const logout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("adminId");
-    setAdminId();
+    localStorage.removeItem("userId");
+    setUserId();
     navigateToLogin();
   };
 
   const renderAuthLinks = () => {
-    if (adminId) {
+    if (userId) {
       return (
         <NavDropdown
-          title={<span className="nav-dropdown-name">{adminName}</span>}
+          title={<span className="nav-dropdown-name">{userName}</span>}
           id="basic-nav-dropdown"
           align="end"
         >
@@ -82,7 +82,7 @@ function OurNavbar() {
 
   const renderAuthNavLinks = () => {
     console.log(location.pathname);
-    if (adminId) {
+    if (userId) {
       // User is logged in
       return (
         <>

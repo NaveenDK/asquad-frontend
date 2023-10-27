@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Container,
   Form,
@@ -10,14 +10,62 @@ import {
 import CreatableReactSelect from "react-select/creatable";
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidV4 } from "uuid";
+import { UserContext } from "../components/UserContext";
+import axios from "axios";
+
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const CreateGroup = ({
   onAddCategory,
   categories = [],
   availableCategories = [],
 }) => {
-  const [selectedCategories, setSelectedCategories] = useState(categories);
+  const navigate = useNavigate();
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [groupname, setGroupName] = useState();
+  const [description, setDescription] = useState();
+  const [error, setError] = useState("");
+
   // const [availableCategories,setAvailableCategories] = useState([])
+  const { userId } = useContext(UserContext);
+  //const [loading, setLoading] = useState(true);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Password validation
+
+    const group = {
+      users: [userId],
+      creatorId: userId,
+      categories: [selectedCategories],
+      groupname: groupname,
+      description: description,
+    };
+    console.log("group::");
+    console.log(group);
+
+    try {
+      const response = await axios.post(`${apiUrl}/groups`, group);
+      // const token = response.data.token;
+
+      // localStorage.setItem("token", token); //
+
+      const userId = response.data.userId; // Assuming the API response contains the adminId
+      localStorage.setItem("userId", userId);
+      // setUserId(adminId);
+
+      navigate("/userwelcome");
+    } catch (error) {
+      console.error(error);
+      if (error.response && error.response.data && error.response.data.msg) {
+        setError(error.response.data.msg);
+      }
+      // console.log("error.response.data.errors: ");
+      // console.log(error.response.data.errors[0].msg);
+      setError(error.response.data.errors[0].msg);
+    }
+  };
 
   return (
     <>
@@ -30,14 +78,19 @@ const CreateGroup = ({
                 <h4 style={{ textAlign: "center" }}>Hi, Nick</h4>
                 <div className="buttonWrapper"></div>
                 <Form.Group className="mb-3" controlId="formEmail">
-                  <Form.Control type="text" placeholder="Enter Group name" />
+                  <Form.Control
+                    value={groupname}
+                    onChange={(e) => setGroupName(e.target.value)}
+                    type="text"
+                    placeholder="Enter Group name"
+                  />
                 </Form.Group>
                 <Form.Group controlId="categories">
                   <Form.Label>Categories</Form.Label>
                   <CreatableReactSelect
                     onCreateOption={(label) => {
                       const newCategory = { id: uuidV4(), label };
-                      onAddCategory(newCategory);
+                      //     onAddCategory(newCategory);
                       setSelectedCategories((prev) => [...prev, newCategory]);
                     }}
                     value={selectedCategories.map((category) => {
@@ -61,10 +114,12 @@ const CreateGroup = ({
                   className="group-desc"
                   required
                   as="textarea"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                   rows={5}
                 />
                 <Stack direction="horizontal" className="button-bottom">
-                  <Button type="submit" className="btn-grp-save">
+                  <Button onClick={handleSubmit} className="btn-grp-save">
                     {" "}
                     Save
                   </Button>

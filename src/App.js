@@ -9,6 +9,7 @@ import EditCycle from "./components/EditCycle";
 import CreateCycle from "./components/CreateCycle";
 import UpdateCycle from "./components/UpdateCycle";
 import { AdminProvider } from "./components/AdminContext";
+import { UserProvider } from "./components/UserContext";
 import { createBrowserHistory } from "history";
 import SignUp from "./components/SignUpForm";
 import { GoogleLogin } from "@react-oauth/google";
@@ -78,10 +79,10 @@ function App() {
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
       <Router>
-        <AdminProvider>
+        <UserProvider>
           <OurNavbar />
           <AppRouter />
-        </AdminProvider>
+        </UserProvider>
       </Router>
     </GoogleOAuthProvider>
   );

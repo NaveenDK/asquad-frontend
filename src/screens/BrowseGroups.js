@@ -1,23 +1,43 @@
-import React, { useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import React, { Component, useEffect, useState, useContext } from "react";
+import { UserContext } from "../components/UserContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const apiUrl = process.env.REACT_APP_API_URL;
 const BrowseGroups = () => {
-  const [allGroups, setAllGroups] = useState([
-    {
-      key: "1",
-      title: "Productivity",
-    },
-    {
-      key: "2",
-      title: "Piano",
-    },
-    {
-      key: "3",
-      title: "Nice work",
-    },
-  ]);
+  const navigate = useNavigate();
+
+  const { userId } = useContext(UserContext);
+  const [allGroups, setAllGroups] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setLoading(true);
+    const token = localStorage.getItem("token"); //
+    const isLoggedIn = Boolean(localStorage.getItem("token"));
+    const fetchData = async () => {
+      try {
+        if (userId && isLoggedIn) {
+          // Check if adminId is defined
+          const response = await axios.get(`${apiUrl}/groups`);
+
+          setAllGroups(response.data);
+        } else {
+          navigate("/signup");
+        }
+      } catch (error) {
+        console.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+    //  console.log("inOverview");
+  }, [userId]);
 
   return (
     <>
@@ -34,7 +54,7 @@ const BrowseGroups = () => {
                     <Card.Title
                       style={{ display: "flex", justifyContent: "center" }}
                     >
-                      {group.title}
+                      {group.groupname}
                     </Card.Title>
                     <div style={{ display: "flex", justifyContent: "center" }}>
                       <Button variant="primary">Join</Button>
