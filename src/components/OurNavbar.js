@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import React, { Component, useEffect, useState, useContext } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { AdminContext } from "./AdminContext";
+import { AdminContext } from "../context/AdminContext";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import {
   Routes,
@@ -57,6 +57,7 @@ function OurNavbar() {
 
   const renderAuthLinks = () => {
     if (adminId) {
+      console.log(adminName);
       return (
         <NavDropdown
           title={<span className="nav-dropdown-name">{adminName}</span>}

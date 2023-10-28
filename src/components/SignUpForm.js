@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { Container, Form, Button } from "react-bootstrap";
-import { AdminContext } from "./AdminContext";
+import { AdminContext } from "../context/AdminContext";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { GoogleLogin } from "@react-oauth/google";

@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import { AdminContext } from "./AdminContext";
+import { AdminContext } from "../context/AdminContext";
 //import cycles from '../data/cycles'
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
@@ -102,9 +102,6 @@ const Overview = () => {
       .delete(`${apiUrl}/admins/${adminId}/cycles/${id}`, {
         headers: {
           "x-auth-token": token,
-
-
-          
         },
       })
       .then((res) => console.log(res.data));
@@ -130,9 +127,8 @@ const Overview = () => {
           );
 
           setCycles(response.data);
-        }
-        else{
-          navigate("/signup")
+        } else {
+          navigate("/signup");
         }
       } catch (error) {
         console.error(error.message);

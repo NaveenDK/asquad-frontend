@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
-import { AdminContext } from "./AdminContext";
+import { AdminContext } from "../context/AdminContext";
 import Button from "react-bootstrap/Button";
 import MainLayout from "./MainLayout";
 import Spinner from "react-bootstrap/Spinner";

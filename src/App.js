@@ -1,6 +1,6 @@
 import "./App.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { AdminProvider } from "./components/AdminContext";
+import { AdminProvider } from "./context/AdminContext";
 import ChangePassword from "./components/ChangePassword";
 import CreateCycle from "./components/CreateCycle/CreateCycle";
 import EditCycle from "./components/EditCycle";
@@ -10,7 +10,7 @@ import OurNavbar from "./components/OurNavbar";
 import Overview from "./components/Overview";
 import ResetPassword from "./components/ResetPassword";
 import SignUp from "./components/SignUpForm";
-import UpdateCycle from "./components/UpdateCycle/";
+import UpdateCycle from "./components/UpdateCycle";
 import BrowseGroups from "./screens/BrowseGroups";
 import CreateGroup from "./screens/CreateGroup";
 import MyGroup from "./screens/MyGroup";
@@ -24,10 +24,12 @@ import {
   Routes,
 } from "react-router-dom";
 
+import { getToken } from "./utils/Token/tokenUtils";
+
 const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 function AppRouter() {
-  const isLoggedIn = Boolean(localStorage.getItem("token"));
+  const isLoggedIn = Boolean(getToken());
 
   return (
     <Routes>

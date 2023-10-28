@@ -1,51 +1,50 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+//Context
+import { AdminContext } from "../../context/AdminContext";
+
+//Styles
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { Helmet } from "react-helmet-async";
-import { useNavigate, useParams } from "react-router-dom";
-import { AdminContext } from "../AdminContext";
-import MainLayout from "../MainLayout";
-import { MemberItem } from "./MemberItem/MemberItem";
 
-const apiUrl = process.env.REACT_APP_API_URL;
+//Components
+import MainLayout from "../MainLayout";
+import MemberItem from "./MemberItem";
+
+//Services
+import { putCycle, returnCycleById } from "../../services/cycleServices";
 
 const UpdateCycle = () => {
-  const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  // const [cycle, setCycle] = useState([]);
-  //empty users array set when we start
-
   const { adminId } = useContext(AdminContext);
   const { cycleId } = useParams();
 
+  const [users, setUsers] = useState([]);
+  const [isDesktop, setIsDesktop] = useState(false);
   const [startDate, setStartDate] = useState(); // empty startDate set when we start initially
   const [endDate, setEndDate] = useState(); // empty endDate set when we start initially
 
+  const navigate = useNavigate();
+
+  const fetchCycleInfo = useCallback(async () => {
+    const data = await returnCycleById(adminId, cycleId);
+    setUsers(data.users);
+    setStartDate(new Date(data.startDate));
+    setEndDate(new Date(data.endDate));
+  }, [adminId, cycleId]);
+
+  const putCycleInfo = async (data) => {
+    await putCycle(adminId, cycleId, data);
+    navigate(`/review/${cycleId}`);
+  };
+
   useEffect(() => {
-    console.log("UpdateCycle");
-    const token = localStorage.getItem("token");
-    axios
-      .get(`${apiUrl}/admins/${adminId}/cycles/${cycleId}`, {
-        headers: {
-          "x-auth-token": token,
-        },
-      })
-      .then((response) => {
-        // setCycle(response.data);
-        //console.log ("cycles set to : " +  cycle)
-        setUsers(response.data.users);
-        setStartDate(new Date(response.data.startDate));
-        setEndDate(new Date(response.data.endDate));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    //Fetch cycle info
+    fetchCycleInfo();
 
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 768); // Adjust the breakpoint value as needed
@@ -58,9 +57,9 @@ const UpdateCycle = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [cycleId, adminId]);
+  }, [cycleId, adminId, fetchCycleInfo]);
+
   const onSubmit = (e) => {
-    const token = localStorage.getItem("token");
     e.preventDefault();
     const cycle = {
       startDate: startDate,
@@ -68,15 +67,8 @@ const UpdateCycle = () => {
       users: users,
     };
 
-    //axios.post
-    axios.put(`${apiUrl}/admins/${adminId}/cycles/${cycleId}`, cycle, {
-      headers: {
-        "x-auth-token": token,
-      },
-    });
-    console.log("adminId" + adminId);
-    //window.location = '/'
-    navigate("/overview");
+    //Put cycle info
+    putCycleInfo(cycle);
   };
 
   const onChangeStartDate = (date) => {
@@ -95,10 +87,8 @@ const UpdateCycle = () => {
       ],
     };
 
-    setUsers([...users, newfield]);
+    setUsers((prev) => [...prev, newfield]);
   };
-
-  console.log(users);
 
   return (
     <>
@@ -145,18 +135,19 @@ const UpdateCycle = () => {
               </Row>
             </div>
             <div className="form-group ownerFields">
-              {users.map((input, index) => {
-                //initially we are mappin through the empty users array and creating one field in the return section
-                return (
-                  <MemberItem
-                    input={input}
-                    index={index}
-                    users={users}
-                    isDesktop={isDesktop}
-                    setUsers={setUsers}
-                  />
-                );
-              })}
+              {users.length >= 0 &&
+                users.map((input, index) => {
+                  //initially we are mappin through the empty users array and creating one field in the return section
+                  return (
+                    <MemberItem
+                      input={input}
+                      index={index}
+                      users={users}
+                      isDesktop={isDesktop}
+                      setUsers={setUsers}
+                    />
+                  );
+                })}
               <div className="plusMember">
                 <button
                   onClick={addFields}

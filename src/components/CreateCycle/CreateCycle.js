@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState, useContext } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-import { AdminContext } from "../AdminContext";
+import { AdminContext } from "../../context/AdminContext";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";

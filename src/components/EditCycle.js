@@ -11,7 +11,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Form from "react-bootstrap/Form";
 import { Helmet } from "react-helmet-async";
-import { AdminContext } from "./AdminContext";
+import { AdminContext } from "../context/AdminContext";
 import Spinner from "react-bootstrap/Spinner";
 import { useParams, useNavigate } from "react-router-dom";
 
