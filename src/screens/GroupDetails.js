@@ -14,9 +14,25 @@ const GroupDetails = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
   const [groupDetails, setGroupDetails] = useState();
+  const [isMember, setIsMember] = useState(false);
+
+  function checkIsMember(userId, groupDetails) {
+    console.log("CHECK ISMEMBER");
+    console.log(JSON.stringify(groupDetails));
+    if (
+      groupDetails &&
+      groupDetails.users &&
+      groupDetails.users.includes(userId)
+    ) {
+      console.log("setting it true");
+      setIsMember(true);
+    } else {
+      console.log("do nothing");
+    }
+  }
 
   useEffect(() => {
-    // setLoading(true);
+    setLoading(true);
     const token = localStorage.getItem("token"); //
     const isLoggedIn = Boolean(localStorage.getItem("token"));
 
@@ -33,7 +49,12 @@ const GroupDetails = () => {
           });
           console.log("Response.data:");
           const group = response.data;
+
           setGroupDetails(group);
+          console.log("isMember");
+          console.log(isMember);
+          checkIsMember(userId, response.data);
+          // setGroupDetails(group);
           // console.log(groupDetails);
           console.log("groupDetails::");
           console.log(groupDetails);
@@ -47,12 +68,13 @@ const GroupDetails = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [groupId]);
 
   const handleJoinGroup = async (userId, groupId) => {
     const token = localStorage.getItem("token");
     console.log("is token in here: ");
     console.log(token);
+    setLoading(true);
     try {
       const res = await axios.post(
         `${apiUrl}/groups/${groupId}/join?userId=${userId}`,
@@ -64,9 +86,15 @@ const GroupDetails = () => {
         }
       );
       const updatedGroup = res.data;
+
       setGroupDetails(updatedGroup);
+      checkIsMember(userId, res.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      if (groupDetails) {
+        setLoading(false);
+      }
     }
   };
   return (
@@ -83,26 +111,25 @@ const GroupDetails = () => {
               <div className="general-form-wrapper pt-5">
                 <Form className="FormContainer">
                   <h4 style={{ textAlign: "center" }}>
-                    {groupDetails && groupDetails.groupname}
+                    {groupDetails &&
+                      groupDetails.users &&
+                      groupDetails.users.length >= 0 &&
+                      groupDetails.groupname}
                   </h4>
 
                   <div>
-                    <p>{groupDetails && groupDetails.description}</p>
-                  </div>
-                  <div>
-                    <h6>
+                    <p>
                       {groupDetails &&
-                        groupDetails.categories[0].map((e) => (
-                          <Badge>{e.label}</Badge>
-                        ))}
-
-                      <p> {groupDetails.categories[0].label} </p>
-                      <p></p>
-                    </h6>
+                        groupDetails.users &&
+                        groupDetails.users.length >= 0 &&
+                        groupDetails.description}
+                    </p>
                   </div>
+                  <div></div>
                   <div className="buttonWrapper">
-                    {!groupDetails.users.includes(userId) &&
-                    groupDetails.creatorId != userId ? (
+                    {isMember ? (
+                      <Button>Leave Group</Button>
+                    ) : (
                       <Button
                         onClick={() => handleJoinGroup(userId, groupId)}
                         type="button"
@@ -111,8 +138,6 @@ const GroupDetails = () => {
                       >
                         Join Group
                       </Button>
-                    ) : (
-                      <p>You are already in this group</p>
                     )}
                   </div>
                   <div className="buttonWrapper">
