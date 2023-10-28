@@ -33,6 +33,7 @@ import {
   Redirect,
   Navigate,
 } from "react-router-dom";
+import GroupDetails from "./screens/GroupDetails";
 const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 function AppRouter() {
   const navigate = useNavigate();
@@ -64,7 +65,8 @@ function AppRouter() {
       <Route path="/userwelcome" element={<WelcomeUser />} />
       <Route path="/edit/" element={<EditCycle />} />
       <Route path="/review/:cycleId" element={<EditCycle />} />
-      <Route path="/mygroup/:groupId" element={<MyGroup />} />
+      <Route path="/mygroups/:groupId" element={<MyGroup />} />
+      <Route path="/browsegroups/:groupId" element={<GroupDetails />} />
       <Route path="/create" element={<CreateCycle />} />
       <Route path="/update/:cycleId" element={<UpdateCycle />} />
       <Route path="/signup" element={<SignUp />} />

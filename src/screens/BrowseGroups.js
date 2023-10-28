@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import React, { Component, useEffect, useState, useContext } from "react";
 import { UserContext } from "../components/UserContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -47,7 +47,7 @@ const BrowseGroups = () => {
       <Row className="mainrow">
         {allGroups.map((group) => {
           return (
-            <Col xs={6} md={4}>
+            <Col key={group._id} xs={6} md={4}>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <Card style={{ width: "18rem" }}>
                   <Card.Body>
@@ -57,7 +57,9 @@ const BrowseGroups = () => {
                       {group.groupname}
                     </Card.Title>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      <Button variant="primary">Join</Button>
+                      <Link to={group._id}>
+                        <Button variant="primary">View Details</Button>
+                      </Link>
                     </div>
                   </Card.Body>
                 </Card>

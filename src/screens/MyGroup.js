@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, useEffect, useState, useContext } from "react";
 import {
   Container,
   Form,
@@ -7,48 +7,102 @@ import {
   FloatingLabel,
   FormControl,
 } from "react-bootstrap";
+import { Routes, Route, useNavigate, useParams } from "react-router-dom";
+import { UserContext } from "../components/UserContext";
+import Spinner from "react-bootstrap/Spinner";
+
+import axios from "axios";
+
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const MyGroup = () => {
+  const { userId } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
+  const { groupId } = useParams();
+  const navigate = useNavigate();
+  const [groupDetails, setGroupDetails] = useState();
+  useEffect(() => {
+    // setLoading(true);
+    const token = localStorage.getItem("token"); //
+    const isLoggedIn = Boolean(localStorage.getItem("token"));
+
+    const fetchData = async () => {
+      console.log("groupId");
+      console.log(groupId);
+      try {
+        if (groupId && isLoggedIn) {
+          // Check if adminId is defined
+          const response = await axios.get(`${apiUrl}/groups/${groupId}`, {
+            headers: {
+              "x-auth-token": token,
+            },
+          });
+          console.log("Response.data:");
+          const group = response.data;
+          setGroupDetails(group);
+          // console.log(groupDetails);
+          console.log("groupDetails::");
+          console.log(groupDetails);
+        } else {
+          navigate("/signup");
+        }
+      } catch (error) {
+        console.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
-      <Container className="parentWrapper">
-        <div className="innerWrapper">
-          <div></div>
-          <div className="general-form-wrapper pt-5">
-            <Form className="FormContainer">
-              <h4 style={{ textAlign: "center" }}>Group Xs </h4>
-              <div className="buttonWrapper">
-                <Button
-                  type="button"
-                  className="btn btn-outline-dark customWidthBtn"
-                  data-mdb-ripple-color="dark"
-                >
-                  Create Cycle
-                </Button>
-              </div>
-              <div className="buttonWrapper">
-                <Button
-                  type="button"
-                  className="btn btn-outline-dark customWidthBtn"
-                  data-mdb-ripple-color="dark"
-                >
-                  Add Members
-                </Button>
-              </div>
-              <div className="buttonWrapper">
-                <Button
-                  type="button"
-                  className="btn btn-outline-dark customWidthBtn"
-                  data-mdb-ripple-color="dark"
-                >
-                  Current Cycles
-                </Button>
-              </div>
-              <br></br>
-            </Form>
-          </div>
+      {loading ? (
+        <div className="d-flex justify-content-center align-items-center vh-100">
+          <Spinner animation="border" />
         </div>
-      </Container>
+      ) : (
+        <Container className="parentWrapper">
+          <div className="innerWrapper">
+            <div></div>
+            <div className="general-form-wrapper pt-5">
+              <Form className="FormContainer">
+                <h4 style={{ textAlign: "center" }}>
+                  Group {groupDetails && groupDetails.groupname}{" "}
+                </h4>
+                <div className="buttonWrapper">
+                  <Button
+                    type="button"
+                    className="btn btn-outline-dark customWidthBtn"
+                    data-mdb-ripple-color="dark"
+                  >
+                    Create Cycle
+                  </Button>
+                </div>
+                <div className="buttonWrapper">
+                  <Button
+                    type="button"
+                    className="btn btn-outline-dark customWidthBtn"
+                    data-mdb-ripple-color="dark"
+                  >
+                    Add Members
+                  </Button>
+                </div>
+                <div className="buttonWrapper">
+                  <Button
+                    type="button"
+                    className="btn btn-outline-dark customWidthBtn"
+                    data-mdb-ripple-color="dark"
+                  >
+                    Current Cycles
+                  </Button>
+                </div>
+                <br></br>
+              </Form>
+            </div>
+          </div>
+        </Container>
+      )}
     </>
   );
 };

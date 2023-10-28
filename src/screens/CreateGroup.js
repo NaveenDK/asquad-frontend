@@ -36,7 +36,7 @@ const CreateGroup = ({
     // Password validation
 
     const group = {
-      users: [userId],
+      users: [],
       creatorId: userId,
       categories: [selectedCategories],
       groupname: groupname,
