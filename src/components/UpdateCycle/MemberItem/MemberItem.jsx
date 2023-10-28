@@ -36,6 +36,9 @@ const MemberItem = ({ input, index, users, isDesktop, setUsers }) => {
   const addSubTask = (i) => {
     let newSubTask = { task: "", done: false };
     const tempUsers = [...users];
+
+    console.log({ tempUsers });
+
     tempUsers[index].goals[i].subTasks.push(newSubTask);
     setUsers(tempUsers);
   };
@@ -50,7 +53,7 @@ const MemberItem = ({ input, index, users, isDesktop, setUsers }) => {
   };
 
   const handleAddSubTask = (goalIndex, subTaskIndex, event) => {
-    let subTasksOfGoal = [...users[index].goals[goalIndex].subTasks];
+    const subTasksOfGoal = [...users[index].goals[goalIndex].subTasks];
     subTasksOfGoal[subTaskIndex].task = event.target.value;
     const tempUsers = [...users];
     tempUsers[index].goals[goalIndex].subTasks = subTasksOfGoal;

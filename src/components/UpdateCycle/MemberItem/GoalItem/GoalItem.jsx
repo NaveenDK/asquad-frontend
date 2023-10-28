@@ -28,21 +28,19 @@ const GoalItem = ({
         </Col>
 
         <label className="boldLabel">Subtasks List</label>
-        {goal.subTasks.map((subtask) => {
+        {goal.subTasks.map((subtask, index) => {
           return (
             <SubtaskItem
+              index={index}
               handleAddSubTask={handleAddSubTask}
               subtask={subtask}
-              indexGoals={indexGoals}
+              indexGoals={index}
             />
           );
         })}
       </Row>
       <Row className="justify-content-center gap-4">
-        <Button
-          className="w-25 subtask-btn"
-          onClick={() => addSubTask(indexGoals)}
-        >
+        <Button className="w-25 subtask-btn" onClick={() => addSubTask(index)}>
           Add Subtask
         </Button>
         <Button onClick={addGoal} className="w-25 goal-btn">

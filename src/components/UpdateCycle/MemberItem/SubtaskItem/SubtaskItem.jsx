@@ -1,6 +1,6 @@
 import { Col, Row } from "react-bootstrap";
 
-const SubtaskItem = ({ handleAddSubTask, indexGoals, subtask }) => {
+const SubtaskItem = ({ index, handleAddSubTask, indexGoals, subtask }) => {
   const indexSubtask = subtask._id;
   return (
     <div className="subtask-innerwrapper" key={indexSubtask}>
@@ -11,9 +11,7 @@ const SubtaskItem = ({ handleAddSubTask, indexGoals, subtask }) => {
             name="subTask "
             placeholder="Subtask"
             value={subtask.task}
-            onChange={(event) =>
-              handleAddSubTask(indexGoals, indexSubtask, event)
-            }
+            onChange={(event) => handleAddSubTask(indexGoals, index, event)}
           />
         </Col>
       </Row>
