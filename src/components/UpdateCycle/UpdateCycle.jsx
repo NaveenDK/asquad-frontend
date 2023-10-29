@@ -36,7 +36,6 @@ const UpdateCycle = () => {
   const { adminId } = useContext(AdminContext);
   const { cycleId } = useParams();
 
-  const [users, setUsers] = useState([]);
   const [isDesktop, setIsDesktop] = useState(false);
   const [startDate, setStartDate] = useState(); // empty startDate set when we start initially
   const [endDate, setEndDate] = useState(); // empty endDate set when we start initially
@@ -77,8 +76,12 @@ const UpdateCycle = () => {
     };
   }, [cycleId, adminId, fetchCycleInfo]);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+
+    //Validate no empty tasks
+    await dispatch({ type: updateCycleActions.submitChanges });
+
     const cycle = {
       startDate: startDate,
       endDate: endDate,
@@ -153,9 +156,7 @@ const UpdateCycle = () => {
                       dispatch={dispatch}
                       input={user}
                       index={index}
-                      users={state}
                       isDesktop={isDesktop}
-                      setUsers={setUsers}
                     />
                   );
                 })}

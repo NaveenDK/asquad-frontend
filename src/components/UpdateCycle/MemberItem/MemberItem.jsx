@@ -11,7 +11,7 @@ import GoalItem from "./GoalItem/GoalItem";
 //Reducer actions
 import { updateCycleActions } from "../../../Reducers/updateCycleReducer";
 
-const MemberItem = ({ dispatch, input, index, users, isDesktop, setUsers }) => {
+const MemberItem = ({ dispatch, input, isDesktop }) => {
   const changeFirstName = (event) => {
     dispatch({
       type: updateCycleActions.changeMemberName,
@@ -29,20 +29,12 @@ const MemberItem = ({ dispatch, input, index, users, isDesktop, setUsers }) => {
   const removeFields = () => {
     dispatch({
       type: updateCycleActions.deleteUser,
-      payload: { index: index },
+      payload: { id: input._id },
     });
   };
 
-  const handleAddSubTask = (goalIndex, subTaskIndex, event) => {
-    const subTasksOfGoal = [...users[index].goals[goalIndex].subTasks];
-    subTasksOfGoal[subTaskIndex].task = event.target.value;
-    const tempUsers = [...users];
-    tempUsers[index].goals[goalIndex].subTasks = subTasksOfGoal;
-    setUsers(tempUsers);
-  };
-
   return (
-    <div className="singleOwnerField" key={index}>
+    <div className="singleOwnerField" key={input._id}>
       <Row className={"align-items-center justify-content-end"}>
         <Col xs={5}>
           <Button
@@ -88,14 +80,12 @@ const MemberItem = ({ dispatch, input, index, users, isDesktop, setUsers }) => {
         </Col>
       </Row>
 
-      {input.goals.map((goal, index) => {
+      {input.goals.map((goal) => {
         return (
           <GoalItem
             dispatch={dispatch}
             memberInfo={{ userId: input._id, goalId: goal._id }}
-            index={index}
             goal={goal}
-            handleAddSubTask={handleAddSubTask}
           />
         );
       })}

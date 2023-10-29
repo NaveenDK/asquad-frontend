@@ -58,6 +58,7 @@ const GoalItem = ({ dispatch, memberInfo, goal }) => {
           return (
             <SubtaskItem
               dispatch={dispatch}
+              subtask={subtask}
               memberInfo={{ ...memberInfo, subtaskId: subtask._id }}
             />
           );

@@ -8,6 +8,8 @@ export const updateCycleActions = {
   changeGoalName: "CHANGE_GOAL_NAME",
   createNewSubtask: "CREATE_NEW_SUBTASK_FIELD",
   changeSubtaskName: "CHANGE_SUBTASK_NAME",
+  deleteSubtask: "DELETE_SUBTASK",
+  submitChanges: "SUBMIT_CHANGES",
 };
 
 const updateCycleReducer = (state, action) => {
@@ -64,8 +66,8 @@ const updateCycleReducer = (state, action) => {
 
   //DELETE NEW USER
   if (action.type === updateCycleActions.deleteUser) {
-    const userIndex = action.payload.index;
-    const newState = [...state].filter((ele, index) => userIndex !== index);
+    const userId = action.payload.id;
+    const newState = [...state].filter((user) => user._id !== userId);
 
     return newState;
   }
@@ -151,9 +153,9 @@ const updateCycleReducer = (state, action) => {
 
     newState.map((user) => {
       if (user._id === userId) {
-        user.goals.map((goal) => {
+        user.goals = user.goals.map((goal) => {
           if (goal._id === goalId) {
-            goal.subTasks.map((subtask) => {
+            goal.subTasks = goal.subTasks.map((subtask) => {
               if (subtask._id === subTaskId) {
                 subtask.task = subTaskTitle;
               }
@@ -165,6 +167,51 @@ const updateCycleReducer = (state, action) => {
           return goal;
         });
       }
+
+      return user;
+    });
+
+    return newState;
+  }
+
+  //DELETE SUBTASK
+  if (action.type === updateCycleActions.deleteSubtask) {
+    const userId = action.payload.userId;
+    const goalId = action.payload.goalId;
+    const subTaskId = action.payload.subtaskId;
+
+    const newState = [...state];
+
+    newState.map((user) => {
+      if (user._id === userId) {
+        user.goals = user.goals.map((goal) => {
+          if (goal._id === goalId) {
+            goal.subTasks = goal.subTasks.filter(
+              (subtask) => subtask._id !== subTaskId
+            );
+          }
+
+          return goal;
+        });
+      }
+
+      return user;
+    });
+
+    return newState;
+  }
+
+  //SUBMIT CHANGES
+  if (action.type === updateCycleActions.submitChanges) {
+    const newState = [...state];
+
+    newState.map((user) => {
+      user.goals = user.goals.map((goal) => {
+        goal.subTasks = goal.subTasks.filter(
+          (subtask) => subtask.task.length > 0
+        );
+        return goal;
+      });
 
       return user;
     });
