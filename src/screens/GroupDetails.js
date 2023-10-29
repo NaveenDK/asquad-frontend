@@ -160,9 +160,6 @@ const GroupDetails = () => {
                         onClick={(e) =>
                           handleJoinLeaveGroup(e, userId, groupId, "LEAVE")
                         }
-                        type="button"
-                        className="btn btn-outline-dark customWidthBtn"
-                        data-mdb-ripple-color="dark"
                       >
                         Leave Group
                       </Button>
