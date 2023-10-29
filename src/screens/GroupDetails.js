@@ -15,6 +15,7 @@ const GroupDetails = () => {
   const navigate = useNavigate();
   const [groupDetails, setGroupDetails] = useState();
   const [isMember, setIsMember] = useState(false);
+  const [groupUsers, setGroupUsers] = useState();
 
   function checkIsMember(userId, groupDetails) {
     console.log("CHECK ISMEMBER");
@@ -27,6 +28,7 @@ const GroupDetails = () => {
       console.log("setting it true");
       setIsMember(true);
     } else {
+      setIsMember(false);
       console.log("do nothing");
     }
   }
@@ -54,6 +56,7 @@ const GroupDetails = () => {
           console.log("isMember");
           console.log(isMember);
           checkIsMember(userId, response.data);
+
           // setGroupDetails(group);
           // console.log(groupDetails);
           console.log("groupDetails::");
@@ -68,32 +71,63 @@ const GroupDetails = () => {
       }
     };
     fetchData();
-  }, [groupId]);
+  }, [groupId, isMember]);
 
-  const handleJoinGroup = async (userId, groupId) => {
+  const handleJoinLeaveGroup = async (e, userId, groupId, action) => {
+    e.preventDefault();
     const token = localStorage.getItem("token");
+    console.log("did we get user ID");
+    console.log(userId);
     console.log("is token in here: ");
     console.log(token);
     setLoading(true);
-    try {
-      const res = await axios.post(
-        `${apiUrl}/groups/${groupId}/join?userId=${userId}`,
-        {},
-        {
-          headers: {
-            "x-auth-token": token,
-          },
+    if (action === "JOIN") {
+      try {
+        const res = await axios.put(
+          `${apiUrl}/groups/${groupId}/join`,
+          { userId },
+          {
+            headers: {
+              "x-auth-token": token,
+            },
+          }
+        );
+        const updatedGroup = res.data;
+        console.log("UpdatedGroup: ");
+        console.log(updatedGroup);
+        setGroupDetails(updatedGroup);
+        setGroupUsers(res.data.users);
+        setIsMember(true);
+        //checkIsMember(userId, res.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        if (groupDetails) {
+          setLoading(false);
         }
-      );
-      const updatedGroup = res.data;
+      }
+    } else if (action == "LEAVE") {
+      try {
+        const res = await axios.put(
+          `${apiUrl}/groups/${groupId}/leave`,
+          { userId },
+          {
+            headers: {
+              "x-auth-token": token,
+            },
+          }
+        );
+        const updatedGroup = res.data;
 
-      setGroupDetails(updatedGroup);
-      checkIsMember(userId, res.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      if (groupDetails) {
-        setLoading(false);
+        setGroupDetails(updatedGroup);
+        setGroupUsers(res.data.users);
+        checkIsMember(userId, res.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        if (groupDetails) {
+          setLoading(false);
+        }
       }
     }
   };
@@ -111,27 +145,32 @@ const GroupDetails = () => {
               <div className="general-form-wrapper pt-5">
                 <Form className="FormContainer">
                   <h4 style={{ textAlign: "center" }}>
-                    {groupDetails &&
-                      groupDetails.users &&
-                      groupDetails.users.length >= 0 &&
-                      groupDetails.groupname}
+                    {groupDetails.groupname && groupDetails.groupname}
                   </h4>
 
                   <div>
                     <p>
-                      {groupDetails &&
-                        groupDetails.users &&
-                        groupDetails.users.length >= 0 &&
-                        groupDetails.description}
+                      {groupDetails.description && groupDetails.description}
                     </p>
                   </div>
                   <div></div>
                   <div className="buttonWrapper">
                     {isMember ? (
-                      <Button>Leave Group</Button>
+                      <Button
+                        onClick={(e) =>
+                          handleJoinLeaveGroup(e, userId, groupId, "LEAVE")
+                        }
+                        type="button"
+                        className="btn btn-outline-dark customWidthBtn"
+                        data-mdb-ripple-color="dark"
+                      >
+                        Leave Group
+                      </Button>
                     ) : (
                       <Button
-                        onClick={() => handleJoinGroup(userId, groupId)}
+                        onClick={(e) =>
+                          handleJoinLeaveGroup(e, userId, groupId, "JOIN")
+                        }
                         type="button"
                         className="btn btn-outline-dark customWidthBtn"
                         data-mdb-ripple-color="dark"
@@ -142,6 +181,9 @@ const GroupDetails = () => {
                   </div>
                   <div className="buttonWrapper">
                     <Button
+                      onClick={() =>
+                        handleJoinLeaveGroup(userId, groupId, "LEAVE")
+                      }
                       type="button"
                       className="btn btn-outline-dark customWidthBtn"
                       data-mdb-ripple-color="dark"
