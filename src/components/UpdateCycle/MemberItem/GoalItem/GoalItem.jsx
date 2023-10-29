@@ -4,6 +4,7 @@ import { Col, Row, Button } from "react-bootstrap";
 import SubtaskItem from "../SubtaskItem";
 
 const GoalItem = ({
+  dispatch,
   index,
   goal,
   handleAddGoal,
@@ -23,7 +24,7 @@ const GoalItem = ({
             name="mainGoal"
             placeholder="Main Goal Name"
             value={goal.mainGoal}
-            onChange={(event) => handleAddGoal(index, event)}
+            onChange={(event) => handleAddGoal(index)}
           />
         </Col>
 
@@ -43,7 +44,7 @@ const GoalItem = ({
         <Button className="w-25 subtask-btn" onClick={() => addSubTask(index)}>
           Add Subtask
         </Button>
-        <Button onClick={addGoal} className="w-25 goal-btn">
+        <Button onClick={() => addGoal(indexGoals)} className="w-25 goal-btn">
           Add Goal
         </Button>
       </Row>

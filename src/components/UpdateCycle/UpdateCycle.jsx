@@ -1,4 +1,10 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  useReducer,
+} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import DatePicker from "react-datepicker";
@@ -19,7 +25,12 @@ import MemberItem from "./MemberItem";
 //Services
 import { putCycle, returnCycleById } from "../../services/cycleServices";
 
+//Reducer
+import updateCycleReducer from "../../Reducers/updateCycleReducer";
+
 const UpdateCycle = () => {
+  const [state, dispatch] = useReducer(updateCycleReducer, {});
+
   const { adminId } = useContext(AdminContext);
   const { cycleId } = useParams();
 
@@ -32,7 +43,12 @@ const UpdateCycle = () => {
 
   const fetchCycleInfo = useCallback(async () => {
     const data = await returnCycleById(adminId, cycleId);
-    setUsers(data.users);
+
+    dispatch({
+      type: "SET_USERS",
+      payload: { users: data.users },
+    });
+
     setStartDate(new Date(data.startDate));
     setEndDate(new Date(data.endDate));
   }, [adminId, cycleId]);
@@ -64,7 +80,7 @@ const UpdateCycle = () => {
     const cycle = {
       startDate: startDate,
       endDate: endDate,
-      users: users,
+      users: state,
     };
 
     //Put cycle info
@@ -79,16 +95,10 @@ const UpdateCycle = () => {
   };
 
   const addFields = () => {
-    let newfield = {
-      firstName: "",
-      lastName: "",
-      goals: [
-        { mainGoal: "", progress: 0, subTasks: [{ task: "", done: false }] },
-      ],
-    };
-
-    setUsers((prev) => [...prev, newfield]);
+    dispatch({ type: "CREATE_NEW_USER_FIELD" });
   };
+
+  console.log(state);
 
   return (
     <>
@@ -135,14 +145,15 @@ const UpdateCycle = () => {
               </Row>
             </div>
             <div className="form-group ownerFields">
-              {users.length >= 0 &&
-                users.map((input, index) => {
+              {state.length >= 0 &&
+                state.map((user, index) => {
                   //initially we are mappin through the empty users array and creating one field in the return section
                   return (
                     <MemberItem
-                      input={input}
+                      dispatch={dispatch}
+                      input={user}
                       index={index}
-                      users={users}
+                      users={state}
                       isDesktop={isDesktop}
                       setUsers={setUsers}
                     />

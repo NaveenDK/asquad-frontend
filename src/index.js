@@ -13,9 +13,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <HelmetProvider>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    {/* <React.StrictMode> */}
+    <App />
+    {/* </React.StrictMode> */}
   </HelmetProvider>
 );
 

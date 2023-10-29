@@ -19,7 +19,6 @@ export const fetchAdminData = async (adminId) => {
       });
 
       // Assuming the response contains admin's name field
-      console.log({ nuevaprueba: response.data });
       return response.data;
     }
   } catch (error) {

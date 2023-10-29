@@ -8,29 +8,36 @@ import "react-datepicker/dist/react-datepicker.css";
 //Components
 import GoalItem from "./GoalItem/GoalItem";
 
-const MemberItem = ({ input, index, users, isDesktop, setUsers }) => {
-  const changeInputInfo = (event) => {
-    const data = [...users];
-    data[index][event.target.name] = event.target.value;
-    setUsers(data);
+//Reducer actions
+import { updateCycleActions } from "../../../Reducers/updateCycleReducer";
+
+const MemberItem = ({ dispatch, input, index, users, isDesktop, setUsers }) => {
+  const changeFirstName = (event) => {
+    dispatch({
+      type: updateCycleActions.changeMemberName,
+      payload: { firstName: event.target.value, id: input._id },
+    });
+  };
+
+  const changeLastName = (event) => {
+    dispatch({
+      type: updateCycleActions.changeMemberLastname,
+      payload: { lastName: event.target.value, id: input._id },
+    });
   };
 
   const removeFields = () => {
-    let data = [...users];
-    data.splice(index, 1);
-    setUsers(data);
+    dispatch({
+      type: updateCycleActions.deleteUser,
+      payload: { index: index },
+    });
   };
 
   const addGoal = () => {
-    let newGoal = {
-      mainGoal: "",
-      progress: 0,
-      subTasks: [{ task: "", done: false }],
-    };
-    const tempUsers = [...users];
-    tempUsers[index].goals.push(newGoal);
-
-    setUsers(tempUsers);
+    dispatch({
+      type: updateCycleActions.createNewGoal,
+      payload: { id: input._id },
+    });
   };
 
   const addSubTask = (i) => {
@@ -87,7 +94,7 @@ const MemberItem = ({ input, index, users, isDesktop, setUsers }) => {
             name="firstName"
             placeholder="First Name"
             value={input.firstName}
-            onChange={changeInputInfo}
+            onChange={changeFirstName}
             className="rounded-3"
           />
         </Col>
@@ -101,7 +108,7 @@ const MemberItem = ({ input, index, users, isDesktop, setUsers }) => {
             name="lastName"
             placeholder="Last Name"
             value={input.lastName}
-            onChange={changeInputInfo}
+            onChange={changeLastName}
             className="rounded-3"
           />
         </Col>
@@ -110,6 +117,7 @@ const MemberItem = ({ input, index, users, isDesktop, setUsers }) => {
       {input.goals.map((goal, index) => {
         return (
           <GoalItem
+            dispatch={dispatch}
             index={index}
             goal={goal}
             handleAddGoal={handleAddGoal}
