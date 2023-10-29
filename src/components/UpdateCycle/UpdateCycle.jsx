@@ -26,7 +26,9 @@ import MemberItem from "./MemberItem";
 import { putCycle, returnCycleById } from "../../services/cycleServices";
 
 //Reducer
-import updateCycleReducer from "../../Reducers/updateCycleReducer";
+import updateCycleReducer, {
+  updateCycleActions,
+} from "../../Reducers/updateCycleReducer";
 
 const UpdateCycle = () => {
   const [state, dispatch] = useReducer(updateCycleReducer, {});
@@ -45,7 +47,7 @@ const UpdateCycle = () => {
     const data = await returnCycleById(adminId, cycleId);
 
     dispatch({
-      type: "SET_USERS",
+      type: updateCycleActions.setUsers,
       payload: { users: data.users },
     });
 
@@ -94,11 +96,9 @@ const UpdateCycle = () => {
     setEndDate(date);
   };
 
-  const addFields = () => {
-    dispatch({ type: "CREATE_NEW_USER_FIELD" });
+  const createNewUserField = () => {
+    dispatch({ type: updateCycleActions.createNewUser });
   };
-
-  console.log(state);
 
   return (
     <>
@@ -161,7 +161,7 @@ const UpdateCycle = () => {
                 })}
               <div className="plusMember">
                 <button
-                  onClick={addFields}
+                  onClick={createNewUserField}
                   type="button"
                   className="btn btn-dark plusMember"
                 >

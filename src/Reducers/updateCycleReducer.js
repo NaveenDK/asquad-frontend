@@ -7,7 +7,7 @@ export const updateCycleActions = {
   createNewGoal: "CREATE_NEW_GOAL_FIELD",
   changeGoalName: "CHANGE_GOAL_NAME",
   createNewSubtask: "CREATE_NEW_SUBTASK_FIELD",
-  changeSubtaskName: "CHANGE_GOAL_NAME",
+  changeSubtaskName: "CHANGE_SUBTASK_NAME",
 };
 
 const updateCycleReducer = (state, action) => {
@@ -92,28 +92,84 @@ const updateCycleReducer = (state, action) => {
 
   //CHANGE GOAL NAME
   if (action.type === updateCycleActions.changeGoalName) {
-    const goalId = action.payload.id;
-    const goalTitle = action.payload.title;
+    const userId = action.payload.userId;
+    const goalId = action.payload.goalId;
+    const goalTitle = action.payload.goalTitle;
+
+    const newState = [...state];
+
+    newState.map((user) => {
+      if (user._id === userId) {
+        user.goals.map((goal) => {
+          if (goal._id === goalId) {
+            goal.mainGoal = goalTitle;
+          }
+
+          return goal;
+        });
+      }
+
+      return user;
+    });
+
+    return newState;
   }
 
   //CREATE NEW SUBTASK
   if (action.type === updateCycleActions.createNewSubtask) {
-    let newfield = {
-      firstName: "",
-      lastName: "",
-      goals: [
-        { mainGoal: "", progress: 0, subTasks: [{ task: "", done: false }] },
-      ],
-    };
+    const userId = action.payload.id;
+    const goalId = action.payload.goalId;
+    const newSubTask = { task: "", done: false };
 
-    return [...state, newfield];
+    const newState = [...state];
+
+    newState.map((user) => {
+      if (user._id === userId) {
+        user.goals.map((goal) => {
+          if (goal._id === goalId) {
+            goal.subTasks.push(newSubTask);
+          }
+
+          return goal;
+        });
+      }
+
+      return user;
+    });
+
+    return newState;
   }
 
   //CHANGE SUBTASK NAME
   if (action.type === updateCycleActions.changeSubtaskName) {
+    const userId = action.payload.userId;
     const goalId = action.payload.goalId;
-    const subTaskId = action.payload.subTaskId;
-    const subTaskTitle = action.payload.title;
+    const subTaskId = action.payload.subtaskId;
+    const subTaskTitle = action.payload.subTaskTitle;
+
+    const newState = [...state];
+
+    newState.map((user) => {
+      if (user._id === userId) {
+        user.goals.map((goal) => {
+          if (goal._id === goalId) {
+            goal.subTasks.map((subtask) => {
+              if (subtask._id === subTaskId) {
+                subtask.task = subTaskTitle;
+              }
+
+              return subtask;
+            });
+          }
+
+          return goal;
+        });
+      }
+
+      return user;
+    });
+
+    return newState;
   }
 };
 

@@ -33,32 +33,6 @@ const MemberItem = ({ dispatch, input, index, users, isDesktop, setUsers }) => {
     });
   };
 
-  const addGoal = () => {
-    dispatch({
-      type: updateCycleActions.createNewGoal,
-      payload: { id: input._id },
-    });
-  };
-
-  const addSubTask = (i) => {
-    let newSubTask = { task: "", done: false };
-    const tempUsers = [...users];
-
-    console.log({ tempUsers });
-
-    tempUsers[index].goals[i].subTasks.push(newSubTask);
-    setUsers(tempUsers);
-  };
-
-  const handleAddGoal = (indexObject, event) => {
-    const goalsOfUser = users[indexObject].goals;
-    const tempUsers = [...users];
-
-    goalsOfUser[indexObject][event.target.name] = event.target.value;
-    tempUsers[indexObject].goals = goalsOfUser;
-    setUsers(tempUsers);
-  };
-
   const handleAddSubTask = (goalIndex, subTaskIndex, event) => {
     const subTasksOfGoal = [...users[index].goals[goalIndex].subTasks];
     subTasksOfGoal[subTaskIndex].task = event.target.value;
@@ -118,11 +92,9 @@ const MemberItem = ({ dispatch, input, index, users, isDesktop, setUsers }) => {
         return (
           <GoalItem
             dispatch={dispatch}
+            memberInfo={{ userId: input._id, goalId: goal._id }}
             index={index}
             goal={goal}
-            handleAddGoal={handleAddGoal}
-            addSubTask={addSubTask}
-            addGoal={addGoal}
             handleAddSubTask={handleAddSubTask}
           />
         );
