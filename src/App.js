@@ -1,16 +1,20 @@
 import "./App.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AdminProvider } from "./context/AdminContext";
+
+//Components
 import ChangePassword from "./components/ChangePassword";
 import CreateCycle from "./components/CreateCycle/CreateCycle";
 import EditCycle from "./components/EditCycle";
 import LandingPage from "./components/LandingPage";
 import Login from "./components/LoginForm";
 import OurNavbar from "./components/OurNavbar";
-import Overview from "./components/Overview";
+import Overview from "./components/OverviewCycles";
 import ResetPassword from "./components/ResetPassword";
 import SignUp from "./components/SignUpForm";
 import UpdateCycle from "./components/UpdateCycle";
+
+//Screens
 import BrowseGroups from "./screens/BrowseGroups";
 import CreateGroup from "./screens/CreateGroup";
 import MyGroup from "./screens/MyGroup";
