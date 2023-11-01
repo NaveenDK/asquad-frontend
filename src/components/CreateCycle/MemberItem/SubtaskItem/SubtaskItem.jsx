@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { Col, Row, Button } from "react-bootstrap";
 
 //Reducer actions
-import { updateCycleActions } from "../../../../Reducers/updateCycleReducer";
+import { createCycleActions } from "../../../../Reducers/createCycleReducer";
 
 const SubtaskItem = ({ dispatch, info, subtask }) => {
   const subtaskRef = useRef();
@@ -13,7 +13,7 @@ const SubtaskItem = ({ dispatch, info, subtask }) => {
     const subTaskTitle = subtaskRef.current.value;
 
     dispatch({
-      type: updateCycleActions.changeSubtaskName,
+      type: createCycleActions.changeSubtaskName,
       payload: {
         ...info,
         subTaskTitle: subTaskTitle,
@@ -23,7 +23,7 @@ const SubtaskItem = ({ dispatch, info, subtask }) => {
 
   const deleteSubtask = () => {
     dispatch({
-      type: updateCycleActions.deleteSubtask,
+      type: createCycleActions.deleteSubtask,
       payload: {
         ...info,
       },

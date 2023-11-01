@@ -4,7 +4,8 @@ import { AdminProvider } from "./context/AdminContext";
 
 //Components
 import ChangePassword from "./components/ChangePassword";
-import CreateCycle from "./components/CreateCycle/CreateCycle";
+// import CreateCycle from "./components/CreateCycle/CreateCycle";
+import CreateCycle from "./components/CreateCycle";
 import EditCycle from "./components/EditCycle";
 import LandingPage from "./components/LandingPage";
 import Login from "./components/LoginForm";

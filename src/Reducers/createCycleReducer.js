@@ -1,5 +1,4 @@
-export const updateCycleActions = {
-  setUsers: "SET_USERS",
+export const createCycleActions = {
   changeMemberName: "CHANGE_MEMBER_NAME",
   changeMemberLastname: "CHANGE_MEMBER_LAST_NAME",
   createNewUser: "CREATE_NEW_USER_FIELD",
@@ -12,21 +11,14 @@ export const updateCycleActions = {
   submitChanges: "SUBMIT_CHANGES",
 };
 
-const updateCycleReducer = (state, action) => {
-  //SET USERS
-  if (action.type === updateCycleActions.setUsers) {
-    const users = action.payload.users;
-
-    return users;
-  }
-
+const createCycleReducer = (state, action) => {
   //CHANGE FIRSTNAME
-  if (action.type === updateCycleActions.changeMemberName) {
+  if (action.type === createCycleActions.changeMemberName) {
     const id = action.payload.id;
     const firstName = action.payload.firstName;
 
-    const newState = state.map((user, indexUser) => {
-      if (indexUser === id) {
+    const newState = state.map((user, index) => {
+      if (index === id) {
         user.firstName = firstName;
       }
 
@@ -37,12 +29,12 @@ const updateCycleReducer = (state, action) => {
   }
 
   //CHANGE LASTNAME
-  if (action.type === updateCycleActions.changeMemberLastname) {
+  if (action.type === createCycleActions.changeMemberLastname) {
     const id = action.payload.id;
     const lastName = action.payload.lastName;
 
-    const newState = state.map((user, indexUser) => {
-      if (indexUser === id) {
+    const newState = state.map((user, index) => {
+      if (index === id) {
         user.lastName = lastName;
       }
 
@@ -53,7 +45,7 @@ const updateCycleReducer = (state, action) => {
   }
 
   //CREATE NEW USER
-  if (action.type === updateCycleActions.createNewUser) {
+  if (action.type === createCycleActions.createNewUser) {
     let newfield = {
       firstName: "",
       lastName: "",
@@ -66,8 +58,8 @@ const updateCycleReducer = (state, action) => {
   }
 
   //DELETE NEW USER
-  if (action.type === updateCycleActions.deleteUser) {
-    const userId = action.payload.userId;
+  if (action.type === createCycleActions.deleteUser) {
+    const userId = action.payload.id;
     const newState = [...state].filter(
       (user, indexUser) => indexUser !== userId
     );
@@ -76,7 +68,7 @@ const updateCycleReducer = (state, action) => {
   }
 
   //CREATE NEW GOAL
-  if (action.type === updateCycleActions.createNewGoal) {
+  if (action.type === createCycleActions.createNewGoal) {
     const userId = action.payload.userId;
     const newGoal = {
       mainGoal: "",
@@ -84,7 +76,6 @@ const updateCycleReducer = (state, action) => {
       subTasks: [{ task: "", done: false }],
     };
 
-    console.log("Prueba");
     const newState = [...state];
 
     newState.forEach((user, userIndex) => {
@@ -97,15 +88,15 @@ const updateCycleReducer = (state, action) => {
   }
 
   //CHANGE GOAL NAME
-  if (action.type === updateCycleActions.changeGoalName) {
+  if (action.type === createCycleActions.changeGoalName) {
     const userId = action.payload.userId;
     const goalId = action.payload.goalId;
     const goalTitle = action.payload.goalTitle;
 
     const newState = [...state];
 
-    newState.map((user, userIndex) => {
-      if (userIndex === userId) {
+    newState.map((user, indexUser) => {
+      if (indexUser === userId) {
         user.goals.map((goal, indexGoal) => {
           if (indexGoal === goalId) {
             goal.mainGoal = goalTitle;
@@ -122,7 +113,7 @@ const updateCycleReducer = (state, action) => {
   }
 
   //CREATE NEW SUBTASK
-  if (action.type === updateCycleActions.createNewSubtask) {
+  if (action.type === createCycleActions.createNewSubtask) {
     const userId = action.payload.userId;
     const goalId = action.payload.goalId;
     const newSubTask = { task: "", done: false };
@@ -147,7 +138,7 @@ const updateCycleReducer = (state, action) => {
   }
 
   //CHANGE SUBTASK NAME
-  if (action.type === updateCycleActions.changeSubtaskName) {
+  if (action.type === createCycleActions.changeSubtaskName) {
     const userId = action.payload.userId;
     const goalId = action.payload.goalId;
     const subTaskId = action.payload.subtaskId;
@@ -179,7 +170,7 @@ const updateCycleReducer = (state, action) => {
   }
 
   //DELETE SUBTASK
-  if (action.type === updateCycleActions.deleteSubtask) {
+  if (action.type === createCycleActions.deleteSubtask) {
     const userId = action.payload.userId;
     const goalId = action.payload.goalId;
     const subTaskId = action.payload.subtaskId;
@@ -190,9 +181,9 @@ const updateCycleReducer = (state, action) => {
       if (indexUser === userId) {
         user.goals = user.goals.map((goal, indexGoal) => {
           if (indexGoal === goalId) {
-            goal.subTasks = goal.subTasks.filter((subtask, indexSubtask) => {
-              return indexSubtask !== subTaskId;
-            });
+            goal.subTasks = goal.subTasks.filter(
+              (subtask, indexSubtask) => indexSubtask !== subTaskId
+            );
           }
 
           return goal;
@@ -206,7 +197,7 @@ const updateCycleReducer = (state, action) => {
   }
 
   //SUBMIT CHANGES
-  if (action.type === updateCycleActions.submitChanges) {
+  if (action.type === createCycleActions.submitChanges) {
     const newState = [...state];
 
     newState.map((user) => {
@@ -224,4 +215,4 @@ const updateCycleReducer = (state, action) => {
   }
 };
 
-export default updateCycleReducer;
+export default createCycleReducer;

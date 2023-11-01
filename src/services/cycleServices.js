@@ -17,7 +17,27 @@ export const fetchAllCycles = async (adminId) => {
 
     return response.data;
   } catch (error) {
-    throw new Error(error);
+    throw new Error({ error });
+  }
+};
+
+export const createCycle = async (adminId, data) => {
+  try {
+    const token = getToken();
+
+    const response = await await axios.post(
+      `${apiUrl}/admins/${adminId}`,
+      data,
+      {
+        headers: {
+          "x-auth-token": token,
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    throw new Error({ error });
   }
 };
 
@@ -35,7 +55,7 @@ export const returnCycleById = async (adminId, cycleId) => {
 
     return await response.data;
   } catch (error) {
-    throw new Error({ errorEnPantalla: error });
+    throw new Error({ error });
   }
 };
 
@@ -54,7 +74,7 @@ export const putCycle = async (adminId, cycleId, data) => {
 
     return response.data;
   } catch (error) {
-    throw new Error({ errorEnPantalla: error });
+    throw new Error({ error });
   }
 };
 
@@ -72,6 +92,6 @@ export const deleteCycle = async (adminId, cycleId) => {
 
     return response;
   } catch (error) {
-    throw new Error({ errorEnPantalla: error });
+    throw new Error({ error });
   }
 };

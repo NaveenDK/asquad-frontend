@@ -7,7 +7,7 @@ import { Col, Row, Button } from "react-bootstrap";
 import SubtaskItem from "../SubtaskItem";
 
 //reducerActions
-import { updateCycleActions } from "../../../../Reducers/updateCycleReducer";
+import { createCycleActions } from "../../../../Reducers/createCycleReducer";
 
 const GoalItem = ({ dispatch, info, goal }) => {
   const goalRef = useRef();
@@ -16,7 +16,7 @@ const GoalItem = ({ dispatch, info, goal }) => {
     const goalTitle = goalRef.current.value;
 
     dispatch({
-      type: updateCycleActions.changeGoalName,
+      type: createCycleActions.changeGoalName,
       payload: {
         ...info,
         goalTitle: goalTitle,
@@ -26,15 +26,15 @@ const GoalItem = ({ dispatch, info, goal }) => {
 
   const addGoal = () => {
     dispatch({
-      type: updateCycleActions.createNewGoal,
+      type: createCycleActions.createNewGoal,
       payload: { userId: info.userId },
     });
   };
 
   const addSubTask = () => {
     dispatch({
-      type: updateCycleActions.createNewSubtask,
-      payload: { userId: info.userId, goalId: info.goalId },
+      type: createCycleActions.createNewSubtask,
+      payload: { ...info },
     });
   };
 
@@ -54,12 +54,12 @@ const GoalItem = ({ dispatch, info, goal }) => {
         </Col>
 
         <label className="boldLabel">Subtasks List</label>
-        {goal.subTasks.map((subtask, indexSubtask) => {
+        {goal.subTasks.map((subtask, index) => {
           return (
             <SubtaskItem
               dispatch={dispatch}
               subtask={subtask}
-              info={{ ...info, subtaskId: indexSubtask }}
+              info={{ ...info, subtaskId: index }}
             />
           );
         })}

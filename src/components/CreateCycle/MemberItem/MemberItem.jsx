@@ -9,32 +9,32 @@ import "react-datepicker/dist/react-datepicker.css";
 import GoalItem from "./GoalItem/GoalItem";
 
 //Reducer actions
-import { updateCycleActions } from "../../../Reducers/updateCycleReducer";
+import { createCycleActions } from "../../../Reducers/createCycleReducer";
 
-const MemberItem = ({ dispatch, index, input, isDesktop }) => {
+const MemberItem = ({ dispatch, input, userIndex, isDesktop }) => {
   const changeFirstName = (event) => {
     dispatch({
-      type: updateCycleActions.changeMemberName,
-      payload: { firstName: event.target.value, id: index },
+      type: createCycleActions.changeMemberName,
+      payload: { firstName: event.target.value, id: userIndex },
     });
   };
 
   const changeLastName = (event) => {
     dispatch({
-      type: updateCycleActions.changeMemberLastname,
-      payload: { lastName: event.target.value, id: index },
+      type: createCycleActions.changeMemberLastname,
+      payload: { lastName: event.target.value, id: userIndex },
     });
   };
 
   const removeFields = () => {
     dispatch({
-      type: updateCycleActions.deleteUser,
-      payload: { userId: index },
+      type: createCycleActions.deleteUser,
+      payload: { id: userIndex },
     });
   };
 
   return (
-    <div className="singleOwnerField" key={index}>
+    <div className="singleOwnerField" key={userIndex}>
       <Row className={"align-items-center justify-content-end"}>
         <Col xs={5}>
           <Button
@@ -80,11 +80,11 @@ const MemberItem = ({ dispatch, index, input, isDesktop }) => {
         </Col>
       </Row>
 
-      {input.goals.map((goal, indexGoal) => {
+      {input.goals.map((goal, index) => {
         return (
           <GoalItem
             dispatch={dispatch}
-            info={{ userId: index, goalId: indexGoal }}
+            info={{ userId: userIndex, goalId: index }}
             goal={goal}
           />
         );

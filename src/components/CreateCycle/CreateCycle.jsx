@@ -1,14 +1,8 @@
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-  useReducer,
-} from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { useContext, useEffect, useReducer, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 
 //Context
 import { AdminContext } from "../../context/AdminContext";
@@ -23,46 +17,40 @@ import MainLayout from "../MainLayout";
 import MemberItem from "./MemberItem";
 
 //Services
-import { putCycle, returnCycleById } from "../../services/cycleServices";
+import { createCycle } from "../../services/cycleServices";
 
 //Reducer
-import updateCycleReducer, {
-  updateCycleActions,
-} from "../../Reducers/updateCycleReducer";
+import createCycleReducer, {
+  createCycleActions,
+} from "../../Reducers/createCycleReducer";
 
-const UpdateCycle = () => {
-  const [state, dispatch] = useReducer(updateCycleReducer, {});
+const initState = [
+  {
+    firstName: "",
+    lastName: "",
+    goals: [
+      { mainGoal: "", progress: 0, subTasks: [{ task: "", done: false }] },
+    ],
+  },
+];
+
+const CreateCycleNew = () => {
+  const [state, dispatch] = useReducer(createCycleReducer, initState);
 
   const { adminId } = useContext(AdminContext);
-  const { cycleId } = useParams();
 
   const [isDesktop, setIsDesktop] = useState(false);
-  const [startDate, setStartDate] = useState(); // empty startDate set when we start initially
-  const [endDate, setEndDate] = useState(); // empty endDate set when we start initially
+  const [startDate, setStartDate] = useState(""); // empty startDate set when we start initially
+  const [endDate, setEndDate] = useState(""); // empty endDate set when we start initially
 
   const navigate = useNavigate();
 
-  const fetchCycleInfo = useCallback(async () => {
-    const data = await returnCycleById(adminId, cycleId);
-
-    dispatch({
-      type: updateCycleActions.setUsers,
-      payload: { users: data.users },
-    });
-
-    setStartDate(new Date(data.startDate));
-    setEndDate(new Date(data.endDate));
-  }, [adminId, cycleId]);
-
-  const putCycleInfo = async (data) => {
-    await putCycle(adminId, cycleId, data);
-    navigate(`/review/${cycleId}`);
+  const createCycleInfo = async (data) => {
+    await createCycle(adminId, data);
+    navigate(`/overview`);
   };
 
   useEffect(() => {
-    //Fetch cycle info
-    fetchCycleInfo();
-
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 768); // Adjust the breakpoint value as needed
     };
@@ -74,13 +62,13 @@ const UpdateCycle = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [cycleId, adminId, fetchCycleInfo]);
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
     //Validate no empty tasks
-    await dispatch({ type: updateCycleActions.submitChanges });
+    await dispatch({ type: createCycleActions.submitChanges });
 
     const cycle = {
       startDate: startDate,
@@ -88,8 +76,8 @@ const UpdateCycle = () => {
       users: state,
     };
 
-    //Put cycle info
-    putCycleInfo(cycle);
+    //Create cycle info
+    createCycleInfo(cycle);
   };
 
   const onChangeStartDate = (date) => {
@@ -100,7 +88,7 @@ const UpdateCycle = () => {
   };
 
   const createNewUserField = () => {
-    dispatch({ type: updateCycleActions.createNewUser });
+    dispatch({ type: createCycleActions.createNewUser });
   };
 
   return (
@@ -110,7 +98,7 @@ const UpdateCycle = () => {
         <meta name="description" content="Asquad - accountability made easy" />
       </Helmet>
       <Container>
-        <MainLayout title="Update Cycle">
+        <MainLayout title="Create Cycle">
           <form className="cycleForm" onSubmit={onSubmit}>
             <div className="form-group dateFields">
               <label className="boldLabel">Select Dates</label>
@@ -148,18 +136,17 @@ const UpdateCycle = () => {
               </Row>
             </div>
             <div className="form-group ownerFields">
-              {state.length >= 0 &&
-                state.map((user, index) => {
-                  //initially we are mappin through the empty users array and creating one field in the return section
-                  return (
-                    <MemberItem
-                      dispatch={dispatch}
-                      index={index}
-                      input={user}
-                      isDesktop={isDesktop}
-                    />
-                  );
-                })}
+              {state.map((user, index) => {
+                //initially we are mappin through the empty users array and creating one field in the return section
+                return (
+                  <MemberItem
+                    dispatch={dispatch}
+                    input={user}
+                    userIndex={index}
+                    isDesktop={isDesktop}
+                  />
+                );
+              })}
               <div className="plusMember">
                 <button
                   onClick={createNewUserField}
@@ -174,7 +161,7 @@ const UpdateCycle = () => {
             <div className="form-group btnSection">
               <input
                 type="submit"
-                value="Update"
+                value="Create"
                 className="btn  btn-dark createCycle"
               />
             </div>
@@ -185,4 +172,4 @@ const UpdateCycle = () => {
   );
 };
 
-export default UpdateCycle;
+export default CreateCycleNew;
