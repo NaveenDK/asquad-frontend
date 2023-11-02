@@ -1,12 +1,12 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 
 //Styles
 import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 
-//Context
-import { AdminContext } from "../../context/AdminContext";
+//Custom Hook
+import { useAdminContext } from "../../hooks/useAdminContext";
 
 //Components
 import MainLayout from "../MainLayout";
@@ -19,7 +19,7 @@ import { deleteCycle, fetchAllCycles } from "../../services/cycleServices";
 import { getToken } from "../../utils/Token/tokenUtils";
 
 const Overview = () => {
-  const { adminId } = useContext(AdminContext);
+  const { adminId } = useAdminContext();
   const [loading, setLoading] = useState(true);
   const [cycles, setCycles] = useState([]);
 
@@ -45,7 +45,7 @@ const Overview = () => {
     }
 
     setLoading(false);
-  }, []);
+  }, [adminId, navigate]);
 
   useEffect(() => {
     fetchCycles();

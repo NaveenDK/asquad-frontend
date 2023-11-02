@@ -84,7 +84,6 @@ const updateCycleReducer = (state, action) => {
       subTasks: [{ task: "", done: false }],
     };
 
-    console.log("Prueba");
     const newState = [...state];
 
     newState.forEach((user, userIndex) => {

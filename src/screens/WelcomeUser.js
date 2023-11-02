@@ -1,13 +1,18 @@
-import React from "react";
-import { Container, Form, Button } from "react-bootstrap";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+//Styles
+import { Button, Container, Form } from "react-bootstrap";
+
+//Custom Hook
+import { useAdminContext } from "../hooks/useAdminContext";
+
 const WelcomeUser = () => {
+  const { adminName } = useAdminContext();
+
   const navigate = useNavigate();
 
   const navigateToMyGroups = () => {
-    // 👇️ navigate to /contacts
     navigate("/mygroups");
-    //setExpanded(false); //
   };
   const navigateToCreateGroups = () => {
     navigate("/creategroup");
@@ -24,7 +29,7 @@ const WelcomeUser = () => {
           <div></div>
           <div className="general-form-wrapper pt-5">
             <Form className="FormContainer">
-              <h4 style={{ textAlign: "center" }}>Hi, Nick</h4>
+              <h4 style={{ textAlign: "center" }}>Hi, {adminName}</h4>
               <div className="buttonWrapper">
                 <Button
                   type="button"

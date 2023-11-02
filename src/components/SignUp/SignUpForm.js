@@ -1,13 +1,17 @@
-import React, { useState, useContext } from "react";
-import axios from "axios";
-import { Container, Form, Button } from "react-bootstrap";
-import { AdminContext } from "../context/AdminContext";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
-import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@react-oauth/google";
+import { Helmet } from "react-helmet-async";
 
-const apiUrl = process.env.REACT_APP_API_URL;
+//Styles
+import { Button, Container, Form } from "react-bootstrap";
+
+//Custom hook
+import { useAdminContext } from "../../hooks/useAdminContext";
+
+//Services
+import { signUpGoogleService } from "../../services/googleServices";
+import { postSignUpAdminData } from "../../services/adminServices";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -17,41 +21,26 @@ const SignUpForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { setAdminId } = useContext(AdminContext);
+  const { setAdminId } = useAdminContext();
 
-  const login = useGoogleLogin({
+  const signUp = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
       try {
-        const res = await axios.post(
-          `${apiUrl}/admins/google-register-custom-btn`,
-          {
-            response: credentialResponse,
-          }
-        );
+        const res = await signUpGoogleService(credentialResponse);
 
         const token = res.data.token;
-        localStorage.setItem("token", token); //
-        const adminId = res.data.adminId; // Assuming the API response contains the adminId
+        const adminId = res.data.adminId;
+
+        localStorage.setItem("token", token);
         localStorage.setItem("adminId", adminId);
         setAdminId(adminId);
         navigate("/overview");
       } catch (error) {
-        console.log("We are facing this error: " + error);
-        console.log("We are facing this error: " + error.response);
-        console.log(
-          "error.response.data.message" +
-            JSON.stringify(error.response.data.message)
-        );
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          setError(error.response.data.message);
-        }
+        error.response.data.message && setError(error.response.data.message);
       }
     },
   });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -69,23 +58,18 @@ const SignUpForm = () => {
     };
 
     try {
-      const response = await axios.post(`${apiUrl}/admins`, admin);
+      const response = await postSignUpAdminData(admin);
+
       const token = response.data.token;
+      const adminId = response.data.adminId; // Assuming the API response contains the adminId
 
       localStorage.setItem("token", token); //
-
-      const adminId = response.data.adminId; // Assuming the API response contains the adminId
       localStorage.setItem("adminId", adminId);
       setAdminId(adminId);
 
       navigate("/userwelcome");
     } catch (error) {
-      console.error(error);
-      if (error.response && error.response.data && error.response.data.msg) {
-        setError(error.response.data.msg);
-      }
-      // console.log("error.response.data.errors: ");
-      // console.log(error.response.data.errors[0].msg);
+      error.response.data.msg && setError(error.response.data.msg);
       setError(error.response.data.errors[0].msg);
     }
   };
@@ -157,12 +141,11 @@ const SignUpForm = () => {
                 Sign Up !
               </Button>
               <div className="divider">
-                {" "}
                 <span className="line-grey"> </span> or
                 <span className="line-grey"> </span>{" "}
               </div>
             </Form>
-            <div className="googleBtn" onClick={() => login()}>
+            <div className="googleBtn" onClick={signUp}>
               Continue with Google
             </div>
           </div>

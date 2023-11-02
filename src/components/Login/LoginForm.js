@@ -1,16 +1,17 @@
-import { useState, useContext } from "react";
-import axios from "axios";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import { AdminContext } from "../context/AdminContext";
-import Button from "react-bootstrap/Button";
-import MainLayout from "./MainLayout";
-import Spinner from "react-bootstrap/Spinner";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@react-oauth/google";
-const apiUrl = process.env.REACT_APP_API_URL;
+
+//Styles
+import { Container, Form, Button, Spinner } from "react-bootstrap";
+
+//Custom hook
+import { useAdminContext } from "../../hooks/useAdminContext";
+
+//Services
+import { loginGoogleService } from "../../services/googleServices";
+import { postLoginAdminData } from "../../services/adminServices";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -19,63 +20,58 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { setAdminId } = useContext(AdminContext);
+  const { setAdminId } = useAdminContext();
 
   const login = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
-      try {
-        const res = await axios.post(
-          `${apiUrl}/admins/google-login-custom-btn`,
-          {
-            response: credentialResponse,
-          }
-        );
+      const res = await loginGoogleService(credentialResponse);
 
-        const token = res.data.token;
-        localStorage.setItem("token", token); //
-        const adminId = res.data.adminId; // Assuming the API response contains the adminId
-        localStorage.setItem("adminId", adminId);
-        setAdminId(adminId);
-        navigate("/userwelcome");
-      } catch (error) {
-        console.log("We are facing this error: " + error);
-        console.log("error " + JSON.stringify(error));
-      }
+      const token = res.data.token;
+      const adminId = res.data.adminId; // Assuming the API response contains the adminId
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("adminId", adminId);
+
+      setAdminId(adminId);
+      navigate("/userwelcome");
     },
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(email, password);
+
     setLoading(true);
+
     const admin = {
       email: email,
       password: password,
     };
+
     try {
-      const response = await axios.post(`${apiUrl}/admins/login`, admin);
+      const response = await postLoginAdminData(admin);
+
       const token = response.data.token;
-
-      localStorage.setItem("token", token); //
-
       const adminId = response.data.adminId; // Assuming the API response contains the adminId
+
+      localStorage.setItem("token", token);
       localStorage.setItem("adminId", adminId);
       setAdminId(adminId);
 
       navigate("/overview");
     } catch (error) {
-      console.error(error);
       setError("Oops, Please check your credentials ");
+      throw new Error(error);
     } finally {
       setLoading(false);
     }
   };
+
   const handleForgotPassword = () => {
     navigate("/reset");
   };
+
   return (
     <>
-      {" "}
       <Helmet>
         <title>Login </title>
         <meta name="description" content="Asquad - accountability made easy" />
@@ -107,7 +103,7 @@ const LoginForm = () => {
                   value={password}
                 />
               </Form.Group>
-              {error && <div className="error-message">{error}</div>}{" "}
+              {error && <div className="error-message">{error}</div>}
               {/* Display error message if it exists */}
               <Button
                 className="fullwidth"
@@ -124,15 +120,14 @@ const LoginForm = () => {
                 )}
               </Button>
               <div className="fpwd pt-2 text-center tagline">
-                <p onClick={handleForgotPassword}> Forgot Password?</p>
+                <p onClick={handleForgotPassword}>Forgot Password?</p>
               </div>
               <div className="divider">
-                {" "}
                 <span className="line-grey"> </span> or
-                <span className="line-grey"> </span>{" "}
+                <span className="line-grey"> </span>
               </div>
             </Form>
-            <div className="googleBtn" onClick={() => login()}>
+            <div className="googleBtn" onClick={login}>
               Continue with Google
             </div>
           </div>

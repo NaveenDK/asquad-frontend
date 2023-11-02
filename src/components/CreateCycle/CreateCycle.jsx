@@ -1,11 +1,8 @@
-import { useContext, useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
-
-//Context
-import { AdminContext } from "../../context/AdminContext";
 
 //Styles
 import Col from "react-bootstrap/Col";
@@ -24,6 +21,9 @@ import createCycleReducer, {
   createCycleActions,
 } from "../../Reducers/createCycleReducer";
 
+//Custom Hook
+import { useAdminContext } from "../../hooks/useAdminContext";
+
 const initState = [
   {
     firstName: "",
@@ -37,7 +37,7 @@ const initState = [
 const CreateCycleNew = () => {
   const [state, dispatch] = useReducer(createCycleReducer, initState);
 
-  const { adminId } = useContext(AdminContext);
+  const { adminId } = useAdminContext();
 
   const [isDesktop, setIsDesktop] = useState(false);
   const [startDate, setStartDate] = useState(""); // empty startDate set when we start initially

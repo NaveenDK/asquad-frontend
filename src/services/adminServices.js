@@ -25,3 +25,23 @@ export const fetchAdminData = async (adminId) => {
     throw new Error(error);
   }
 };
+
+export const postLoginAdminData = async (admin) => {
+  try {
+    const response = await axios.post(`${apiUrl}/admins/login`, admin);
+
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const postSignUpAdminData = async (admin) => {
+  try {
+    const response = await axios.post(`${apiUrl}/admins`, admin);
+
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
+};

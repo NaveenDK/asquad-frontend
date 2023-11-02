@@ -1,17 +1,11 @@
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-  useReducer,
-} from "react";
+import { useCallback, useEffect, useState, useReducer } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-//Context
-import { AdminContext } from "../../context/AdminContext";
+//Custom Hook
+import { useAdminContext } from "../../hooks/useAdminContext";
 
 //Styles
 import Col from "react-bootstrap/Col";
@@ -33,7 +27,7 @@ import updateCycleReducer, {
 const UpdateCycle = () => {
   const [state, dispatch] = useReducer(updateCycleReducer, {});
 
-  const { adminId } = useContext(AdminContext);
+  const { adminId } = useAdminContext();
   const { cycleId } = useParams();
 
   const [isDesktop, setIsDesktop] = useState(false);

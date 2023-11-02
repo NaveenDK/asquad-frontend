@@ -8,11 +8,11 @@ import ChangePassword from "./components/ChangePassword";
 import CreateCycle from "./components/CreateCycle";
 import EditCycle from "./components/EditCycle";
 import LandingPage from "./components/LandingPage";
-import Login from "./components/LoginForm";
+import Login from "./components/Login";
 import OurNavbar from "./components/OurNavbar";
 import Overview from "./components/OverviewCycles";
 import ResetPassword from "./components/ResetPassword";
-import SignUp from "./components/SignUpForm";
+import SignUp from "./components/SignUp";
 import UpdateCycle from "./components/UpdateCycle";
 
 //Screens
@@ -55,7 +55,9 @@ function AppRouter() {
       <Route path="/mygroups" element={<MyGroups />} />
       <Route path="/overview" element={<Overview />} />
       <Route path="/userwelcome" element={<WelcomeUser />} />
+      {/* EDIT IS NOT WORKING */}
       <Route path="/edit/" element={<EditCycle />} />
+      {/* ------------------- */}
       <Route path="/review/:cycleId" element={<EditCycle />} />
       <Route path="/mygroup/:groupId" element={<MyGroup />} />
       <Route path="/create" element={<CreateCycle />} />
