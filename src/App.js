@@ -1,12 +1,18 @@
 import "./App.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AdminProvider } from "./context/AdminContext";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
 
 //Components
 import ChangePassword from "./components/ChangePassword";
 // import CreateCycle from "./components/CreateCycle/CreateCycle";
 import CreateCycle from "./components/CreateCycle";
-import EditCycle from "./components/EditCycle";
+import ReviewCycle from "./components/ReviewCycle";
 import LandingPage from "./components/LandingPage";
 import Login from "./components/Login";
 import OurNavbar from "./components/OurNavbar";
@@ -22,13 +28,7 @@ import MyGroup from "./screens/MyGroup";
 import MyGroups from "./screens/MyGroups";
 import WelcomeUser from "./screens/WelcomeUser";
 
-import {
-  Navigate,
-  Route,
-  BrowserRouter as Router,
-  Routes,
-} from "react-router-dom";
-
+//Utils
 import { getToken } from "./utils/Token/tokenUtils";
 
 const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -56,9 +56,9 @@ function AppRouter() {
       <Route path="/overview" element={<Overview />} />
       <Route path="/userwelcome" element={<WelcomeUser />} />
       {/* EDIT IS NOT WORKING */}
-      <Route path="/edit/" element={<EditCycle />} />
+      <Route path="/edit/" element={<ReviewCycle />} />
       {/* ------------------- */}
-      <Route path="/review/:cycleId" element={<EditCycle />} />
+      <Route path="/review/:cycleId" element={<ReviewCycle />} />
       <Route path="/mygroup/:groupId" element={<MyGroup />} />
       <Route path="/create" element={<CreateCycle />} />
       <Route path="/update/:cycleId" element={<UpdateCycle />} />

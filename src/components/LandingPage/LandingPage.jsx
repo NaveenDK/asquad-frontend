@@ -1,23 +1,20 @@
-import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
+//Styles
+import { Button, Col, Container, Row } from "react-bootstrap";
+
+//Components
 import FooterLanding from "./FooterLanding";
-import {
-  Routes,
-  Route,
-  useNavigate,
-  useParams,
-  useLocation,
-} from "react-router-dom";
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const navigateToLogin = () => {
-    // 👇️ navigate to /contacts
-    navigate("/login");
-  };
+  // const navigateToLogin = () => {
+  //   // 👇️ navigate to /login
+  //   navigate("/login");
+  // };
 
   const navigateToSignup = () => {
-    // 👇️ navigate to /contacts
+    // 👇️ navigate to /signup
     navigate("/signup");
 
     //
@@ -86,8 +83,7 @@ const LandingPage = () => {
                 fontWeight: "800",
               }}
             >
-              {" "}
-              How it works?{" "}
+              How it works?
             </h2>
             <Row>
               <Col className="pt-5">

@@ -1,5 +1,3 @@
-import React from "react";
-
 const MainLayout = ({ children, title, start_date, end_date }) => {
   return (
     <div>

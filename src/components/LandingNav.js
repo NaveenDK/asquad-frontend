@@ -1,26 +1,18 @@
-import Container from "react-bootstrap/Container";
-import React, { Component, useEffect, useState, useContext } from "react";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import { AdminContext } from "./AdminContext";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import {
-  Routes,
-  Route,
-  useNavigate,
-  useParams,
-  useLocation,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+//Styles
+import { Container, Nav, Navbar } from "react-bootstrap";
+
+//Custom hook
+import { useAdminContext } from "../hooks/useAdminContext";
 
 function LandingNav() {
   const isLoggedIn = Boolean(localStorage.getItem("token"));
   const navigate = useNavigate();
-  const { adminId, setAdminId } = useContext(AdminContext);
+  const { adminId, setAdminId } = useAdminContext();
 
-  // const location = useLocation();
-  // const adminId = location.pathname.split("/")[1];
   const navigateToHome = () => {
-    // 👇️ navigate to /contacts
+    // 👇️ navigate to /overview
     if (isLoggedIn) {
       navigate("/overview");
     } else if (!isLoggedIn) {
@@ -29,16 +21,16 @@ function LandingNav() {
   };
 
   const navigateToCreate = () => {
-    // 👇️ navigate to /contacts
+    // 👇️ navigate to /create
     navigate("/create");
   };
   const navigateToLogin = () => {
-    // 👇️ navigate to /contacts
+    // 👇️ navigate to /login
     navigate("/login");
   };
 
   const navigateToSignup = () => {
-    // 👇️ navigate to /contacts
+    // 👇️ navigate to /signup
     navigate("/signup");
   };
   const logout = () => {

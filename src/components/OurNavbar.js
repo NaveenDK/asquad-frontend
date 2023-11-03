@@ -1,23 +1,17 @@
-import Container from "react-bootstrap/Container";
-import React, { Component, useEffect, useState, useContext } from "react";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import { AdminContext } from "../context/AdminContext";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import {
-  Routes,
-  Route,
-  useNavigate,
-  useParams,
-  useLocation,
-  Link,
-} from "react-router-dom";
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+//Styles
+import { Nav, Container, NavDropdown, Navbar } from "react-bootstrap";
+
+//Custom hook
+import { useAdminContext } from "../hooks/useAdminContext";
 
 function OurNavbar() {
   const isLoggedIn = Boolean(localStorage.getItem("token"));
   const navigate = useNavigate();
   const location = useLocation();
-  const { adminId, setAdminId, adminName } = useContext(AdminContext);
+  const { adminId, setAdminId, adminName } = useAdminContext();
   const [expanded, setExpanded] = useState(false);
 
   // const location = useLocation();
@@ -43,11 +37,11 @@ function OurNavbar() {
     setExpanded(false); //
   };
 
-  const navigateToSignup = () => {
-    // 👇️ navigate to /contacts
-    navigate("/signup");
-    setExpanded(false); //
-  };
+  // const navigateToSignup = () => {
+  //   // 👇️ navigate to /contacts
+  //   navigate("/signup");
+  //   setExpanded(false); //
+  // };
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("adminId");
@@ -57,7 +51,6 @@ function OurNavbar() {
 
   const renderAuthLinks = () => {
     if (adminId) {
-      console.log(adminName);
       return (
         <NavDropdown
           title={<span className="nav-dropdown-name">{adminName}</span>}
@@ -107,7 +100,6 @@ function OurNavbar() {
     >
       <Container>
         <Navbar.Brand onClick={navigateToHome}>
-          {" "}
           <img
             src={process.env.PUBLIC_URL + "/img/asquad-h-logo.png"}
             alt="Logo"

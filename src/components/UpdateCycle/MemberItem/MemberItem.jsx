@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import "react-datepicker/dist/react-datepicker.css";
 
 //Components
-import GoalItem from "./GoalItem/GoalItem";
+import GoalItem from "./GoalItem";
 
 //Reducer actions
 import { updateCycleActions } from "../../../Reducers/updateCycleReducer";
