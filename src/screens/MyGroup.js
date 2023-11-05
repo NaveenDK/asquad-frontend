@@ -55,6 +55,28 @@ const MyGroup = () => {
     fetchData();
   }, []);
 
+  const deleteGroup = async (e, groupId, userId) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.post(
+        `${apiUrl}/groups/delete`,
+        {
+          groupId,
+          userId,
+        },
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+        }
+      );
+      navigate("/userwelcome");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -95,6 +117,16 @@ const MyGroup = () => {
                     data-mdb-ripple-color="dark"
                   >
                     Current Cycles
+                  </Button>
+                </div>
+                <div className="buttonWrapper">
+                  <Button
+                    type="button warning"
+                    className="warning"
+                    data-mdb-ripple-color="dark"
+                    onClick={(e) => deleteGroup(e, groupId, userId)}
+                  >
+                    Delete Group
                   </Button>
                 </div>
                 <br></br>

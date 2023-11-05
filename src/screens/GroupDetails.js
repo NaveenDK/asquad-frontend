@@ -155,7 +155,9 @@ const GroupDetails = () => {
                   </div>
                   <div></div>
                   <div className="buttonWrapper">
-                    {isMember ? (
+                    {groupDetails.creatorId === userId ? (
+                      "YOU ARE ORGANIZER OF THIS GROUP"
+                    ) : isMember ? (
                       <Button
                         onClick={(e) =>
                           handleJoinLeaveGroup(e, userId, groupId, "LEAVE")
@@ -176,27 +178,7 @@ const GroupDetails = () => {
                       </Button>
                     )}
                   </div>
-                  <div className="buttonWrapper">
-                    <Button
-                      onClick={() =>
-                        handleJoinLeaveGroup(userId, groupId, "LEAVE")
-                      }
-                      type="button"
-                      className="btn btn-outline-dark customWidthBtn"
-                      data-mdb-ripple-color="dark"
-                    >
-                      Add Members
-                    </Button>
-                  </div>
-                  <div className="buttonWrapper">
-                    <Button
-                      type="button"
-                      className="btn btn-outline-dark customWidthBtn"
-                      data-mdb-ripple-color="dark"
-                    >
-                      Current Cycles
-                    </Button>
-                  </div>
+
                   <br></br>
                 </Form>
               </div>
