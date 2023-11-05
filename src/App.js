@@ -34,6 +34,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import GroupDetails from "./screens/GroupDetails";
+import AddMember from "./screens/AddMember";
 const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 function AppRouter() {
   const navigate = useNavigate();
@@ -57,21 +58,24 @@ function AppRouter() {
           )
         }
       />
+      <Route path="mygroups/:groupId/addmember" element={<AddMember />} />
       <Route path="/welcome" element={<LandingPage />} />
       <Route path="/creategroup" element={<CreateGroup />} />
       <Route path="/browsegroups" element={<BrowseGroups />} />
       <Route path="/mygroups" element={<MyGroups />} />
-      <Route path="/overview" element={<Overview />} />
+      <Route path="/mygroups/:groupId/currentcycles" element={<Overview />} />
       <Route path="/userwelcome" element={<WelcomeUser />} />
       <Route path="/edit/" element={<EditCycle />} />
       <Route path="/review/:cycleId" element={<EditCycle />} />
       <Route path="/mygroups/:groupId" element={<MyGroup />} />
       <Route path="/browsegroups/:groupId" element={<GroupDetails />} />
-      <Route path="/create" element={<CreateCycle />} />
+      <Route path="/mygroups/:groupId/create" element={<CreateCycle />} />
       <Route path="/update/:cycleId" element={<UpdateCycle />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/reset" element={<ResetPassword />} />
+      <Route path="/" element={<ResetPassword />} />
+
       <Route path="/changepwd/:id/:token" element={<ChangePassword />} />
     </Routes>
   );

@@ -77,6 +77,18 @@ const MyGroup = () => {
     }
   };
 
+  const navigateToCreate = () => {
+    // 👇️ navigate to /contacts
+    navigate("create");
+  };
+
+  const navigateToCurrentCycles = () => {
+    // 👇️ navigate to /contacts
+    navigate("currentcycles");
+  };
+  const navigatetoAddMember = () => {
+    navigate("addmember");
+  };
   return (
     <>
       {loading ? (
@@ -94,6 +106,7 @@ const MyGroup = () => {
                 </h4>
                 <div className="buttonWrapper">
                   <Button
+                    onClick={navigateToCreate}
                     type="button"
                     className="btn btn-outline-dark customWidthBtn"
                     data-mdb-ripple-color="dark"
@@ -106,12 +119,14 @@ const MyGroup = () => {
                     type="button"
                     className="btn btn-outline-dark customWidthBtn"
                     data-mdb-ripple-color="dark"
+                    onClick={navigatetoAddMember}
                   >
                     Add Members
                   </Button>
                 </div>
                 <div className="buttonWrapper">
                   <Button
+                    onClick={navigateToCurrentCycles}
                     type="button"
                     className="btn btn-outline-dark customWidthBtn"
                     data-mdb-ripple-color="dark"

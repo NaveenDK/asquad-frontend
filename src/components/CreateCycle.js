@@ -18,8 +18,9 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 const CreateCycle = () => {
   const [isDesktop, setIsDesktop] = useState(false);
+  //  const { groupId } = useContext(AdminContext);
   const navigate = useNavigate();
-  const { adminId } = useContext(AdminContext);
+  //const { userId } = useContext(AdminContext);
   useEffect(() => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 768); // Adjust the breakpoint value as needed
@@ -52,24 +53,23 @@ const CreateCycle = () => {
   const [endDate, setEndDate] = useState(); // empty endDate set when we start initially
 
   const onSubmit = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("token");
-    const cycle = {
-      startDate: startDate,
-      endDate: endDate,
-      users: users,
-    };
-
-    try {
-      await axios.post(`${apiUrl}/admins/${adminId}`, cycle, {
-        headers: {
-          "x-auth-token": token,
-        },
-      });
-      navigate("/overview");
-    } catch (error) {
-      console.error(error);
-    }
+    // e.preventDefault();
+    // const token = localStorage.getItem("token");
+    // const cycle = {
+    //   startDate: startDate,
+    //   endDate: endDate,
+    //   users: users,
+    // };
+    // try {
+    //   await axios.post(`${apiUrl}/admins/${userId}`, cycle, {
+    //     headers: {
+    //       "x-auth-token": token,
+    //     },
+    //   });
+    //   navigate("/overview");
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   const handleAddMore = (index, event) => {
