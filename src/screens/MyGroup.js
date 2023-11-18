@@ -115,14 +115,14 @@ const MyGroup = () => {
                   </Button>
                 </div>
                 <div className="buttonWrapper">
-                  <Button
+                  {/* <Button
                     type="button"
                     className="btn btn-outline-dark customWidthBtn"
                     data-mdb-ripple-color="dark"
                     onClick={navigatetoAddMember}
                   >
                     Add Members
-                  </Button>
+                  </Button> */}
                 </div>
                 <div className="buttonWrapper">
                   <Button

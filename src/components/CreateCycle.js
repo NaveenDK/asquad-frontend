@@ -18,16 +18,40 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 const CreateCycle = () => {
   const [isDesktop, setIsDesktop] = useState(false);
+  const [groupMembers, setGroupMembers] = useState();
+  const [loading, setLoading] = useState(true);
   //  const { groupId } = useContext(AdminContext);
   const navigate = useNavigate();
   //const { userId } = useContext(AdminContext);
   useEffect(() => {
+    setLoading(true);
+    const token = localStorage.getItem("token"); //
+    const isLoggedIn = Boolean(localStorage.getItem("token"));
+    // const fetchData = async () => {
+    //   try {
+    //     if (userId && isLoggedIn) {
+    //       // Check if adminId is defined
+    //       const response = await axios.get(`${apiUrl}/groups`);
+
+    //       setAllGroups(response.data);
+    //     } else {
+    //       navigate("/signup");
+    //     }
+    //   } catch (error) {
+    //     console.error(error.message);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
+    // fetchData();
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 768); // Adjust the breakpoint value as needed
     };
 
     // Add event listener on component mount
     window.addEventListener("resize", handleResize);
+
+    //get all members of the group
 
     // Remove event listener on component unmount
     return () => {
@@ -53,13 +77,15 @@ const CreateCycle = () => {
   const [endDate, setEndDate] = useState(); // empty endDate set when we start initially
 
   const onSubmit = async (e) => {
-    // e.preventDefault();
-    // const token = localStorage.getItem("token");
-    // const cycle = {
-    //   startDate: startDate,
-    //   endDate: endDate,
-    //   users: users,
-    // };
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    const cycle = {
+      startDate: startDate,
+      endDate: endDate,
+      users: users,
+    };
+    console.log("cycel:");
+    console.log(cycle);
     // try {
     //   await axios.post(`${apiUrl}/admins/${userId}`, cycle, {
     //     headers: {
@@ -190,6 +216,13 @@ const CreateCycle = () => {
               </Row>
             </div>
             <div className="form-group ownerFields">
+              <Form.Select aria-label="Default select example">
+                <option>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </Form.Select>
+
               {users.map((input, index) => {
                 //initially we are mappin through the empty users array and creating one field in the return section
                 return (

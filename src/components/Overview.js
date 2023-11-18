@@ -92,58 +92,55 @@ function Cycle(props) {
 }
 
 const Overview = () => {
-  const { adminId } = useContext(AdminContext);
+  // const { adminId } = useContext(AdminContext);
   const [loading, setLoading] = useState(true);
   const [cycles, setCycles] = useState([]);
 
   const deleteCycle = (id) => {
     const token = localStorage.getItem("token");
-    axios
-      .delete(`${apiUrl}/admins/${adminId}/cycles/${id}`, {
-        headers: {
-          "x-auth-token": token,
+    // axios
+    //   .delete(`${apiUrl}/admins/${adminId}/cycles/${id}`, {
+    //     headers: {
+    //       "x-auth-token": token,
+    //     },
+    //   })
+    //   .then((res) => console.log(res.data));
 
-
-          
-        },
-      })
-      .then((res) => console.log(res.data));
-
-    setCycles(cycles.filter((item) => item._id !== id));
+    // setCycles(cycles.filter((item) => item._id !== id));
   };
 
-  useEffect(() => {
-    setLoading(true);
-    const token = localStorage.getItem("token"); //
-    const isLoggedIn = Boolean(localStorage.getItem("token"));
-    const fetchData = async () => {
-      try {
-        if (adminId && isLoggedIn) {
-          // Check if adminId is defined
-          const response = await axios.get(
-            `${apiUrl}/admins/${adminId}/cycles`,
-            {
-              headers: {
-                "x-auth-token": token,
-              },
-            }
-          );
+  // useEffect(() => {
+  //   setLoading(true);
+  //   const token = localStorage.getItem("token"); //
+  //   const isLoggedIn = Boolean(localStorage.getItem("token"));
+  //   const fetchData = async () => {
+  //     try {
+  //       if (adminId && isLoggedIn) {
+  //         // Check if adminId is defined
+  //         const response = await axios.get(
+  //           `${apiUrl}/admins/${adminId}/cycles`,
+  //           {
+  //             headers: {
+  //               "x-auth-token": token,
+  //             },
+  //           }
+  //         );
 
-          setCycles(response.data);
-        }
-        else{
-          navigate("/signup")
-        }
-      } catch (error) {
-        console.error(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  //         setCycles(response.data);
+  //       }
+  //       else{
+  //         navigate("/signup")
+  //       }
+  //     } catch (error) {
+  //       console.error(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-    console.log("inOverview");
-  }, [adminId]);
+  //   fetchData();
+  //   console.log("inOverview");
+  // }, [adminId]);
   const navigate = useNavigate();
   const navigateToCreate = () => {
     // 👇️ navigate to /contacts
