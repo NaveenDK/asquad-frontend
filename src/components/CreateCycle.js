@@ -18,15 +18,20 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 const CreateCycle = () => {
   const [isDesktop, setIsDesktop] = useState(false);
-  const [groupMembers, setGroupMembers] = useState();
+  const [groupMembers, setGroupMembers] = useState([]);
   const [loading, setLoading] = useState(true);
+  let groupId = useParams();
+  groupId = groupId.groupId;
   //  const { groupId } = useContext(AdminContext);
   const navigate = useNavigate();
   //const { userId } = useContext(AdminContext);
   useEffect(() => {
+    console.log("groupId to String: ");
+    console.log(groupId.groupId);
     setLoading(true);
     const token = localStorage.getItem("token"); //
     const isLoggedIn = Boolean(localStorage.getItem("token"));
+
     // const fetchData = async () => {
     //   try {
     //     if (userId && isLoggedIn) {
@@ -52,6 +57,20 @@ const CreateCycle = () => {
     window.addEventListener("resize", handleResize);
 
     //get all members of the group
+    try {
+      const fetchUsers = async () => {
+        try {
+          const members = await axios.get(`${apiUrl}/groups/${groupId}/users`);
+          console.log("members.data::", members.data);
+          setGroupMembers(members.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchUsers();
+    } catch (error) {
+      console.log(error);
+    }
 
     // Remove event listener on component unmount
     return () => {
@@ -215,12 +234,14 @@ const CreateCycle = () => {
                 </Col>
               </Row>
             </div>
+
             <div className="form-group ownerFields">
               <Form.Select aria-label="Default select example">
                 <option>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+
+                {groupMembers.map((member) => (
+                  <option value={member}>{member}</option>
+                ))}
               </Form.Select>
 
               {users.map((input, index) => {
